@@ -42,6 +42,8 @@ Thumbs.db
 
 # Testing
 coverage/
+test_*.mjs
+*test*.mjs
 
 # Temporary files
 *.tmp
