@@ -23,7 +23,7 @@ A modern, responsive e-commerce website for African fashion and lifestyle produc
 
 1. Clone the repository:
    ```
-   git clone <repository-url>
+   git clone https://github.com/GoyBoi/mmwafrika.git
    ```
 
 2. Install dependencies:
@@ -64,12 +64,38 @@ This version includes significant UI/UX improvements:
 - Optimized responsive design for all screen sizes
 - Improved cart and checkout pages with better layouts
 
-## Contributing
+## Pushing to GitHub
 
-1. Fork the repository
-2. Create a new branch for your feature
-3. Make your changes
-4. Submit a pull request
+To push this code to your GitHub repository (https://github.com/GoyBoi/mmwafrika), follow these steps:
+
+1. Make sure you're logged into GitHub in your browser
+
+2. If you have SSH keys set up:
+   ```bash
+   git remote add origin git@github.com:GoyBoi/mmwafrika.git
+   git branch -M main
+   git push -u origin main
+   ```
+
+3. If using HTTPS authentication:
+   ```bash
+   git remote add origin https://github.com/GoyBoi/mmwafrika.git
+   git branch -M main
+   git push -u origin main
+   ```
+   
+   If you get authentication errors, you may need to:
+   - Use a Personal Access Token instead of your password
+   - Configure Git credentials helper:
+     ```bash
+     git config --global credential.helper store
+     ```
+   - Then try pushing again
+
+4. If you continue to have issues, you can also:
+   - Delete the existing remote repository on GitHub
+   - Create a new one (making sure you're logged in as GoyBoi)
+   - Follow the setup instructions provided by GitHub
 
 ## License
 
