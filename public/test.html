@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tailwind CSS Test</title>
+    <script src="/bundle.js" defer></script>
+    <style>
+        .test-element {
+            background-color: red;
+        }
+    </style>
+</head>
+<body>
+    <div id="root"></div>
+    <!-- Test element to verify Tailwind CSS -->
+    <div class="tailwind-test bg-blue-500 text-white p-4 rounded-lg">
+        This should be blue with white text and rounded corners if Tailwind is working
+    </div>
+    <div class="test-element">
+        This should be red if custom CSS is working
+    </div>
+</body>
+</html>

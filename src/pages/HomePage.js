@@ -12,51 +12,59 @@ function HomePage() {
   };
 
   return (
-    <div className="min-h-screen flex flex-col">
+    <div className="min-h-screen flex flex-col bg-gradient-to-b from-warm-gray to-background-white">
       <Navbar />
       <Box 
-        className="flex-grow flex flex-col items-center justify-center text-center bg-gradient-to-b from-purple-900 to-indigo-800"
+        className="flex-grow flex flex-col items-center justify-center text-center"
         sx={{ 
-          padding: { xs: '2rem', sm: '3rem', md: '4rem' },
-          minHeight: 'calc(100vh - 64px)'
+          padding: { xs: '1.5rem', sm: '2rem', md: '3rem' },
+          minHeight: '60vh',
+          maxWidth: '600px',
+          margin: '0 auto'
         }}
       >
+        {/* Hero Headline: 48px, font-weight: 300 (ultra-light) */}
         <Typography 
           variant="h1" 
-          className="font-bold text-white mb-6"
+          className="font-light text-primary-black mb-6 tracking-[0.5px]"
           sx={{ 
-            fontSize: { xs: '2rem', sm: '2.5rem', md: '3rem', lg: '3.5rem' },
-            lineHeight: 1.2
+            fontSize: '3rem',
+            lineHeight: 1.2,
+            color: '#000000',
+            fontWeight: 300
           }}
         >
           Welcome to MMWafrika
         </Typography>
+        {/* Body Text: 14px, font-weight: 400 (normal) */}
         <Typography 
-          variant="h5" 
-          className="max-w-2xl text-indigo-100 mb-10"
+          variant="body1" 
+          className="text-secondary-black mb-8 max-w-lg"
           sx={{ 
-            fontSize: { xs: '1rem', sm: '1.1rem', md: '1.25rem' },
-            lineHeight: 1.6
+            fontSize: '1.125rem',
+            lineHeight: '2rem',
+            color: '#1d1d1f'
           }}
         >
           Your one-stop shop for authentic African fashion and lifestyle products. 
           Discover the beauty and culture of Africa through our curated collection.
         </Typography>
+        {/* Primary Button (CTA) */}
         <Button 
           variant="contained" 
-          color="primary" 
           onClick={handleShopNow}
-          className="text-white font-bold rounded-full shadow-lg transform transition duration-300 hover:scale-105"
+          className="font-medium rounded-lg transition duration-300 bg-primary-black text-background-white hover:bg-secondary-black normal-case tracking-wide shadow-none py-3 px-6"
           sx={{
-            background: 'linear-gradient(45deg, #f59e0b, #ea580c)',
-            padding: '12px 32px',
-            fontSize: '1.1rem',
-            minWidth: '180px',
-            boxShadow: '0 6px 12px rgba(245, 158, 11, 0.3)',
+            backgroundColor: '#000000',
+            color: '#ffffff',
+            padding: '12px 24px',
+            fontSize: '1rem',
+            minWidth: '160px',
+            fontWeight: 500,
+            marginTop: '16px', // 16px margin-top as per PRD
             '&:hover': {
-              background: 'linear-gradient(45deg, #d97706, #c2410c)',
-              boxShadow: '0 8px 16px rgba(245, 158, 11, 0.4)',
-              transform: 'scale(1.05) translateY(-2px)'
+              backgroundColor: '#1d1d1f',
+              color: '#ffffff'
             }
           }}
         >

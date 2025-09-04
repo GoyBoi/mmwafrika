@@ -2,8 +2,18 @@ src/
   app/
     App.js
   components/
+    ProductCard.js
+    ProductDetailModal.js
+    Navbar.js
+    Footer.js
+  context/
+    CartContext.js
   pages/
     HomePage.js
+    ProductListingPage.js
+    ProductDetailPage.js
+    CartPage.js
+    CheckoutPage.js
   index.css
   index.js
   Root.js

@@ -1,0 +1,31 @@
+import React from 'react';
+
+function MinimalProductCard({ product, onViewProduct }) {
+  return (
+    <div 
+      className="product-card-hover cursor-pointer bg-background-white rounded-xl border border-border-gray p-6 w-[280px] h-[320px]"
+      onClick={() => onViewProduct(product.id)}
+    >
+      {/* Image container with fixed aspect ratio - 1:1 with object-fit cover */}
+      <div className="aspect-square w-full flex items-center justify-center bg-warm-gray rounded-lg mb-6">
+        <img 
+          src={product.image} 
+          alt={product.name} 
+          className="object-cover w-full h-full rounded-lg"
+        />
+      </div>
+      
+      {/* Product info with refined typography */}
+      <div className="flex flex-col">
+        <h3 className="text-product-title text-secondary-black font-medium mb-2 tracking-[0.25px] leading-tight truncate">
+          {product.name}
+        </h3>
+        <p className="text-product-price text-secondary-black font-semibold tracking-tight">
+          ${product.price.toFixed(2)}
+        </p>
+      </div>
+    </div>
+  );
+}
+
+export default MinimalProductCard;

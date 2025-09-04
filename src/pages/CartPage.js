@@ -1,5 +1,5 @@
 import React from 'react';
-import { Box, Typography, Grid, Card, CardMedia, CardContent, CardActions, Button, Paper, Table, TableBody, TableCell, TableContainer, TableHead, TableRow, TextField, IconButton } from '@mui/material';
+import { Box, Typography, Button, Paper, Table, TableBody, TableCell, TableContainer, TableHead, TableRow, TextField, IconButton } from '@mui/material';
 import { Delete } from '@mui/icons-material';
 import { useCart } from '../context/CartContext.js';
 import { useNavigate } from 'react-router-dom';
@@ -7,7 +7,7 @@ import Navbar from '../components/Navbar.js';
 import Footer from '../components/Footer.js';
 
 function CartPage() {
-  const { cartItems, totalItems, totalAmount, removeFromCart, updateQuantity, clearCart } = useCart();
+  const { cartItems, removeFromCart, updateQuantity, clearCart, totalAmount } = useCart();
   const navigate = useNavigate();
 
   const handleRemoveFromCart = (productId) => {
@@ -32,29 +32,29 @@ function CartPage() {
   };
 
   return (
-    <div className="flex flex-col min-h-screen">
+    <div className="flex flex-col min-h-screen bg-warm-gray">
       <Navbar showBackButton={true} />
-      <Box className="flex-grow p-4 md:p-6 bg-gray-50">
-        <Typography variant="h4" className="mb-6 text-center font-bold text-gray-800">
+      <Box className="flex-grow p-6 md:p-8">
+        <Typography variant="h2" className="mb-12 text-center font-normal text-secondary-black tracking-[0.5px]">
           Your Cart
         </Typography>
         {cartItems.length === 0 ? (
-          <Box className="text-center py-12">
-            <Typography variant="h6" className="mb-4">Your cart is empty</Typography>
+          <Box className="text-center py-12 bg-background-white rounded-xl shadow-sm p-6">
+            <Typography variant="h6" className="mb-4 text-secondary-black">Your cart is empty</Typography>
             <Button 
-              variant="contained" 
-              color="primary" 
+              variant="outlined" 
               onClick={handleContinueShopping}
-              className="font-semibold rounded-lg transition-all duration-300 transform hover:scale-105"
+              className="font-medium rounded-lg transition-all duration-300 border-border-gray text-secondary-black hover:bg-secondary-black hover:text-background-white normal-case tracking-wide"
               sx={{
-                background: 'linear-gradient(45deg, #7e22ce, #4f46e5)',
+                borderColor: '#d2d2d7',
+                color: '#1d1d1f',
                 padding: '10px 20px',
                 fontSize: '1rem',
-                boxShadow: '0 4px 6px rgba(126, 34, 206, 0.2)',
+                fontWeight: 500,
                 '&:hover': {
-                  background: 'linear-gradient(45deg, #6b21a8, #4338ca)',
-                  boxShadow: '0 6px 8px rgba(126, 34, 206, 0.3)',
-                  transform: 'scale(1.05) translateY(-2px)'
+                  backgroundColor: '#1d1d1f',
+                  color: '#ffffff',
+                  borderColor: '#1d1d1f'
                 }
               }}
             >
@@ -63,52 +63,67 @@ function CartPage() {
           </Box>
         ) : (
           <>
-            <TableContainer component={Paper} className="rounded-xl shadow-lg mb-6 overflow-hidden">
+            <TableContainer 
+              component={Paper} 
+              className="rounded-xl shadow-sm mb-12 overflow-hidden"
+              sx={{
+                backgroundColor: '#ffffff',
+                boxShadow: '0 1px 3px rgba(0,0,0,0.1)'
+              }}
+            >
               <Table>
                 <TableHead>
-                  <TableRow className="bg-gradient-to-r from-purple-500 to-indigo-600">
-                    <TableCell className="text-white font-bold py-4">Product</TableCell>
-                    <TableCell className="text-white font-bold py-4">Price</TableCell>
-                    <TableCell className="text-white font-bold py-4">Quantity</TableCell>
-                    <TableCell className="text-white font-bold py-4">Total</TableCell>
-                    <TableCell className="text-white font-bold py-4">Actions</TableCell>
+                  <TableRow 
+                    className="bg-warm-gray"
+                    sx={{
+                      backgroundColor: '#f5f5f7'
+                    }}
+                  >
+                    <TableCell className="font-normal py-6 text-secondary-black">Product</TableCell>
+                    <TableCell className="font-normal py-6 text-secondary-black">Price</TableCell>
+                    <TableCell className="font-normal py-6 text-secondary-black">Quantity</TableCell>
+                    <TableCell className="font-normal py-6 text-secondary-black">Total</TableCell>
+                    <TableCell className="font-normal py-6 text-secondary-black">Actions</TableCell>
                   </TableRow>
                 </TableHead>
                 <TableBody>
                   {cartItems.map((item) => (
                     <TableRow 
                       key={item.id} 
-                      className="hover:bg-purple-50 transition-colors duration-200"
+                      className="hover:bg-warm-gray transition-colors duration-200"
+                      sx={{
+                        '&:hover': {
+                          backgroundColor: '#fafafa'
+                        }
+                      }}
                     >
                       <TableCell>
                         <Box className="flex items-center">
                           <div 
-                            className="relative rounded overflow-hidden mr-4"
+                            className="relative rounded-lg overflow-hidden mr-6 border border-border-gray"
                             style={{ 
                               width: '80px', 
                               height: '80px',
                               minWidth: '80px'
                             }}
                           >
-                            <CardMedia
-                              component="img"
-                              image={item.image}
+                            <img
+                              src={item.image}
                               alt={item.name}
-                              sx={{
-                                width: '100%',
-                                height: '100%',
-                                objectFit: 'cover',
-                              }}
-                              className="cursor-pointer transition-transform duration-300 hover:scale-110"
+                              className="w-full h-full object-contain p-2 bg-warm-gray cursor-pointer transition-transform duration-300 hover:scale-105"
                               onClick={() => navigate(`/product/${item.id}`)}
                             />
                           </div>
                           <Typography 
-                            className="font-medium cursor-pointer hover:text-indigo-600 transition-colors duration-300" 
+                            className="font-medium cursor-pointer hover:text-secondary-black transition-colors duration-300" 
                             onClick={() => navigate(`/product/${item.id}`)}
                             sx={{
                               fontSize: '1rem',
-                              fontWeight: 500
+                              fontWeight: 500,
+                              color: '#1d1d1f',
+                              '&:hover': {
+                                color: '#000000'
+                              }
                             }}
                           >
                             {item.name}
@@ -119,7 +134,8 @@ function CartPage() {
                         className="font-semibold"
                         sx={{
                           fontSize: '1.1rem',
-                          color: '#4f46e5'
+                          color: '#1d1d1f',
+                          fontWeight: 600
                         }}
                       >
                         ${item.price.toFixed(2)}
@@ -136,7 +152,16 @@ function CartPage() {
                           sx={{
                             width: '80px',
                             '& .MuiOutlinedInput-root': {
-                              borderRadius: '8px'
+                              borderRadius: '8px',
+                              '& fieldset': {
+                                borderColor: '#d2d2d7'
+                              },
+                              '&:hover fieldset': {
+                                borderColor: '#86868b'
+                              },
+                              '&.Mui-focused fieldset': {
+                                borderColor: '#000000'
+                              }
                             }
                           }}
                         />
@@ -144,7 +169,9 @@ function CartPage() {
                       <TableCell 
                         className="font-bold"
                         sx={{
-                          fontSize: '1.1rem'
+                          fontSize: '1.1rem',
+                          color: '#1d1d1f',
+                          fontWeight: 700
                         }}
                       >
                         ${(item.price * item.quantity).toFixed(2)}
@@ -152,11 +179,12 @@ function CartPage() {
                       <TableCell>
                         <IconButton 
                           onClick={() => handleRemoveFromCart(item.id)}
-                          className="text-red-500 hover:bg-red-100 transition-all duration-300 rounded-full"
+                          className="text-secondary-black hover:bg-warm-gray transition-all duration-300 rounded-full"
                           size="large"
                           sx={{
+                            color: '#1d1d1f',
                             '&:hover': {
-                              backgroundColor: 'rgba(239, 68, 68, 0.1)'
+                              backgroundColor: '#e5e5e5'
                             }
                           }}
                         >
@@ -168,21 +196,22 @@ function CartPage() {
                 </TableBody>
               </Table>
             </TableContainer>
-            <Box className="mt-6 md:mt-8 flex flex-col md:flex-row justify-between items-center gap-4">
+            <Box className="mt-12 md:mt-16 flex flex-col md:flex-row justify-between items-center gap-4">
               <Box className="flex flex-wrap gap-2">
                 <Button 
                   variant="outlined" 
                   onClick={handleContinueShopping}
-                  className="font-semibold rounded-lg transition-all duration-300 transform hover:scale-105"
+                  className="font-medium rounded-lg transition-all duration-300 border-border-gray text-secondary-black hover:bg-secondary-black hover:text-background-white normal-case tracking-wide"
                   sx={{
-                    borderColor: '#7e22ce',
-                    color: '#7e22ce',
+                    borderColor: '#d2d2d7',
+                    color: '#1d1d1f',
                     padding: '8px 16px',
                     fontSize: '0.9rem',
+                    fontWeight: 500,
                     '&:hover': {
-                      backgroundColor: 'rgba(126, 34, 206, 0.05)',
-                      borderColor: '#6b21a8',
-                      transform: 'scale(1.05) translateY(-1px)'
+                      backgroundColor: '#1d1d1f',
+                      color: '#ffffff',
+                      borderColor: '#1d1d1f'
                     }
                   }}
                 >
@@ -191,41 +220,41 @@ function CartPage() {
                 <Button 
                   variant="outlined" 
                   onClick={handleClearCart}
-                  className="font-semibold rounded-lg transition-all duration-300 transform hover:scale-105"
+                  className="font-medium rounded-lg transition-all duration-300 border-danger-red text-danger-red hover:bg-danger-red hover:text-background-white normal-case tracking-wide"
                   sx={{
-                    borderColor: '#dc2626',
-                    color: '#dc2626',
+                    borderColor: '#ff3b30',
+                    color: '#ff3b30',
                     padding: '8px 16px',
                     fontSize: '0.9rem',
+                    fontWeight: 500,
                     '&:hover': {
-                      backgroundColor: 'rgba(220, 38, 38, 0.05)',
-                      borderColor: '#b91c1c',
-                      transform: 'scale(1.05) translateY(-1px)'
+                      backgroundColor: '#ff3b30',
+                      color: '#ffffff',
+                      borderColor: '#ff3b30'
                     }
                   }}
                 >
                   Clear Cart
                 </Button>
               </Box>
-              <Box className="flex flex-col sm:flex-row items-center gap-4 md:gap-6">
-                <Typography variant="h6" className="font-bold text-gray-800 text-xl">
-                  Total: <span className="text-indigo-600">${totalAmount.toFixed(2)}</span>
+              <Box className="flex flex-col sm:flex-row items-center gap-4 md:gap-6 bg-background-white p-4 rounded-lg shadow-sm">
+                <Typography variant="h6" className="font-medium text-secondary-black text-xl">
+                  Total: <span className="text-secondary-black font-semibold">${totalAmount.toFixed(2)}</span>
                 </Typography>
                 <Button 
                   variant="contained" 
-                  color="primary"
                   onClick={handleProceedToCheckout}
-                  className="font-semibold rounded-lg transition-all duration-300 transform hover:scale-105"
+                  className="font-medium rounded-lg transition-all duration-300 bg-primary-black text-background-white hover:bg-secondary-black normal-case tracking-wide shadow-none py-3 px-6"
                   sx={{
-                    background: 'linear-gradient(45deg, #10b981, #059669)',
+                    backgroundColor: '#000000',
+                    color: '#ffffff',
                     padding: '10px 24px',
                     fontSize: '1rem',
                     minWidth: '160px',
-                    boxShadow: '0 4px 6px rgba(16, 185, 129, 0.3)',
+                    fontWeight: 500,
                     '&:hover': {
-                      background: 'linear-gradient(45deg, #059669, #047857)',
-                      boxShadow: '0 6px 8px rgba(16, 185, 129, 0.4)',
-                      transform: 'scale(1.05) translateY(-2px)'
+                      backgroundColor: '#1d1d1f',
+                      color: '#ffffff'
                     }
                   }}
                 >

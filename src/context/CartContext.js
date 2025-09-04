@@ -18,7 +18,7 @@ const actionTypes = {
 // Cart reducer
 const cartReducer = (state, action) => {
   switch (action.type) {
-    case actionTypes.ADD_TO_CART:
+    case actionTypes.ADD_TO_CART: {
       const existingItem = state.cartItems.find(item => item.id === action.payload.id);
       
       if (existingItem) {
@@ -47,8 +47,9 @@ const cartReducer = (state, action) => {
           totalAmount: state.totalAmount + action.payload.price,
         };
       }
+    }
       
-    case actionTypes.REMOVE_FROM_CART:
+    case actionTypes.REMOVE_FROM_CART: {
       const itemToRemove = state.cartItems.find(item => item.id === action.payload);
       const updatedCartItems = state.cartItems.filter(item => item.id !== action.payload);
       
@@ -58,8 +59,9 @@ const cartReducer = (state, action) => {
         totalItems: state.totalItems - itemToRemove.quantity,
         totalAmount: state.totalAmount - (itemToRemove.price * itemToRemove.quantity),
       };
+    }
       
-    case actionTypes.UPDATE_QUANTITY:
+    case actionTypes.UPDATE_QUANTITY: {
       const itemToUpdate = state.cartItems.find(item => item.id === action.payload.id);
       const quantityDifference = action.payload.quantity - itemToUpdate.quantity;
       
@@ -75,6 +77,7 @@ const cartReducer = (state, action) => {
         totalItems: state.totalItems + quantityDifference,
         totalAmount: state.totalAmount + (itemToUpdate.price * quantityDifference),
       };
+    }
       
     case actionTypes.CLEAR_CART:
       return initialState;

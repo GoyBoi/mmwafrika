@@ -1,16 +1,19 @@
 import React from 'react';
-import { Box, Typography } from '@mui/material';
 
 function Footer() {
   return (
-    <Box className="bg-gradient-to-r from-purple-800 to-indigo-900 text-white py-6">
-      <Typography variant="body1" className="text-center">
-        © {new Date().getFullYear()} MMWafrika. All rights reserved.
-      </Typography>
-      <Typography variant="body2" className="text-center mt-2 text-indigo-200">
-        Bringing African culture to the world
-      </Typography>
-    </Box>
+    <footer className="bg-white border-t border-gray-100 py-12">
+      <div className="container mx-auto px-6">
+        <div className="text-center">
+          <p className="font-light text-gray-600 text-sm tracking-wide">
+            © {new Date().getFullYear()} MMWAFRIKA. All rights reserved.
+          </p>
+          <p className="font-light text-gray-500 text-xs mt-2 tracking-wide">
+            Celebrating African culture through authentic fashion
+          </p>
+        </div>
+      </div>
+    </footer>
   );
 }
 

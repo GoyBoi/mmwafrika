@@ -1,9 +1,10 @@
 import React, { useState } from 'react';
-import { Box, Typography, Button, Card, CardMedia, CardContent, Snackbar, Alert } from '@mui/material';
+import { Box, Typography, Button, Snackbar, Alert } from '@mui/material';
 import { useNavigate, useParams } from 'react-router-dom';
 import { useCart } from '../context/CartContext.js';
 import Navbar from '../components/Navbar.js';
 import Footer from '../components/Footer.js';
+import ProductDetailModal from '../components/RedesignedProductDetailModal.js';
 
 // Mock product data
 const products = [
@@ -56,6 +57,7 @@ function ProductDetailPage() {
   const navigate = useNavigate();
   const { addToCart } = useCart();
   const [openSnackbar, setOpenSnackbar] = useState(false);
+  const [isModalOpen, setIsModalOpen] = useState(true);
   
   const product = products.find(p => p.id === parseInt(productId));
   
@@ -64,14 +66,27 @@ function ProductDetailPage() {
       <div className="flex flex-col min-h-screen">
         <Navbar showBackButton={true} />
         <Box className="flex-grow p-6 bg-gray-50 min-h-screen">
-          <Typography variant="h4" className="mb-6 text-center font-bold text-gray-800">
+          <Typography variant="h4" className="mb-6 text-center font-bold text-gray-900">
             Product Not Found
           </Typography>
           <Button 
-            variant="contained" 
-            color="primary" 
+            variant="outlined" 
             onClick={() => navigate('/products')}
-            className="bg-gradient-to-r from-purple-600 to-indigo-700 hover:from-purple-700 hover:to-indigo-800 font-semibold py-2 rounded-lg transition-all duration-300 transform hover:scale-105"
+            className="font-semibold py-2 rounded-lg transition-all duration-300 transform hover:scale-105 border-black text-black hover:bg-black hover:text-white"
+            sx={{
+              borderColor: '#000000',
+              color: '#000000',
+              padding: '10px 20px',
+              fontSize: '1rem',
+              fontWeight: 600,
+              '&:hover': {
+                backgroundColor: '#000000',
+                color: '#ffffff',
+                borderColor: '#000000',
+                transform: 'scale(1.05) translateY(-1px)',
+                boxShadow: '0 2px 4px rgba(0, 0, 0, 0.1)'
+              }
+            }}
           >
             Back to Products
           </Button>
@@ -93,47 +108,23 @@ function ProductDetailPage() {
     setOpenSnackbar(false);
   };
 
+  const handleCloseModal = () => {
+    setIsModalOpen(false);
+    navigate('/products');
+  };
+
   return (
-    <div className="flex flex-col min-h-screen">
+    <div className="flex flex-col min-h-screen bg-gray-50">
       <Navbar showBackButton={true} />
-      <Box className="flex-grow p-6 bg-gray-50 min-h-screen">
-        <Card className="max-w-4xl mx-auto rounded-2xl overflow-hidden shadow-2xl">
-          <div style={{ position: 'relative', width: '100%', paddingBottom: '100%' }}>
-            <CardMedia
-              component="img"
-              image={product.image}
-              alt={product.name}
-              style={{
-                position: 'absolute',
-                top: 0,
-                left: 0,
-                width: '100%',
-                height: '100%',
-                objectFit: 'contain',
-                padding: '1rem',
-              }}
-            />
-          </div>
-          <CardContent className="p-6">
-            <Typography variant="h4" className="font-bold text-gray-800 mb-2">
-              {product.name}
-            </Typography>
-            <Typography variant="h5" className="text-indigo-600 font-semibold mb-4">
-              ${product.price.toFixed(2)}
-            </Typography>
-            <Typography variant="body1" className="text-gray-600 mb-6 leading-relaxed">
-              {product.description}
-            </Typography>
-            <Button 
-              variant="contained" 
-              color="primary" 
-              onClick={handleAddToCart}
-              className="bg-gradient-to-r from-purple-600 to-indigo-700 hover:from-purple-700 hover:to-indigo-800 font-semibold py-3 px-6 rounded-lg transition-all duration-300 transform hover:scale-105"
-            >
-              Add to Cart
-            </Button>
-          </CardContent>
-        </Card>
+      <Box className="flex-grow p-6 min-h-screen">
+        {/* Product Detail Modal */}
+        {isModalOpen && (
+          <ProductDetailModal 
+            product={product} 
+            onClose={handleCloseModal} 
+            onAddToCart={handleAddToCart} 
+          />
+        )}
       </Box>
       <Footer />
       <Snackbar open={openSnackbar} autoHideDuration={3000} onClose={handleCloseSnackbar}>

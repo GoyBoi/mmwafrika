@@ -26,7 +26,21 @@ export default {
       },
       {
         test: /\.css$/,
-        use: ['style-loader', 'css-loader', 'postcss-loader'],
+        use: [
+          'style-loader',
+          'css-loader',
+          {
+            loader: 'postcss-loader',
+            options: {
+              postcssOptions: {
+                plugins: [
+                  ['tailwindcss'],
+                  ['autoprefixer'],
+                ],
+              },
+            },
+          },
+        ],
       },
       {
         test: /\.(png|jpg|jpeg|gif|svg)$/i,
@@ -58,7 +72,7 @@ export default {
       },
     ],
     compress: true,
-    port: 3000,
+    port: 3001,
     historyApiFallback: true,
   },
   resolve: {
