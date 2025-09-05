@@ -3,7 +3,7 @@ import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card.j
 import { Button } from '@/components/ui/button.jsx';
 import { Label } from '@/components/ui/label.jsx';
 import { Checkbox } from '@/components/ui/checkbox.jsx';
-import { Input } from '../../FormComponents.js';
+import { Input } from '../FormComponents.js';
 
 const GuestCheckout = ({ onGuestCheckout, onAccountCheckout }) => {
   const [isGuest, setIsGuest] = useState(true);
