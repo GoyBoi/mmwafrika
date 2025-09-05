@@ -4,11 +4,18 @@ import { useCart } from '../context/CartContext.js';
 import { useNavigate } from 'react-router-dom';
 import Navbar from '../components/Navbar.js';
 import Footer from '../components/Footer.js';
+import CheckoutProgress from '../components/cart/CheckoutProgress.js';
+import TrustBadges from '../components/cart/TrustBadges.js';
+import GuestCheckout from '../components/cart/GuestCheckout.js';
+import OrderSummary from '../components/cart/OrderSummary.js';
+import LoyaltyEnrollment from '../components/cart/LoyaltyEnrollment.js';
 
 function CheckoutPage() {
   const { cartItems, clearCart } = useCart();
   const navigate = useNavigate();
   const [activeStep, setActiveStep] = useState(0);
+  const [isGuestCheckout, setIsGuestCheckout] = useState(true);
+  const [isLoyaltyEnrolled, setIsLoyaltyEnrolled] = useState(false);
   
   // Form state for shipping information
   const [shippingInfo, setShippingInfo] = useState({
@@ -63,6 +70,32 @@ function CheckoutPage() {
 
   const handleContinueShopping = () => {
     navigate('/products');
+  };
+
+  const handleGuestCheckout = (guestInfo) => {
+    // Set the email from guest info
+    setShippingInfo(prev => ({
+      ...prev,
+      email: guestInfo.email
+    }));
+    setIsGuestCheckout(true);
+    handleNext();
+  };
+
+  const handleAccountCheckout = () => {
+    // In a real application, this would redirect to login/signup
+    alert('Redirecting to account login/signup...');
+    setIsGuestCheckout(false);
+  };
+
+  const handleEnrollInLoyalty = () => {
+    setIsLoyaltyEnrolled(true);
+    alert('Thank you for enrolling in MMWafrika Rewards!');
+  };
+
+  const handleApplyPromo = (code, discount) => {
+    // In a real application, this would update the order total
+    console.log(`Applied promo code ${code} for ${discount.toFixed(2)} discount`);
   };
 
   const getTotalPrice = () => {
@@ -370,59 +403,19 @@ function CheckoutPage() {
               
               <Typography variant="h6" className="mb-6 font-normal text-secondary-black tracking-[0.25px]">Payment Method</Typography>
               <Typography className="text-secondary-black">Card ending in {paymentInfo.cardNumber.slice(-4)}</Typography>
+              
+              <LoyaltyEnrollment 
+                onEnroll={handleEnrollInLoyalty}
+                isEnrolled={isLoyaltyEnrolled}
+              />
             </Box>
             <Box>
-              <Typography variant="h6" className="mb-6 font-normal text-secondary-black tracking-[0.25px]">Order Summary</Typography>
-              <TableContainer component={Paper} className="rounded-lg shadow-sm">
-                <Table>
-                  <TableBody>
-                    {cartItems.map((item) => (
-                      <TableRow key={item.id}>
-                        <TableCell>
-                          <Box className="flex items-center">
-                            <div className="relative mr-3 rounded-lg overflow-hidden border border-border-gray" style={{ width: '50px', height: '50px' }}>
-                              <img
-                                src={item.image}
-                                alt={item.name}
-                                className="w-full h-full object-contain p-1 bg-warm-gray"
-                              />
-                            </div>
-                            <div>
-                              <Typography sx={{ fontSize: '0.9rem', color: '#1d1d1f' }}>{item.name}</Typography>
-                              <Typography sx={{ fontSize: '0.8rem', color: '#86868b' }}>
-                                Qty: {item.quantity}
-                              </Typography>
-                            </div>
-                          </Box>
-                        </TableCell>
-                        <TableCell align="right">
-                          <Typography sx={{ fontSize: '0.9rem', color: '#1d1d1f', fontWeight: 500 }}>${(item.price * item.quantity).toFixed(2)}</Typography>
-                        </TableCell>
-                      </TableRow>
-                    ))}
-                    <TableRow>
-                      <TableCell colSpan={2}>
-                        <Box className="flex justify-between">
-                          <Typography className="font-normal text-secondary-black">Subtotal</Typography>
-                          <Typography className="font-normal text-secondary-black">${getTotalPrice().toFixed(2)}</Typography>
-                        </Box>
-                        <Box className="flex justify-between mt-3">
-                          <Typography className="text-secondary-black">Shipping</Typography>
-                          <Typography className="text-secondary-black">$5.99</Typography>
-                        </Box>
-                        <Box className="flex justify-between mt-3">
-                          <Typography className="text-secondary-black">Tax</Typography>
-                          <Typography className="text-secondary-black">${(getTotalPrice() * 0.08).toFixed(2)}</Typography>
-                        </Box>
-                        <Box className="flex justify-between mt-4 pt-4" sx={{ borderTop: '1px solid #d2d2d7' }}>
-                          <Typography className="font-semibold text-secondary-black">Total</Typography>
-                          <Typography className="font-semibold text-secondary-black">${(getTotalPrice() + 5.99 + (getTotalPrice() * 0.08)).toFixed(2)}</Typography>
-                        </Box>
-                      </TableCell>
-                    </TableRow>
-                  </TableBody>
-                </Table>
-              </TableContainer>
+              <OrderSummary 
+                cartItems={cartItems}
+                onApplyPromo={handleApplyPromo}
+                showPromoCode={true}
+                showEditCart={false}
+              />
             </Box>
           </Box>
         );
@@ -439,55 +432,17 @@ function CheckoutPage() {
           Checkout
         </Typography>
         
-        <Stepper 
-          activeStep={activeStep} 
-          alternativeLabel 
-          className="mb-16 hidden md:flex"
-          sx={{
-            '& .MuiStepIcon-root.Mui-active': {
-              color: '#000000'
-            },
-            '& .MuiStepIcon-root.Mui-completed': {
-              color: '#000000'
-            },
-            '& .MuiStepLabel-label.Mui-active': {
-              color: '#000000',
-              fontWeight: 500
-            }
-          }}
-        >
-          {steps.map((label) => (
-            <Step key={label}>
-              <StepLabel>
-                <span className="font-normal text-secondary-black tracking-[0.25px]">{label}</span>
-              </StepLabel>
-            </Step>
-          ))}
-        </Stepper>
+        <TrustBadges />
         
-        {/* Mobile version of stepper */}
-        <Box className="md:hidden mb-12">
-          {steps.map((label, index) => (
-            <Box 
-              key={label} 
-              className={`p-6 mb-3 rounded-lg ${index === activeStep ? 'bg-warm-gray border-l-4 border-primary-black' : 'bg-background-white'}`}
-              sx={{
-                backgroundColor: index === activeStep ? '#f5f5f7' : '#ffffff',
-                borderLeft: index === activeStep ? '4px solid #000000' : 'none'
-              }}
-            >
-              <Typography 
-                className={`font-normal ${index === activeStep ? 'text-primary-black' : 'text-cool-gray'}`}
-                sx={{
-                  color: index === activeStep ? '#000000' : '#86868b',
-                  fontWeight: index === activeStep ? 500 : 400
-                }}
-              >
-                {label}
-              </Typography>
-            </Box>
-          ))}
-        </Box>
+        <CheckoutProgress currentStep={activeStep} onStepChange={setActiveStep} />
+        
+        {/* Guest checkout option for first step */}
+        {activeStep === 0 && (
+          <GuestCheckout 
+            onGuestCheckout={handleGuestCheckout}
+            onAccountCheckout={handleAccountCheckout}
+          />
+        )}
         
         {cartItems.length === 0 ? (
           <Box className="text-center py-16 bg-background-white rounded-xl shadow-sm p-6">
