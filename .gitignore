@@ -67,3 +67,8 @@ test_*.mjs
 
 # Logs directory
 logs/
+
+# Test HTML files
+*test*.html
+*verification*.html
+*complete*.html
