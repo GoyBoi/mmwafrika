@@ -56,3 +56,14 @@ test_*.mjs
 *responsive_*.png
 *website_screenshot.png
 *fixed.png
+
+# Additional screenshots
+*screenshot*.png
+*hero_section*.png
+*button*.png
+
+# Qwen configuration
+.qwen/
+
+# Logs directory
+logs/

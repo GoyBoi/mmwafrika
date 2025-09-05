@@ -1,12 +1,12 @@
 import React, { useState } from 'react';
-import { Box, Typography, Button, Paper, Table, TableBody, TableCell, TableContainer, TableHead, TableRow, TextField, Stepper, Step, StepLabel } from '@mui/material';
+import { Box, Typography, Button, Paper, Table, TableBody, TableCell, TableContainer, TableRow, TextField, Stepper, Step, StepLabel } from '@mui/material';
 import { useCart } from '../context/CartContext.js';
 import { useNavigate } from 'react-router-dom';
 import Navbar from '../components/Navbar.js';
 import Footer from '../components/Footer.js';
 
 function CheckoutPage() {
-  const { cartItems, clearCart, totalAmount } = useCart();
+  const { cartItems, clearCart } = useCart();
   const navigate = useNavigate();
   const [activeStep, setActiveStep] = useState(0);
   

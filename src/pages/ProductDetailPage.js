@@ -127,8 +127,38 @@ function ProductDetailPage() {
         )}
       </Box>
       <Footer />
-      <Snackbar open={openSnackbar} autoHideDuration={3000} onClose={handleCloseSnackbar}>
-        <Alert onClose={handleCloseSnackbar} severity="success" sx={{ width: '100%' }}>
+      <Snackbar 
+        open={openSnackbar} 
+        autoHideDuration={3000} 
+        onClose={handleCloseSnackbar}
+        anchorOrigin={{ vertical: 'bottom', horizontal: 'right' }}
+        sx={{
+          '& .MuiSnackbarContent-root': {
+            background: 'white',
+            color: '#1d1d1f',
+            boxShadow: '0 4px 12px rgba(0,0,0,0.08)',
+            borderRadius: '12px',
+            fontWeight: 400,
+            fontSize: '0.95rem',
+            border: '1px solid #f0f0f0',
+            minWidth: '300px'
+          }
+        }}
+      >
+        <Alert 
+          onClose={handleCloseSnackbar} 
+          severity="success" 
+          sx={{ 
+            width: '100%',
+            background: 'transparent',
+            color: '#1d1d1f',
+            fontWeight: 400,
+            fontSize: '0.95rem',
+            padding: '0px'
+          }}
+          variant="filled"
+          icon={false}
+        >
           {product.name} added to cart!
         </Alert>
       </Snackbar>

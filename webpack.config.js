@@ -64,7 +64,7 @@ export default {
   devServer: {
     static: [
       {
-        directory: path.join(__dirname, 'dist'),
+        directory: path.join(__dirname, 'public'),
       },
       {
         directory: path.join(__dirname, 'products_and_logo'),
@@ -72,10 +72,15 @@ export default {
       },
     ],
     compress: true,
-    port: 3001,
+    port: 3003,
     historyApiFallback: true,
   },
   resolve: {
     extensions: ['.js', '.jsx'],
+    alias: {
+      '@components': path.resolve(__dirname, 'src/components'),
+      '@pages': path.resolve(__dirname, 'src/pages'),
+      '@utils': path.resolve(__dirname, 'src/utils'),
+    },
   },
 };

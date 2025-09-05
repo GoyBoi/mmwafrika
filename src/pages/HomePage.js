@@ -1,76 +1,197 @@
-import React from 'react';
-import { Box, Typography, Button } from '@mui/material';
+import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import Navbar from '../components/Navbar.js';
 import Footer from '../components/Footer.js';
+import ProductCarousel from '../components/ProductCarousel.js';
+import BestSellersSection from '../components/BestSellersSection.js';
+import LimitedTimeOffersSection from '../components/LimitedTimeOffersSection.js';
+import EmailSignupForm from '../components/EmailSignupForm.js';
+import CuratorsPicksSection from '../components/CuratorsPicksSection.js';
+import SocialProofSection from '../components/SocialProofSection.js';
+import Button from '../components/Button.js';
+
+// Mock product data with additional properties for our new features
+const products = [
+  {
+    id: 1,
+    name: 'African Print Dress',
+    price: 29.99,
+    image: '/products_and_logo/1000006827.jpg',
+    description: 'Beautiful traditional African print dress made from high-quality fabric. Perfect for any occasion.',
+    isNew: true,
+    addedDate: new Date(Date.now() - 2 * 24 * 60 * 60 * 1000), // Added 2 days ago
+    salesCount: 128
+  },
+  {
+    id: 2,
+    name: 'Handwoven Basket',
+    price: 39.99,
+    image: '/products_and_logo/1000006833.jpg',
+    description: 'Handcrafted basket made by skilled artisans using traditional techniques. Great for storage or decoration.',
+    isNew: false,
+    salesCount: 96
+  },
+  {
+    id: 3,
+    name: 'Wooden Sculpture',
+    price: 19.99,
+    image: '/products_and_logo/1000006880.jpg',
+    description: 'Intricately carved wooden sculpture representing African culture and heritage.',
+    isNew: true,
+    addedDate: new Date(Date.now() - 1 * 24 * 60 * 60 * 1000), // Added 1 day ago
+    salesCount: 75
+  },
+  {
+    id: 4,
+    name: 'Kente Cloth',
+    price: 49.99,
+    image: '/products_and_logo/1000006881.jpg',
+    description: 'Authentic Kente cloth made in Ghana. Each pattern has a special meaning and significance.',
+    isNew: false,
+    salesCount: 210
+  },
+  {
+    id: 5,
+    name: 'Beaded Jewelry Set',
+    price: 59.99,
+    image: '/products_and_logo/1000006886.jpg',
+    description: 'Beautiful set of beaded jewelry including necklace, earrings, and bracelet. Handmade with vibrant colors.',
+    isNew: false,
+    salesCount: 187
+  },
+  {
+    id: 6,
+    name: 'Traditional Mask',
+    price: 69.99,
+    image: '/products_and_logo/1000016728.jpg',
+    description: 'Traditional African mask used in ceremonies and cultural events. Made from authentic materials.',
+    isNew: true,
+    addedDate: new Date(Date.now() - 5 * 24 * 60 * 60 * 1000), // Added 5 days ago
+    salesCount: 64
+  }
+];
+
+// Mock limited time offers data
+const limitedTimeOffers = [
+  {
+    title: 'Summer Collection Sale',
+    description: 'Up to 50% off on selected items',
+    discount: '50%',
+    endTime: new Date(Date.now() + 3 * 24 * 60 * 60 * 1000), // 3 days from now
+    products: [products[0], products[1]]
+  },
+  {
+    title: 'New Arrivals Special',
+    description: '25% off all new arrivals',
+    discount: '25%',
+    endTime: new Date(Date.now() + 5 * 24 * 60 * 60 * 1000), // 5 days from now
+    products: [products[2], products[5]]
+  }
+];
 
 function HomePage() {
   const navigate = useNavigate();
-
+  const [selectedProduct, setSelectedProduct] = useState(null);
+  
   const handleShopNow = () => {
     navigate('/products');
   };
 
+  const handleViewProduct = (productId) => {
+    navigate(`/product/${productId}`);
+  };
+
   return (
-    <div className="min-h-screen flex flex-col bg-gradient-to-b from-warm-gray to-background-white">
+    <div className="min-h-screen flex flex-col bg-white">
       <Navbar />
-      <Box 
-        className="flex-grow flex flex-col items-center justify-center text-center"
-        sx={{ 
-          padding: { xs: '1.5rem', sm: '2rem', md: '3rem' },
-          minHeight: '60vh',
-          maxWidth: '600px',
-          margin: '0 auto'
-        }}
-      >
-        {/* Hero Headline: 48px, font-weight: 300 (ultra-light) */}
-        <Typography 
-          variant="h1" 
-          className="font-light text-primary-black mb-6 tracking-[0.5px]"
-          sx={{ 
-            fontSize: '3rem',
-            lineHeight: 1.2,
-            color: '#000000',
-            fontWeight: 300
-          }}
-        >
-          Welcome to MMWafrika
-        </Typography>
-        {/* Body Text: 14px, font-weight: 400 (normal) */}
-        <Typography 
-          variant="body1" 
-          className="text-secondary-black mb-8 max-w-lg"
-          sx={{ 
-            fontSize: '1.125rem',
-            lineHeight: '2rem',
-            color: '#1d1d1f'
-          }}
-        >
-          Your one-stop shop for authentic African fashion and lifestyle products. 
-          Discover the beauty and culture of Africa through our curated collection.
-        </Typography>
-        {/* Primary Button (CTA) */}
-        <Button 
-          variant="contained" 
-          onClick={handleShopNow}
-          className="font-medium rounded-lg transition duration-300 bg-primary-black text-background-white hover:bg-secondary-black normal-case tracking-wide shadow-none py-3 px-6"
-          sx={{
-            backgroundColor: '#000000',
-            color: '#ffffff',
-            padding: '12px 24px',
-            fontSize: '1rem',
-            minWidth: '160px',
-            fontWeight: 500,
-            marginTop: '16px', // 16px margin-top as per PRD
-            '&:hover': {
-              backgroundColor: '#1d1d1f',
-              color: '#ffffff'
-            }
-          }}
-        >
-          Shop Now
-        </Button>
-      </Box>
+      
+      {/* Hero Section */}
+      <div className="relative bg-gradient-to-r from-amber-50 to-orange-50 overflow-hidden">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="flex flex-col lg:flex-row items-center py-16 md:py-24">
+            {/* Text Content */}
+            <div className="lg:w-1/2 lg:pr-12 text-center lg:text-left mb-12 lg:mb-0">
+              <h1 className="text-4xl md:text-5xl lg:text-6xl font-extrabold text-gray-900 tracking-tight mb-6">
+                <span className="block">Discover Authentic</span>
+                <span className="block text-amber-600 mt-2">African Fashion</span>
+              </h1>
+              <p className="text-lg md:text-xl text-gray-600 max-w-2xl mx-auto lg:mx-0 mb-10">
+                Experience the rich heritage and vibrant culture of Africa through our curated collection of traditional clothing, accessories, and artisan crafts.
+              </p>
+              <div className="flex justify-center lg:justify-start mt-2">
+                <Button
+                  onClick={handleShopNow}
+                  variant="accent"
+                  size="lg"
+                  style={{ 
+                    minWidth: '200px',
+                    fontWeight: 'bold',
+                    fontSize: '16px',
+                    position: 'relative',
+                    zIndex: '10',
+                    boxShadow: '0 4px 6px -1px rgba(0, 0, 0, 0.1)'
+                  }}
+                >
+                  Shop Now
+                </Button>
+              </div>
+            </div>
+            
+            {/* Image */}
+            <div className="lg:w-1/2 w-full">
+              <div className="rounded-2xl overflow-hidden shadow-xl">
+                <img
+                  className="w-full h-auto object-cover"
+                  src="/products_and_logo/1000006827.jpg"
+                  alt="African fashion collection"
+                />
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      {/* Featured Products Carousel */}
+      <div className="py-12 bg-white">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="text-center mb-10">
+            <h2 className="text-3xl font-bold text-gray-900 mb-2">Featured Products</h2>
+            <p className="text-gray-600">Handpicked selections from our collection</p>
+            <div className="w-20 h-1 bg-gradient-to-r from-amber-500 to-orange-500 mx-auto mt-4 rounded-full"></div>
+          </div>
+          <ProductCarousel 
+            products={products.slice(0, 3)} 
+            onAddToCart={(product) => console.log('Add to cart:', product)} 
+            onViewProduct={handleViewProduct} 
+          />
+        </div>
+      </div>
+
+      {/* Limited Time Offers */}
+      <div className="py-8">
+        <LimitedTimeOffersSection offers={limitedTimeOffers} onViewProduct={handleViewProduct} />
+      </div>
+
+      {/* Best Sellers */}
+      <div className="py-8">
+        <BestSellersSection products={products} onViewProduct={handleViewProduct} />
+      </div>
+
+      {/* Curator's Picks */}
+      <div className="py-8">
+        <CuratorsPicksSection onViewProduct={handleViewProduct} />
+      </div>
+
+      {/* Social Proof */}
+      <div className="py-8">
+        <SocialProofSection />
+      </div>
+
+      {/* Email Signup */}
+      <div className="py-12 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <EmailSignupForm />
+      </div>
+
       <Footer />
     </div>
   );
