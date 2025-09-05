@@ -17,18 +17,23 @@ const QuickViewModal = ({ product, isOpen, onClose, onAddToCart }) => {
     product.image
   ];
   
-  // Mock product sizes (in a real app, this would come from the product data)
-  const productSizes = ['XS', 'S', 'M', 'L', 'XL', 'XXL'];
+  // Use actual product sizes if available, otherwise use mock sizes
+  const productSizes = product.size && product.size.length > 0 
+    ? product.size 
+    : ['XS', 'S', 'M', 'L', 'XL', 'XXL'];
   
   const handleAddToCart = () => {
-    if (!selectedSize) {
-      alert('Please select a size');
-      return;
+    // Only require size selection for products that have sizes defined
+    if (product.size && product.size.length > 0 && product.size[0] !== 'one-size') {
+      if (!selectedSize) {
+        alert('Please select a size');
+        return;
+      }
     }
     
     const productToAdd = {
       ...product,
-      selectedSize,
+      ...(selectedSize && { selectedSize }), // Only add selectedSize if it exists
       quantity
     };
     
@@ -106,24 +111,26 @@ const QuickViewModal = ({ product, isOpen, onClose, onAddToCart }) => {
                 <p className="text-gray-600 mb-6">{product.description}</p>
                 
                 {/* Size Selection */}
-                <div className="mb-6">
-                  <h3 className="text-sm font-medium text-gray-900 mb-2">Size</h3>
-                  <div className="flex flex-wrap gap-2">
-                    {productSizes.map(size => (
-                      <button
-                        key={size}
-                        onClick={() => setSelectedSize(size)}
-                        className={`px-4 py-2 text-sm rounded-md border ${
-                          selectedSize === size 
-                            ? 'bg-amber-600 text-white border-amber-600' 
-                            : 'bg-white text-gray-700 border-gray-300 hover:bg-gray-50'
-                        }`}
-                      >
-                        {size}
-                      </button>
-                    ))}
+                {product.size && product.size.length > 0 && product.size[0] !== 'one-size' && (
+                  <div className="mb-6">
+                    <h3 className="text-sm font-medium text-gray-900 mb-2">Size</h3>
+                    <div className="flex flex-wrap gap-2">
+                      {productSizes.map(size => (
+                        <button
+                          key={size}
+                          onClick={() => setSelectedSize(size)}
+                          className={`px-4 py-2 text-sm rounded-md border ${
+                            selectedSize === size 
+                              ? 'bg-amber-600 text-white border-amber-600' 
+                              : 'bg-white text-gray-700 border-gray-300 hover:bg-gray-50'
+                          }`}
+                        >
+                          {size}
+                        </button>
+                      ))}
+                    </div>
                   </div>
-                </div>
+                )}
                 
                 {/* Quantity */}
                 <div className="mb-6">

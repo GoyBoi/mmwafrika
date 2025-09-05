@@ -7,6 +7,8 @@ const HomePage = React.lazy(() => import('../pages/HomePage.js'));
 const EnhancedProductDetailPage = React.lazy(() => import('../pages/EnhancedProductDetailPage.js'));
 const RedesignedProductListingPage = React.lazy(() => import('../pages/RedesignedProductListingPage.js'));
 const ComponentShowcasePage = React.lazy(() => import('../pages/ComponentShowcasePage.js'));
+const CartPage = React.lazy(() => import('../pages/CartPage.js'));
+const CheckoutPage = React.lazy(() => import('../pages/CheckoutPage.js'));
 
 // Loading fallback component
 const LoadingFallback = () => (
@@ -26,6 +28,8 @@ function App() {
               <Route path="/product/:productId" element={<EnhancedProductDetailPage />} />
               <Route path="/products" element={<RedesignedProductListingPage />} />
               <Route path="/components" element={<ComponentShowcasePage />} />
+              <Route path="/cart" element={<CartPage />} />
+              <Route path="/checkout" element={<CheckoutPage />} />
             </Routes>
           </Suspense>
         </div>

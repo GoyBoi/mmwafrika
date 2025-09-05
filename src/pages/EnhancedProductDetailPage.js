@@ -24,7 +24,7 @@ const products = [
     description: 'Beautiful traditional African print dress made from high-quality fabric. Perfect for any occasion.',
     rating: 4.5,
     reviewCount: 128,
-    sizes: ['XS', 'S', 'M', 'L', 'XL'],
+    size: ['XS', 'S', 'M', 'L', 'XL'],
     inventory: 3,
     category: 'Dresses',
     colors: ['Multi', 'Blue', 'Red'],
@@ -44,7 +44,7 @@ const products = [
     description: 'Handcrafted basket made by skilled artisans using traditional techniques. Great for storage or decoration.',
     rating: 4.8,
     reviewCount: 96,
-    sizes: ['One Size'],
+    size: ['One Size'],
     inventory: 8,
     category: 'Home',
     colors: ['Natural'],
@@ -65,7 +65,7 @@ const products = [
     description: 'Intricately carved wooden sculpture representing African culture and heritage.',
     rating: 4.3,
     reviewCount: 74,
-    sizes: ['One Size'],
+    size: ['One Size'],
     inventory: 12,
     category: 'Home',
     colors: ['Brown'],
@@ -105,7 +105,7 @@ const products = [
     description: 'Beautiful set of beaded jewelry including necklace, earrings, and bracelet. Handmade with vibrant colors.',
     rating: 4.7,
     reviewCount: 89,
-    sizes: ['One Size'],
+    size: ['One Size'],
     inventory: 7,
     category: 'Accessories',
     colors: ['Multi'],
@@ -225,20 +225,22 @@ function EnhancedProductDetailPage() {
   }
 
   const handleAddToCart = () => {
-    if (!selectedSize) {
-      alert('Please select a size');
-      return;
+    // Only require size selection for products that have sizes defined
+    if (product.size && product.size.length > 0 && product.size[0] !== 'one-size') {
+      if (!selectedSize) {
+        alert('Please select a size');
+        return;
+      }
     }
     
     const productToAdd = {
       ...product,
-      selectedSize,
+      ...(selectedSize && { selectedSize }), // Only add selectedSize if it exists
       quantity
     };
     
     addToCart(productToAdd);
     // Show success message or redirect to cart
-    alert(`${product.name} added to cart!`);
   };
 
   const handleImageClick = () => {
@@ -387,34 +389,36 @@ function EnhancedProductDetailPage() {
               
               <form className="mt-6">
                 {/* Size selection */}
-                <div>
-                  <h3 className="text-sm text-gray-900 font-medium">Size</h3>
-                  <div className="mt-2 flex items-center">
-                    <div className="grid grid-cols-5 gap-2 sm:grid-cols-3">
-                      {product.sizes.map((size) => (
-                        <button
-                          key={size}
-                          type="button"
-                          onClick={() => setSelectedSize(size)}
-                          className={`py-2 px-3 border rounded-md text-sm font-medium uppercase focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-amber-500 ${
-                            selectedSize === size
-                              ? 'bg-amber-500 border-amber-500 text-white'
-                              : 'bg-white border-gray-200 text-gray-900 hover:bg-gray-50'
-                          }`}
-                        >
-                          {size}
-                        </button>
-                      ))}
+                {product.size && product.size.length > 0 && product.size[0] !== 'one-size' && (
+                  <div>
+                    <h3 className="text-sm text-gray-900 font-medium">Size</h3>
+                    <div className="mt-2 flex items-center">
+                      <div className="grid grid-cols-5 gap-2 sm:grid-cols-3">
+                                              {product.size.map((size) => (
+                          <button
+                            key={size}
+                            type="button"
+                            onClick={() => setSelectedSize(size)}
+                            className={`py-2 px-3 border rounded-md text-sm font-medium uppercase focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-amber-500 ${
+                              selectedSize === size
+                                ? 'bg-amber-500 border-amber-500 text-white'
+                                : 'bg-white border-gray-200 text-gray-900 hover:bg-gray-50'
+                            }`}
+                          >
+                            {size}
+                          </button>
+                        ))}
+                      </div>
+                      <button
+                        type="button"
+                        onClick={() => setShowSizeGuide(true)}
+                        className="ml-4 text-sm font-medium text-amber-600 hover:text-amber-500"
+                      >
+                        Size guide
+                      </button>
                     </div>
-                    <button
-                      type="button"
-                      onClick={() => setShowSizeGuide(true)}
-                      className="ml-4 text-sm font-medium text-amber-600 hover:text-amber-500"
-                    >
-                      Size guide
-                    </button>
                   </div>
-                </div>
+                )}
                 
                 {/* Quantity */}
                 <div className="mt-6">
