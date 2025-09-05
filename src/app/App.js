@@ -1,8 +1,12 @@
 import React, { Suspense } from 'react';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
+import { CartProvider } from '../context/CartContext.js';
 
 // Lazy load components
 const HomePage = React.lazy(() => import('../pages/HomePage.js'));
+const EnhancedProductDetailPage = React.lazy(() => import('../pages/EnhancedProductDetailPage.js'));
+const RedesignedProductListingPage = React.lazy(() => import('../pages/RedesignedProductListingPage.js'));
+const ComponentShowcasePage = React.lazy(() => import('../pages/ComponentShowcasePage.js'));
 
 // Loading fallback component
 const LoadingFallback = () => (
@@ -13,13 +17,20 @@ const LoadingFallback = () => (
 
 function App() {
   return (
-    <div className="App bg-white">
-      <Suspense fallback={<LoadingFallback />}>
-        <Routes>
-          <Route path="/" element={<HomePage />} />
-        </Routes>
-      </Suspense>
-    </div>
+    <Router>
+      <CartProvider>
+        <div className="App bg-white">
+          <Suspense fallback={<LoadingFallback />}>
+            <Routes>
+              <Route path="/" element={<HomePage />} />
+              <Route path="/product/:productId" element={<EnhancedProductDetailPage />} />
+              <Route path="/products" element={<RedesignedProductListingPage />} />
+              <Route path="/components" element={<ComponentShowcasePage />} />
+            </Routes>
+          </Suspense>
+        </div>
+      </CartProvider>
+    </Router>
   );
 }
 
