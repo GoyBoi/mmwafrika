@@ -1,12 +1,4 @@
 import React from 'react';
-import { 
-  Breadcrumb, 
-  BreadcrumbItem, 
-  BreadcrumbLink, 
-  BreadcrumbList, 
-  BreadcrumbPage, 
-  BreadcrumbSeparator 
-} from '@/components/ui/breadcrumb.jsx';
 
 const CheckoutProgress = ({ currentStep, onStepChange }) => {
   const steps = [
@@ -19,39 +11,40 @@ const CheckoutProgress = ({ currentStep, onStepChange }) => {
 
   return (
     <div className="mb-8">
-      <Breadcrumb>
-        <BreadcrumbList>
-          {steps.map((step, index) => (
-            <React.Fragment key={step.id}>
-              <BreadcrumbItem>
-                {step.id < currentStep ? (
-                  <BreadcrumbLink 
-                    href={step.path} 
-                    onClick={(e) => {
-                      e.preventDefault();
-                      if (onStepChange) onStepChange(step.id);
-                    }}
-                    className="text-amber-600 hover:text-amber-700"
-                  >
-                    {step.label}
-                  </BreadcrumbLink>
-                ) : step.id === currentStep ? (
-                  <BreadcrumbPage className="font-semibold text-gray-900">
-                    {step.label}
-                  </BreadcrumbPage>
-                ) : (
-                  <span className="text-gray-400">
-                    {step.label}
-                  </span>
-                )}
-              </BreadcrumbItem>
-              {index < steps.length - 1 && <BreadcrumbSeparator />}
-            </React.Fragment>
-          ))}
-        </BreadcrumbList>
-      </Breadcrumb>
+      {/* Desktop progress indicator */}
+      <div className="hidden md:flex justify-between mb-4">
+        {steps.map((step, index) => (
+          <div key={step.id} className="flex items-center">
+            <div 
+              className={`w-8 h-8 rounded-full flex items-center justify-center text-sm font-medium ${
+                step.id < currentStep 
+                  ? 'bg-green-600 text-white' 
+                  : step.id === currentStep 
+                    ? 'bg-amber-600 text-white border-2 border-amber-600' 
+                    : 'bg-gray-200 text-gray-500'
+              }`}
+            >
+              {step.id < currentStep ? '✓' : step.id + 1}
+            </div>
+            <span 
+              className={`ml-2 text-sm font-medium ${
+                step.id <= currentStep ? 'text-gray-900' : 'text-gray-400'
+              }`}
+            >
+              {step.label}
+            </span>
+            {index < steps.length - 1 && (
+              <div 
+                className={`w-16 h-0.5 mx-2 ${
+                  step.id < currentStep ? 'bg-green-600' : 'bg-gray-200'
+                }`}
+              />
+            )}
+          </div>
+        ))}
+      </div>
       
-      {/* Progress bar for mobile */}
+      {/* Mobile progress bar */}
       <div className="mt-4 md:hidden">
         <div className="w-full bg-gray-200 rounded-full h-2">
           <div 
