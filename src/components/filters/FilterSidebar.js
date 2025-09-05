@@ -1,5 +1,8 @@
 import React, { useState } from 'react';
 import Card from '../Card.js';
+import { Slider } from '@/components/ui/slider.jsx';
+import { Checkbox } from '@/components/ui/checkbox.jsx';
+import { Label } from '@/components/ui/label.jsx';
 
 const FilterSidebar = ({ onFiltersChange, activeFilters }) => {
   // State for filter values
@@ -92,9 +95,9 @@ const FilterSidebar = ({ onFiltersChange, activeFilters }) => {
     onFiltersChange({ ...activeFilters, size: newSize });
   };
 
-  const handlePriceRangeChange = (min, max) => {
-    setPriceRange([min, max]);
-    onFiltersChange({ ...activeFilters, priceRange: [min, max] });
+  const handlePriceRangeChange = (value) => {
+    setPriceRange(value);
+    onFiltersChange({ ...activeFilters, priceRange: value });
   };
 
   // Clear all filters
@@ -126,19 +129,17 @@ const FilterSidebar = ({ onFiltersChange, activeFilters }) => {
           <div className="space-y-2">
             {genderOptions.map(option => (
               <div key={option.id} className="flex items-center">
-                <input
-                  type="checkbox"
+                <Checkbox
                   id={`gender-${option.id}`}
                   checked={gender.includes(option.id)}
-                  onChange={() => handleGenderChange(option.id)}
-                  className="h-4 w-4 text-amber-600 border-gray-300 rounded focus:ring-amber-500"
+                  onCheckedChange={() => handleGenderChange(option.id)}
                 />
-                <label 
+                <Label 
                   htmlFor={`gender-${option.id}`} 
                   className="ml-2 text-sm text-gray-700"
                 >
                   {option.label}
-                </label>
+                </Label>
               </div>
             ))}
           </div>
@@ -150,19 +151,17 @@ const FilterSidebar = ({ onFiltersChange, activeFilters }) => {
           <div className="space-y-2">
             {categoryOptions.map(option => (
               <div key={option.id} className="flex items-center">
-                <input
-                  type="checkbox"
+                <Checkbox
                   id={`category-${option.id}`}
                   checked={category.includes(option.id)}
-                  onChange={() => handleCategoryChange(option.id)}
-                  className="h-4 w-4 text-amber-600 border-gray-300 rounded focus:ring-amber-500"
+                  onCheckedChange={() => handleCategoryChange(option.id)}
                 />
-                <label 
+                <Label 
                   htmlFor={`category-${option.id}`} 
                   className="ml-2 text-sm text-gray-700"
                 >
                   {option.label}
-                </label>
+                </Label>
               </div>
             ))}
           </div>
@@ -176,16 +175,14 @@ const FilterSidebar = ({ onFiltersChange, activeFilters }) => {
               <span className="text-sm text-gray-600">${priceRange[0]}</span>
               <span className="text-sm text-gray-600">${priceRange[1]}</span>
             </div>
-            <div className="relative pt-1">
-              <input 
-                type="range" 
-                min="0" 
-                max="200" 
-                value={priceRange[1]} 
-                onChange={(e) => handlePriceRangeChange(priceRange[0], parseInt(e.target.value))}
-                className="w-full h-2 bg-gray-200 rounded-lg appearance-none cursor-pointer"
-              />
-            </div>
+            <Slider
+              min={0}
+              max={200}
+              step={1}
+              value={priceRange}
+              onValueChange={handlePriceRangeChange}
+              className="w-full"
+            />
           </div>
         </div>
 

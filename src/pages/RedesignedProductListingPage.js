@@ -7,10 +7,11 @@ import Footer from '../components/Footer.js';
 import MinimalProductCard from '../components/MinimalProductCard.js';
 import ProductCarousel from '../components/ProductCarousel.js';
 import FilterSidebar from '../components/filters/FilterSidebar.js';
-import MobileFilterModal from '../components/filters/MobileFilterModal.js';
+import MobileFilterSheet from '../components/filters/MobileFilterSheet.js';
 import SortingDropdown from '../components/filters/SortingDropdown.js';
 import QuickViewModal from '../components/QuickViewModal.js';
 import Button from '../components/Button.js';
+import ProductPagination from '../components/ProductPagination.js';
 
 // Mock product data with enhanced properties
 const products = [
@@ -345,36 +346,11 @@ function ProductListingPage() {
                   {/* Pagination */}
                   {totalPages > 1 && (
                     <div className="flex justify-center mt-8">
-                      <nav className="flex items-center space-x-2">
-                        <Button
-                          variant="secondary"
-                          onClick={() => handlePageChange(Math.max(1, currentPage - 1))}
-                          disabled={currentPage === 1}
-                          size="sm"
-                        >
-                          Previous
-                        </Button>
-                        
-                        {[...Array(totalPages)].map((_, index) => (
-                          <Button
-                            key={index + 1}
-                            variant={currentPage === index + 1 ? "accent" : "secondary"}
-                            onClick={() => handlePageChange(index + 1)}
-                            size="sm"
-                          >
-                            {index + 1}
-                          </Button>
-                        ))}
-                        
-                        <Button
-                          variant="secondary"
-                          onClick={() => handlePageChange(Math.min(totalPages, currentPage + 1))}
-                          disabled={currentPage === totalPages}
-                          size="sm"
-                        >
-                          Next
-                        </Button>
-                      </nav>
+                      <ProductPagination
+                        currentPage={currentPage}
+                        totalPages={totalPages}
+                        onPageChange={handlePageChange}
+                      />
                     </div>
                   )}
                 </>
@@ -411,8 +387,8 @@ function ProductListingPage() {
         />
       )}
       
-      {/* Mobile Filter Modal */}
-      <MobileFilterModal 
+      {/* Mobile Filter Sheet */}
+      <MobileFilterSheet 
         isOpen={isMobileFilterOpen} 
         onClose={() => setIsMobileFilterOpen(false)} 
         onFiltersChange={handleFiltersChange} 

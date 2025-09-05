@@ -6,6 +6,7 @@ import Footer from '../components/Footer.js';
 import Button from '../components/Button.js';
 import Rating from '../components/Rating.js';
 import Card from '../components/Card.js';
+import ProductDetailTabs from '../components/ProductDetailTabs.js';
 
 // Mock product data with enhanced information
 const products = [
@@ -198,7 +199,6 @@ function EnhancedProductDetailPage() {
   const [quantity, setQuantity] = useState(1);
   const [showZoom, setShowZoom] = useState(false);
   const [showSizeGuide, setShowSizeGuide] = useState(false);
-  const [activeTab, setActiveTab] = useState('description');
   
   const product = products.find(p => p.id === parseInt(productId));
   
@@ -292,9 +292,7 @@ function EnhancedProductDetailPage() {
                     <button
                       key={index}
                       onClick={() => setSelectedImage(index)}
-                      className={`relative h-24 bg-white rounded-md flex items-center justify-center text-sm font-medium uppercase text-gray-900 cursor-pointer hover:bg-gray-50 focus:outline-none focus:ring focus:ring-offset-4 focus:ring-amber-500 ${
-                        selectedImage === index ? 'ring-2 ring-amber-500' : ''
-                      }`}
+                      className={`relative h-24 bg-white rounded-md flex items-center justify-center text-sm font-medium uppercase text-gray-900 cursor-pointer hover:bg-gray-50 focus:outline-none focus:ring focus:ring-offset-4 focus:ring-amber-500 ${selectedImage === index ? 'ring-2 ring-amber-500' : ''}`}
                     >
                       <span className="sr-only">Image {index + 1}</span>
                       <span className="absolute inset-0 rounded-md overflow-hidden">
@@ -305,9 +303,7 @@ function EnhancedProductDetailPage() {
                         />
                       </span>
                       <span
-                        className={`absolute inset-0 rounded-md ring-2 ring-offset-2 ${
-                          selectedImage === index ? 'ring-amber-500' : 'ring-transparent'
-                        }`}
+                        className={`absolute inset-0 rounded-md ring-2 ring-offset-2 ${selectedImage === index ? 'ring-amber-500' : 'ring-transparent'}`}
                         aria-hidden="true"
                       />
                     </button>
@@ -506,125 +502,7 @@ function EnhancedProductDetailPage() {
           
           {/* Product details tabs */}
           <div className="mt-16">
-            <div className="border-b border-gray-200">
-              <nav className="-mb-px flex space-x-8">
-                <button
-                  onClick={() => setActiveTab('description')}
-                  className={`py-4 px-1 text-sm font-medium border-b-2 ${
-                    activeTab === 'description'
-                      ? 'border-amber-500 text-amber-600'
-                      : 'border-transparent text-gray-500 hover:text-gray-700 hover:border-gray-300'
-                  }`}
-                >
-                  Description
-                </button>
-                <button
-                  onClick={() => setActiveTab('reviews')}
-                  className={`py-4 px-1 text-sm font-medium border-b-2 ${
-                    activeTab === 'reviews'
-                      ? 'border-amber-500 text-amber-600'
-                      : 'border-transparent text-gray-500 hover:text-gray-700 hover:border-gray-300'
-                  }`}
-                >
-                  Reviews ({product.reviewCount})
-                </button>
-                <button
-                  onClick={() => setActiveTab('details')}
-                  className={`py-4 px-1 text-sm font-medium border-b-2 ${
-                    activeTab === 'details'
-                      ? 'border-amber-500 text-amber-600'
-                      : 'border-transparent text-gray-500 hover:text-gray-700 hover:border-gray-300'
-                  }`}
-                >
-                  Details
-                </button>
-              </nav>
-            </div>
-            
-            {activeTab === 'description' && (
-              <div className="pt-10">
-                <div className="prose prose-sm text-gray-500">
-                  <p>{product.description}</p>
-                  <p>This authentic African piece celebrates heritage and craftsmanship. Each item is carefully made by skilled artisans who preserve traditional techniques passed down through generations.</p>
-                </div>
-              </div>
-            )}
-            
-            {activeTab === 'reviews' && (
-              <div className="pt-10">
-                <div className="flex items-center">
-                  <h3 className="text-lg font-medium text-gray-900">Customer Reviews</h3>
-                  <div className="ml-4 flex items-center">
-                    <Rating value={product.rating} />
-                    <p className="ml-2 text-sm text-gray-500">{product.rating} out of 5 stars</p>
-                  </div>
-                </div>
-                
-                <div className="mt-6">
-                  <h4 className="sr-only">Reviews</h4>
-                  <div className="space-y-6">
-                    {reviews.map((review) => (
-                      <div key={review.id} className="border-b border-gray-200 pb-6">
-                        <div className="flex items-center">
-                          <Rating value={review.rating} />
-                          <p className="ml-3 text-sm text-gray-500">{review.date}</p>
-                        </div>
-                        <div className="mt-2">
-                          <h4 className="text-sm font-medium text-gray-900">{review.userName}</h4>
-                          {review.verified && (
-                            <span className="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-green-100 text-green-800 mt-1">
-                              Verified Purchase
-                            </span>
-                          )}
-                        </div>
-                        <p className="mt-2 text-sm text-gray-700">{review.comment}</p>
-                      </div>
-                    ))}
-                  </div>
-                </div>
-                
-                <div className="mt-10">
-                  <Button variant="secondary">Write a Review</Button>
-                </div>
-              </div>
-            )}
-            
-            {activeTab === 'details' && (
-              <div className="pt-10">
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                  <div>
-                    <h3 className="text-lg font-medium text-gray-900">Product Details</h3>
-                    <div className="mt-4 space-y-4">
-                      <div>
-                        <h4 className="text-sm font-medium text-gray-900">Material</h4>
-                        <p className="mt-1 text-sm text-gray-500">{product.material}</p>
-                      </div>
-                      <div>
-                        <h4 className="text-sm font-medium text-gray-900">Fit</h4>
-                        <p className="mt-1 text-sm text-gray-500">{product.fit}</p>
-                      </div>
-                      <div>
-                        <h4 className="text-sm font-medium text-gray-900">Colors</h4>
-                        <p className="mt-1 text-sm text-gray-500">{product.colors.join(', ')}</p>
-                      </div>
-                    </div>
-                  </div>
-                  
-                  <div>
-                    <h3 className="text-lg font-medium text-gray-900">Care Instructions</h3>
-                    <div className="mt-4 space-y-4">
-                      <ul className="text-sm text-gray-500 list-disc pl-5 space-y-2">
-                        <li>Hand wash cold</li>
-                        <li>Use mild detergent</li>
-                        <li>Hang to dry</li>
-                        <li>Iron on low heat if needed</li>
-                        <li>Store in a cool, dry place</li>
-                      </ul>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            )}
+            <ProductDetailTabs product={product} reviews={reviews} />
           </div>
           
           {/* Frequently Bought Together */}
