@@ -1,11 +1,10 @@
 import React, { useState, useEffect } from 'react';
-import { Box, Typography, Grid, Snackbar, Alert } from '@mui/material';
-import { useNavigate } from 'react-router-dom';
+import { useLocation } from 'react-router-dom';
+import { Box, Typography, Grid } from '@mui/material';
 import { useCart } from '../context/CartContext.js';
 import Navbar from '../components/Navbar.js';
 import Footer from '../components/Footer.js';
 import MinimalProductCard from '../components/MinimalProductCard.js';
-import ProductCarousel from '../components/ProductCarousel.js';
 import FilterSidebar from '../components/filters/FilterSidebar.js';
 import MobileFilterModal from '../components/filters/MobileFilterModal.js';
 import SortingDropdown from '../components/filters/SortingDropdown.js';
@@ -137,8 +136,8 @@ const products = [
   }
 ];
 
-function ProductListingPage() {
-  const navigate = useNavigate();
+function SearchResultsPage() {
+  const location = useLocation();
   const { addToCart } = useCart();
   const [openSnackbar, setOpenSnackbar] = useState(false);
   const [snackbarMessage, setSnackbarMessage] = useState('');
@@ -150,18 +149,21 @@ function ProductListingPage() {
   const [currentPage, setCurrentPage] = useState(1);
   const [productsPerPage] = useState(8);
 
+  // Get search query from URL
+  const searchParams = new URLSearchParams(location.search);
+  const searchQuery = searchParams.get('q') || '';
+
   const handleAddToCart = (product) => {
     addToCart(product);
     setSnackbarMessage(`${product.name} added to cart!`);
     setOpenSnackbar(true);
-    
-    // Close modals after adding to cart
     setIsQuickViewOpen(false);
   };
 
   const handleViewProduct = (productId) => {
-    // Navigate to the product detail page using React Router
-    navigate(`/product/${productId}`);
+    const product = products.find(p => p.id === productId);
+    // In a real app, this would open a product detail page
+    alert(`Viewing product: ${product.name}`);
   };
 
   const handleQuickView = (productId) => {
@@ -192,9 +194,20 @@ function ProductListingPage() {
     setCurrentPage(1); // Reset to first page when sorting changes
   };
 
-  // Filter and sort products
+  // Filter and sort products based on search query
   const filteredAndSortedProducts = (() => {
     let result = [...products];
+    
+    // Filter by search query
+    if (searchQuery) {
+      const query = searchQuery.toLowerCase();
+      result = result.filter(product => 
+        product.name.toLowerCase().includes(query) ||
+        product.description.toLowerCase().includes(query) ||
+        product.category.toLowerCase().includes(query) ||
+        product.color.toLowerCase().includes(query)
+      );
+    }
     
     // Apply filters
     if (activeFilters.gender && activeFilters.gender.length > 0) {
@@ -270,30 +283,25 @@ function ProductListingPage() {
     setCurrentPage(pageNumber);
   };
 
-  // Featured products (first 3)
-  const featuredProducts = products.slice(0, 3);
-
   return (
     <div className="flex flex-col min-h-screen bg-background-white">
       <Navbar showBackButton={true} />
       
       <Box className="flex-grow">
-        {/* Hero section with featured products carousel */}
-        <div className="bg-background-white py-section-space-2">
-          <div className="container mx-auto px-component-space-2">
-            <Typography variant="h2" className="mb-section-space-1 text-center font-normal text-secondary-black tracking-[0.5px]">
-              Featured Products
+        {/* Search Results Header */}
+        <div className="bg-background-white py-8">
+          <div className="container mx-auto px-4">
+            <Typography variant="h4" className="mb-2 font-bold text-gray-900">
+              Search Results
             </Typography>
-            <ProductCarousel 
-              products={featuredProducts} 
-              onAddToCart={handleAddToCart} 
-              onViewProduct={handleViewProduct} 
-            />
+            <Typography variant="body1" className="text-gray-600">
+              {filteredAndSortedProducts.length} results for "{searchQuery}"
+            </Typography>
           </div>
         </div>
         
         {/* Products section with filters and sorting */}
-        <div className="container mx-auto px-component-space-2 py-section-space-2">
+        <div className="container mx-auto px-4 py-8">
           <div className="flex flex-col md:flex-row">
             {/* Filter Sidebar - Hidden on mobile */}
             <div className="hidden md:block">
@@ -384,11 +392,14 @@ function ProductListingPage() {
                     No products found
                   </Typography>
                   <p className="text-gray-600 mb-6">
-                    Try adjusting your filters to see more products
+                    Try adjusting your search or filters to see more products
                   </p>
                   <Button
                     variant="accent"
-                    onClick={() => handleFiltersChange({})}
+                    onClick={() => {
+                      handleFiltersChange({});
+                      // In a real app, you might want to clear the search query too
+                    }}
                   >
                     Clear All Filters
                   </Button>
@@ -418,44 +429,8 @@ function ProductListingPage() {
         onFiltersChange={handleFiltersChange} 
         activeFilters={activeFilters} 
       />
-      
-      <Snackbar 
-        open={openSnackbar} 
-        autoHideDuration={3000} 
-        onClose={handleCloseSnackbar}
-        anchorOrigin={{ vertical: 'bottom', horizontal: 'right' }}
-        sx={{
-          '& .MuiSnackbarContent-root': {
-            background: 'white',
-            color: '#1d1d1f',
-            boxShadow: '0 4px 12px rgba(0,0,0,0.08)',
-            borderRadius: '12px',
-            fontWeight: 400,
-            fontSize: '0.95rem',
-            border: '1px solid #f0f0f0',
-            minWidth: '300px'
-          }
-        }}
-      >
-        <Alert 
-          onClose={handleCloseSnackbar} 
-          severity="success" 
-          sx={{ 
-            width: '100%',
-            background: 'transparent',
-            color: '#1d1d1f',
-            fontWeight: 400,
-            fontSize: '0.95rem',
-            padding: '0px'
-          }}
-          variant="filled"
-          icon={false}
-        >
-          {snackbarMessage}
-        </Alert>
-      </Snackbar>
     </div>
   );
 }
 
-export default ProductListingPage;
+export default SearchResultsPage;
