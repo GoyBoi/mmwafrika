@@ -23,17 +23,17 @@ const QuickViewModal = ({ product, isOpen, onClose, onAddToCart }) => {
     : ['XS', 'S', 'M', 'L', 'XL', 'XXL'];
   
   const handleAddToCart = () => {
-    // Only require size selection for products that have sizes defined
-    if (product.size && product.size.length > 0 && product.size[0] !== 'one-size') {
-      if (!selectedSize) {
-        alert('Please select a size');
-        return;
-      }
-    }
+    // DISABLED: Size selection requirement - using standard size for all products
+    // const productToAdd = {
+    //   ...product,
+    //   ...(selectedSize && { selectedSize }), // Only add selectedSize if it exists
+    //   quantity
+    // };
     
+    // Using standard/default size for all products
     const productToAdd = {
       ...product,
-      ...(selectedSize && { selectedSize }), // Only add selectedSize if it exists
+      selectedSize: product.size && product.size.length > 0 ? product.size[0] : 'ONE SIZE',
       quantity
     };
     
