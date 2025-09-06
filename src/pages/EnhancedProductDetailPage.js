@@ -8,6 +8,7 @@ import Rating from '../components/Rating.js';
 import Card from '../components/Card.js';
 import ProductDetailTabs from '../components/ProductDetailTabs.js';
 import AddToCartButton from '../components/AddToCartButton.js';
+import ProductImageViewer from '../components/ProductImageViewer.js';
 
 // Mock product data with enhanced information
 const products = [
@@ -280,66 +281,13 @@ function EnhancedProductDetailPage() {
           <div className="lg:grid lg:grid-cols-2 lg:gap-x-8 lg:items-start">
             {/* Image gallery */}
             <div className="flex flex-col-reverse">
-              {/* Image grid */}
-              <div className="hidden mt-6 w-full max-w-2xl mx-auto sm:block lg:max-w-none">
-                <div className="grid grid-cols-4 gap-6">
-                  {product.images.map((image, index) => (
-                    <button
-                      key={index}
-                      onClick={() => setSelectedImage(index)}
-                      className={`relative h-24 bg-white rounded-md flex items-center justify-center text-sm font-medium uppercase text-gray-900 cursor-pointer hover:bg-gray-50 focus:outline-none focus:ring focus:ring-offset-4 focus:ring-amber-500 ${selectedImage === index ? 'ring-2 ring-amber-500' : ''}`}
-                    >
-                      <span className="sr-only">Image {index + 1}</span>
-                      <span className="absolute inset-0 rounded-md overflow-hidden">
-                        <img 
-                          src={image} 
-                          alt={`Product view ${index + 1}`} 
-                          className="w-full h-full object-contain"
-                        />
-                      </span>
-                      <span
-                        className={`absolute inset-0 rounded-md ring-2 ring-offset-2 ${selectedImage === index ? 'ring-amber-500' : 'ring-transparent'}`}
-                        aria-hidden="true"
-                      />
-                    </button>
-                  ))}
-                </div>
-              </div>
-              
-              {/* Main image */}
-              <div className="w-full aspect-w-1 aspect-h-1">
-                <div 
-                  className="w-full h-96 sm:h-[32rem] lg:h-[36rem] bg-white rounded-lg overflow-hidden cursor-zoom-in"
-                  onClick={handleImageClick}
-                >
-                  <img
-                    src={product.images[selectedImage]}
-                    alt={product.name}
-                    className="w-full h-full object-contain"
-                  />
-                  {showZoom && (
-                    <div className="fixed inset-0 bg-black bg-opacity-75 flex items-center justify-center z-50 p-4">
-                      <div className="relative max-w-4xl max-h-full">
-                        <Button
-                          variant="ghost"
-                          size="icon"
-                          onClick={() => setShowZoom(false)}
-                          className="absolute top-4 right-4 text-white bg-black bg-opacity-50 rounded-full p-2 z-10 hover:bg-opacity-75"
-                        >
-                          <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
-                          </svg>
-                        </Button>
-                        <img
-                          src={product.images[selectedImage]}
-                          alt={product.name}
-                          className="max-w-full max-h-full object-contain"
-                        />
-                      </div>
-                    </div>
-                  )}
-                </div>
-              </div>
+              {/* Enhanced Product Image Viewer */}
+              <ProductImageViewer 
+                images={product.images} 
+                productName={product.name}
+                viewType="carousel"
+                showModelView={true}
+              />
             </div>
             
             {/* Product info */}

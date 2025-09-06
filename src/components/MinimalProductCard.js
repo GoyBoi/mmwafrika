@@ -1,7 +1,8 @@
-import React from 'react';
+import React, { useState } from 'react';
 import Badge from './Badge.js';
 import Rating from './Rating.js';
 import AddToCartButton from './AddToCartButton.js';
+import ProductImageViewer from './ProductImageViewer.js';
 
 function MinimalProductCard({ product, onViewProduct, onAddToCart, onQuickView, compact = false }) {
   // Determine if product is new (added in last 7 days)
@@ -26,10 +27,10 @@ function MinimalProductCard({ product, onViewProduct, onAddToCart, onQuickView, 
       >
         {/* Enhanced Image Container with Neutral Background for Clothing */}
         <div className="relative h-32 overflow-hidden bg-gradient-to-br from-gray-50 to-gray-100 flex items-center justify-center">
-          <img 
-            src={product.image} 
-            alt={product.name} 
-            className="w-full h-full object-contain transition-transform duration-500 group-hover:scale-105 p-2"
+          <ProductImageViewer 
+            images={[product.image]} 
+            productName={product.name}
+            viewType="single"
           />
           
           {/* New Arrival Badge */}
@@ -97,10 +98,10 @@ function MinimalProductCard({ product, onViewProduct, onAddToCart, onQuickView, 
     >
       {/* Enhanced Image Container with Neutral Background for Clothing */}
       <div className="relative h-64 overflow-hidden bg-gradient-to-br from-gray-50 to-gray-100 flex items-center justify-center" onClick={() => onViewProduct(product.id)}>
-        <img 
-          src={product.image} 
-          alt={product.name} 
-          className="w-full h-full object-contain transition-transform duration-500 group-hover:scale-105 p-4"
+        <ProductImageViewer 
+          images={[product.image]} 
+          productName={product.name}
+          viewType="single"
         />
         
         {/* New Arrival Badge */}
