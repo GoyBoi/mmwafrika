@@ -98,7 +98,6 @@ function CuratorsPicksSection({ onViewProduct }) {
                     columns={2}
                     renderItem={(product) => (
                       <div 
-                        key={product.id} 
                         className="flex items-center p-3 rounded-lg border border-gray-200 hover:border-amber-300 transition-all duration-200 cursor-pointer bg-white w-full"
                         onClick={() => onViewProduct(product.id)}
                       >

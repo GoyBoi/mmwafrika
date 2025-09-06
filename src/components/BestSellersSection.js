@@ -22,7 +22,7 @@ function BestSellersSection({ products, onViewProduct }) {
           products={bestSellers} 
           columns={4}
           renderItem={(product) => (
-            <div key={product.id} className="relative">
+            <div className="relative">
               <MinimalProductCard product={product} onViewProduct={onViewProduct} />
               <div className="absolute top-3 right-3 bg-white rounded-full px-2 py-1 text-xs font-bold text-gray-900 shadow-sm font-body">
                 #{bestSellers.indexOf(product) + 1}

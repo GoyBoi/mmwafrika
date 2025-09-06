@@ -1,4 +1,5 @@
 import React, { useState, useMemo } from 'react';
+import { useNavigate } from 'react-router-dom';
 import { Box, Typography, Grid, Snackbar, Alert } from '@mui/material';
 import Navbar from '../components/Navbar.js';
 import Footer from '../components/Footer.js';
@@ -9,6 +10,8 @@ import FilterSidebar from '../components/filters/FilterSidebar.js';
 import MobileFilterSheet from '../components/filters/MobileFilterSheet.js';
 import SortingDropdown from '../components/filters/SortingDropdown.js';
 import ProductGrid from '../components/ProductGrid.js';
+import ProductCarousel from '../components/ProductCarousel.js';
+import Button from '../components/Button.js';
 import { useCart } from '../context/CartContext.js';
 
 // Mock product data with enhanced properties
