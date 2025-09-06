@@ -7,6 +7,7 @@ import Button from '../components/Button.js';
 import Rating from '../components/Rating.js';
 import Card from '../components/Card.js';
 import ProductDetailTabs from '../components/ProductDetailTabs.js';
+import AddToCartButton from '../components/AddToCartButton.js';
 
 // Mock product data with enhanced information
 const products = [
@@ -195,10 +196,8 @@ function EnhancedProductDetailPage() {
   const navigate = useNavigate();
   const { addToCart } = useCart();
   const [selectedImage, setSelectedImage] = useState(0);
-  const [selectedSize, setSelectedSize] = useState('');
   const [quantity, setQuantity] = useState(1);
   const [showZoom, setShowZoom] = useState(false);
-  const [showSizeGuide, setShowSizeGuide] = useState(false);
   
   const product = products.find(p => p.id === parseInt(productId));
   
@@ -225,24 +224,16 @@ function EnhancedProductDetailPage() {
   }
 
   const handleAddToCart = () => {
-    // DISABLED: Size selection requirement - using standard size for all products
-    // Only require size selection for products that have sizes defined
-    // if (product.size && product.size.length > 0 && product.size[0] !== 'one-size') {
-    //   if (!selectedSize) {
-    //     alert('Please select a size');
-    //     return;
-    //   }
-    // }
-    
-    // Using standard/default size for all products
+    // Add the product to cart without size selection
     const productToAdd = {
       ...product,
-      selectedSize: product.size && product.size.length > 0 ? product.size[0] : 'ONE SIZE',
       quantity
     };
     
+    console.log('Adding product to cart:', productToAdd);
     addToCart(productToAdd);
     // Show success message or redirect to cart
+    console.log('Product added to cart successfully');
   };
 
   const handleImageClick = () => {
@@ -329,14 +320,16 @@ function EnhancedProductDetailPage() {
                   {showZoom && (
                     <div className="fixed inset-0 bg-black bg-opacity-75 flex items-center justify-center z-50 p-4">
                       <div className="relative max-w-4xl max-h-full">
-                        <button 
+                        <Button
+                          variant="ghost"
+                          size="icon"
                           onClick={() => setShowZoom(false)}
-                          className="absolute top-4 right-4 text-white bg-black bg-opacity-50 rounded-full p-2 z-10"
+                          className="absolute top-4 right-4 text-white bg-black bg-opacity-50 rounded-full p-2 z-10 hover:bg-opacity-75"
                         >
                           <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
                           </svg>
-                        </button>
+                        </Button>
                         <img
                           src={product.images[selectedImage]}
                           alt={product.name}
@@ -351,7 +344,7 @@ function EnhancedProductDetailPage() {
             
             {/* Product info */}
             <div className="mt-10 px-4 sm:px-0 sm:mt-16 lg:mt-0">
-              <h1 className="text-3xl font-light tracking-tight text-gray-900">{product.name}</h1>
+              <h1 className="text-3xl font-heading font-light tracking-tight text-gray-900">{product.name}</h1>
               
               <div className="mt-3">
                 <Rating value={product.rating} count={product.reviewCount} />
@@ -360,13 +353,13 @@ function EnhancedProductDetailPage() {
               {/* Price */}
               <div className="mt-4">
                 <div className="flex items-center">
-                  <p className="text-3xl font-semibold text-gray-900">${product.price.toFixed(2)}</p>
+                  <p className="text-3xl font-body font-semibold text-gray-900">${product.price.toFixed(2)}</p>
                   {product.originalPrice && product.originalPrice > product.price && (
-                    <p className="ml-4 text-xl text-gray-500 line-through">${product.originalPrice.toFixed(2)}</p>
+                    <p className="ml-4 text-xl text-gray-500 line-through font-body">${product.originalPrice.toFixed(2)}</p>
                   )}
                 </div>
                 {product.originalPrice && product.originalPrice > product.price && (
-                  <p className="mt-1 text-sm text-green-600">
+                  <p className="mt-1 text-sm text-green-600 font-body">
                     Save ${(product.originalPrice - product.price).toFixed(2)} ({Math.round((1 - product.price / product.originalPrice) * 100)}% off)
                   </p>
                 )}
@@ -390,38 +383,6 @@ function EnhancedProductDetailPage() {
               </div>
               
               <form className="mt-6">
-                {/* Size selection */}
-                {product.size && product.size.length > 0 && product.size[0] !== 'one-size' && (
-                  <div>
-                    <h3 className="text-sm text-gray-900 font-medium">Size</h3>
-                    <div className="mt-2 flex items-center">
-                      <div className="grid grid-cols-5 gap-2 sm:grid-cols-3">
-                                              {product.size.map((size) => (
-                          <button
-                            key={size}
-                            type="button"
-                            onClick={() => setSelectedSize(size)}
-                            className={`py-2 px-3 border rounded-md text-sm font-medium uppercase focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-amber-500 ${
-                              selectedSize === size
-                                ? 'bg-amber-500 border-amber-500 text-white'
-                                : 'bg-white border-gray-200 text-gray-900 hover:bg-gray-50'
-                            }`}
-                          >
-                            {size}
-                          </button>
-                        ))}
-                      </div>
-                      <button
-                        type="button"
-                        onClick={() => setShowSizeGuide(true)}
-                        className="ml-4 text-sm font-medium text-amber-600 hover:text-amber-500"
-                      >
-                        Size guide
-                      </button>
-                    </div>
-                  </div>
-                )}
-                
                 {/* Quantity */}
                 <div className="mt-6">
                   <h3 className="text-sm text-gray-900 font-medium">Quantity</h3>
@@ -459,14 +420,15 @@ function EnhancedProductDetailPage() {
                 
                 {/* Add to cart button */}
                 <div className="mt-6">
-                  <Button
-                    variant="accent"
+                  <AddToCartButton 
+                    product={{
+                      ...product,
+                      selectedSize: product.size && product.size.length > 0 ? product.size[0] : 'ONE SIZE'
+                    }}
                     size="lg"
-                    onClick={handleAddToCart}
-                    className="w-full"
-                  >
-                    Add to Cart
-                  </Button>
+                    fullWidth={true}
+                    onAddToCart={() => console.log('Added to cart (detail):', product.name)}
+                  />
                 </div>
                 
                 {/* Social sharing */}
@@ -580,80 +542,6 @@ function EnhancedProductDetailPage() {
       </main>
       
       <Footer />
-      
-      {/* Size Guide Modal */}
-      {showSizeGuide && (
-        <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 p-4">
-          <div className="bg-white rounded-lg max-w-2xl w-full max-h-[90vh] overflow-y-auto">
-            <div className="p-6">
-              <div className="flex justify-between items-center border-b border-gray-200 pb-4">
-                <h3 className="text-lg font-medium text-gray-900">Size Guide</h3>
-                <button
-                  onClick={() => setShowSizeGuide(false)}
-                  className="text-gray-400 hover:text-gray-500"
-                >
-                  <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
-                  </svg>
-                </button>
-              </div>
-              <div className="mt-6">
-                <div className="overflow-x-auto">
-                  <table className="min-w-full divide-y divide-gray-200">
-                    <thead className="bg-gray-50">
-                      <tr>
-                        <th scope="col" className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Size</th>
-                        <th scope="col" className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Chest (in)</th>
-                        <th scope="col" className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Waist (in)</th>
-                        <th scope="col" className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Hips (in)</th>
-                      </tr>
-                    </thead>
-                    <tbody className="bg-white divide-y divide-gray-200">
-                      <tr>
-                        <td className="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">XS</td>
-                        <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">32-34</td>
-                        <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">25-27</td>
-                        <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">34-36</td>
-                      </tr>
-                      <tr>
-                        <td className="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">S</td>
-                        <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">35-37</td>
-                        <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">28-30</td>
-                        <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">37-39</td>
-                      </tr>
-                      <tr>
-                        <td className="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">M</td>
-                        <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">38-40</td>
-                        <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">31-33</td>
-                        <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">40-42</td>
-                      </tr>
-                      <tr>
-                        <td className="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">L</td>
-                        <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">41-43</td>
-                        <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">34-36</td>
-                        <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">43-45</td>
-                      </tr>
-                      <tr>
-                        <td className="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">XL</td>
-                        <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">44-46</td>
-                        <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">37-39</td>
-                        <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">46-48</td>
-                      </tr>
-                    </tbody>
-                  </table>
-                </div>
-                <div className="mt-6">
-                  <h4 className="text-md font-medium text-gray-900">Fit Information</h4>
-                  <p className="mt-2 text-sm text-gray-500">
-                    This product has a regular fit. We recommend choosing your usual size. 
-                    If you're between sizes, we recommend sizing up for a more comfortable fit.
-                  </p>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-      )}
     </div>
   );
 }

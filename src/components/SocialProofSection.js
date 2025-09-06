@@ -76,8 +76,8 @@ function SocialProofSection() {
         {/* Testimonials Section */}
         <div className="mb-16">
           <div className="text-center mb-12">
-            <h2 className="text-3xl font-bold text-gray-900 mb-4">What Our Customers Say</h2>
-            <p className="text-gray-600 max-w-2xl mx-auto">
+            <h2 className="text-3xl font-bold text-gray-900 mb-4 font-heading">What Our Customers Say</h2>
+            <p className="text-gray-600 max-w-2xl mx-auto font-body">
               Don't just take our word for it - hear from our satisfied customers
             </p>
             <div className="w-20 h-1 bg-gradient-to-r from-amber-500 to-orange-500 mx-auto mt-6 rounded-full"></div>
@@ -94,11 +94,11 @@ function SocialProofSection() {
                     <div className="bg-gray-200 border-2 border-dashed rounded-xl w-12 h-12" />
                   </div>
                   <div className="ml-4">
-                    <h4 className="font-semibold text-gray-900">{testimonial.name}</h4>
-                    <p className="text-sm text-gray-500">{testimonial.location}</p>
+                    <h4 className="font-semibold text-gray-900 font-heading">{testimonial.name}</h4>
+                    <p className="text-sm text-gray-500 font-body">{testimonial.location}</p>
                   </div>
                   {testimonial.verified && (
-                    <span className="ml-auto bg-blue-100 text-blue-800 text-xs font-medium px-2 py-1 rounded-full">
+                    <span className="ml-auto bg-blue-100 text-blue-800 text-xs font-medium px-2 py-1 rounded-full font-body">
                       Verified
                     </span>
                   )}
@@ -108,9 +108,9 @@ function SocialProofSection() {
                   <Rating value={testimonial.rating} />
                 </div>
                 
-                <p className="text-gray-600 mb-4 italic">"{testimonial.text}"</p>
+                <p className="text-gray-600 mb-4 italic font-body">"{testimonial.text}"</p>
                 
-                <p className="text-xs text-gray-400">{testimonial.date}</p>
+                <p className="text-xs text-gray-400 font-body">{testimonial.date}</p>
               </div>
             ))}
           </div>
@@ -119,7 +119,7 @@ function SocialProofSection() {
             <div className="text-center mt-8">
               <button 
                 onClick={loadMoreTestimonials}
-                className="inline-flex items-center px-4 py-2 border border-gray-300 text-sm font-medium rounded-md text-gray-700 bg-white hover:bg-gray-50 transition-colors duration-200"
+                className="inline-flex items-center px-4 py-2 border border-gray-300 text-sm font-medium rounded-md text-gray-700 bg-white hover:bg-gray-50 transition-colors duration-200 font-body"
               >
                 Load More Reviews
               </button>
@@ -130,8 +130,8 @@ function SocialProofSection() {
         {/* User Generated Content Section */}
         <div>
           <div className="text-center mb-12">
-            <h2 className="text-3xl font-bold text-gray-900 mb-4">From Our Community</h2>
-            <p className="text-gray-600 max-w-2xl mx-auto">
+            <h2 className="text-3xl font-bold text-gray-900 mb-4 font-heading">From Our Community</h2>
+            <p className="text-gray-600 max-w-2xl mx-auto font-body">
               See how our customers style and enjoy their MMWafrika pieces
             </p>
             <div className="w-20 h-1 bg-gradient-to-r from-amber-500 to-orange-500 mx-auto mt-6 rounded-full"></div>
@@ -152,8 +152,8 @@ function SocialProofSection() {
                 </div>
                 <div className="absolute inset-0 bg-gradient-to-t from-black/70 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-end p-4">
                   <div className="text-white">
-                    <p className="text-sm line-clamp-2 mb-2">{content.caption}</p>
-                    <div className="flex items-center text-xs">
+                    <p className="text-sm line-clamp-2 mb-2 font-body">{content.caption}</p>
+                    <div className="flex items-center text-xs font-body">
                       <svg className="w-4 h-4 mr-1" fill="currentColor" viewBox="0 0 20 20">
                         <path fillRule="evenodd" d="M3.172 5.172a4 4 0 015.656 0L10 6.343l1.172-1.171a4 4 0 115.656 5.656L10 17.657l-6.828-6.829a4 4 0 010-5.656z" clipRule="evenodd" />
                       </svg>
@@ -166,7 +166,7 @@ function SocialProofSection() {
           </div>
           
           <div className="text-center mt-8">
-            <button className="inline-flex items-center px-6 py-3 bg-gradient-to-r from-amber-600 to-orange-600 text-white font-medium rounded-lg hover:from-amber-700 hover:to-orange-700 transition-all duration-300 shadow-sm hover:shadow-md">
+            <button className="inline-flex items-center px-6 py-3 bg-gradient-to-r from-amber-600 to-orange-600 text-white font-medium rounded-lg hover:from-amber-700 hover:to-orange-700 transition-all duration-300 shadow-sm hover:shadow-md font-body">
               Share Your Style
               <svg className="ml-2 w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 6v6m0 0v6m0-6h6m-6 0H6" />

@@ -152,6 +152,7 @@ function ProductListingPage() {
   const [productsPerPage] = useState(8);
 
   const handleAddToCart = (product) => {
+    console.log('handleAddToCart called with product:', product);
     addToCart(product);
     setSnackbarMessage(`${product.name} added to cart!`);
     setOpenSnackbar(true);
@@ -223,12 +224,6 @@ function ProductListingPage() {
       );
     }
     
-    if (activeFilters.size && activeFilters.size.length > 0) {
-      result = result.filter(product => 
-        activeFilters.size.some(size => product.size.includes(size))
-      );
-    }
-    
     // Apply sorting
     switch (sortBy) {
       case 'newest':
@@ -282,7 +277,7 @@ function ProductListingPage() {
         {/* Hero section with featured products carousel */}
         <div className="bg-background-white py-section-space-2">
           <div className="container mx-auto px-component-space-2">
-            <Typography variant="h2" className="mb-section-space-1 text-center font-normal text-secondary-black tracking-[0.5px]">
+            <Typography variant="h2" className="mb-section-space-1 text-center font-heading font-medium text-secondary-black">
               Featured Products
             </Typography>
             <ProductCarousel 
@@ -317,7 +312,7 @@ function ProductListingPage() {
                 </Button>
                 
                 <div className="flex items-center w-full sm:w-auto">
-                  <span className="mr-4 text-sm text-gray-600">
+                  <span className="mr-4 text-sm text-gray-600 font-body">
                     {filteredAndSortedProducts.length} products
                   </span>
                   <SortingDropdown 
@@ -327,25 +322,26 @@ function ProductListingPage() {
                 </div>
               </div>
               
-              {/* Products Grid */}
+              {/* Product Grid */}
+            <div className="flex-grow">
               {currentProducts.length > 0 ? (
                 <>
-                  <Grid container spacing={3}>
+                  <div className="grid grid-cols-2 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
                     {currentProducts.map((product) => (
-                      <Grid item xs={6} sm={4} md={3} key={product.id}>
+                      <div key={product.id}>
                         <MinimalProductCard 
                           product={product} 
                           onViewProduct={handleViewProduct} 
                           onAddToCart={handleAddToCart} 
                           onQuickView={handleQuickView} 
                         />
-                      </Grid>
+                      </div>
                     ))}
-                  </Grid>
+                  </div>
                   
                   {/* Pagination */}
                   {totalPages > 1 && (
-                    <div className="flex justify-center mt-8">
+                    <div className="flex justify-center mt-12 mb-8">
                       <ProductPagination
                         currentPage={currentPage}
                         totalPages={totalPages}
@@ -355,21 +351,23 @@ function ProductListingPage() {
                   )}
                 </>
               ) : (
-                <div className="text-center py-12">
-                  <Typography variant="h5" className="mb-4">
+                <div className="text-center py-16">
+                  <Typography variant="h5" className="mb-4 font-heading font-medium text-gray-900">
                     No products found
                   </Typography>
-                  <p className="text-gray-600 mb-6">
+                  <p className="text-gray-600 mb-8 font-body">
                     Try adjusting your filters to see more products
                   </p>
                   <Button
                     variant="accent"
                     onClick={() => handleFiltersChange({})}
+                    className="px-6 py-3"
                   >
                     Clear All Filters
                   </Button>
                 </div>
               )}
+            </div>
             </div>
           </div>
         </div>

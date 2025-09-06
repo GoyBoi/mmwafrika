@@ -10,7 +10,6 @@ const FilterSidebar = ({ onFiltersChange, activeFilters }) => {
   const [category, setCategory] = useState(activeFilters.category || []);
   const [priceRange, setPriceRange] = useState(activeFilters.priceRange || [0, 200]);
   const [color, setColor] = useState(activeFilters.color || []);
-  const [size, setSize] = useState(activeFilters.size || []);
 
   // Gender filter options
   const genderOptions = [
@@ -32,30 +31,20 @@ const FilterSidebar = ({ onFiltersChange, activeFilters }) => {
     { id: 'home', label: 'Home' }
   ];
 
+  // Price range filter options
+  const minPrice = 0;
+  const maxPrice = 200;
+
   // Color filter options
   const colorOptions = [
     { id: 'black', label: 'Black', color: '#000000' },
     { id: 'white', label: 'White', color: '#ffffff' },
-    { id: 'red', label: 'Red', color: '#ef4444' },
-    { id: 'blue', label: 'Blue', color: '#3b82f6' },
-    { id: 'green', label: 'Green', color: '#22c55e' },
-    { id: 'yellow', label: 'Yellow', color: '#eab308' },
-    { id: 'orange', label: 'Orange', color: '#f97316' },
-    { id: 'purple', label: 'Purple', color: '#a855f7' },
-    { id: 'pink', label: 'Pink', color: '#ec4899' },
-    { id: 'brown', label: 'Brown', color: '#a16207' },
-    { id: 'gray', label: 'Gray', color: '#6b7280' }
-  ];
-
-  // Size filter options
-  const sizeOptions = [
-    { id: 'xs', label: 'XS' },
-    { id: 's', label: 'S' },
-    { id: 'm', label: 'M' },
-    { id: 'l', label: 'L' },
-    { id: 'xl', label: 'XL' },
-    { id: 'xxl', label: 'XXL' },
-    { id: 'xxxl', label: 'XXXL' }
+    { id: 'gray', label: 'Gray', color: '#808080' },
+    { id: 'brown', label: 'Brown', color: '#8B4513' },
+    { id: 'red', label: 'Red', color: '#FF0000' },
+    { id: 'blue', label: 'Blue', color: '#0000FF' },
+    { id: 'green', label: 'Green', color: '#008000' },
+    { id: 'multi', label: 'Multi', color: 'linear-gradient(45deg, #FF0000, #00FF00, #0000FF)' }
   ];
 
   // Handle filter changes
@@ -65,7 +54,6 @@ const FilterSidebar = ({ onFiltersChange, activeFilters }) => {
       : [...gender, genderId];
     
     setGender(newGender);
-    onFiltersChange({ ...activeFilters, gender: newGender });
   };
 
   const handleCategoryChange = (categoryId) => {
@@ -74,7 +62,10 @@ const FilterSidebar = ({ onFiltersChange, activeFilters }) => {
       : [...category, categoryId];
     
     setCategory(newCategory);
-    onFiltersChange({ ...activeFilters, category: newCategory });
+  };
+
+  const handlePriceRangeChange = (newRange) => {
+    setPriceRange(newRange);
   };
 
   const handleColorChange = (colorId) => {
@@ -83,49 +74,50 @@ const FilterSidebar = ({ onFiltersChange, activeFilters }) => {
       : [...color, colorId];
     
     setColor(newColor);
-    onFiltersChange({ ...activeFilters, color: newColor });
-  };
-
-  const handleSizeChange = (sizeId) => {
-    const newSize = size.includes(sizeId)
-      ? size.filter(id => id !== sizeId)
-      : [...size, sizeId];
-    
-    setSize(newSize);
-    onFiltersChange({ ...activeFilters, size: newSize });
-  };
-
-  const handlePriceRangeChange = (value) => {
-    setPriceRange(value);
-    onFiltersChange({ ...activeFilters, priceRange: value });
   };
 
   // Clear all filters
+  const applyFilters = () => {
+    const newFilters = {
+      gender: gender.length > 0 ? gender : undefined,
+      category: category.length > 0 ? category : undefined,
+      priceRange: priceRange[0] !== minPrice || priceRange[1] !== maxPrice ? priceRange : undefined,
+      color: color.length > 0 ? color : undefined
+    };
+    
+    // Remove undefined values
+    Object.keys(newFilters).forEach(key => {
+      if (newFilters[key] === undefined) {
+        delete newFilters[key];
+      }
+    });
+    
+    onFiltersChange(newFilters);
+  };
+
   const clearAllFilters = () => {
     setGender([]);
     setCategory([]);
-    setPriceRange([0, 200]);
+    setPriceRange([minPrice, maxPrice]);
     setColor([]);
-    setSize([]);
-    onFiltersChange({});
   };
 
   return (
     <div className="w-full md:w-64 lg:w-72 pr-4">
-      <Card className="p-4 sticky top-4">
-        <div className="flex justify-between items-center mb-6">
-          <h2 className="text-lg font-semibold text-gray-900">Filters</h2>
+      <Card className="p-5 sticky top-4 shadow-md">
+        <div className="flex justify-between items-center mb-6 pb-3 border-b border-gray-100">
+          <h2 className="text-xl font-heading font-semibold text-gray-900">Filters</h2>
           <button 
             onClick={clearAllFilters}
-            className="text-sm text-amber-600 hover:text-amber-700 font-medium"
+            className="text-sm text-amber-600 hover:text-amber-700 font-medium transition-colors"
           >
             Clear All
           </button>
         </div>
-
-        {/* Gender Filter */}
-        <div className="mb-6">
-          <h3 className="font-medium text-gray-900 mb-3">Gender</h3>
+        
+        <div className="space-y-6">
+        <div className="mb-6 pb-4 border-b border-gray-100">
+          <h3 className="font-medium text-gray-900 mb-3 font-heading">Gender</h3>
           <div className="space-y-2">
             {genderOptions.map(option => (
               <div key={option.id} className="flex items-center">
@@ -136,7 +128,7 @@ const FilterSidebar = ({ onFiltersChange, activeFilters }) => {
                 />
                 <Label 
                   htmlFor={`gender-${option.id}`} 
-                  className="ml-2 text-sm text-gray-700"
+                  className="ml-3 text-sm text-gray-700 font-body"
                 >
                   {option.label}
                 </Label>
@@ -146,8 +138,8 @@ const FilterSidebar = ({ onFiltersChange, activeFilters }) => {
         </div>
 
         {/* Category Filter */}
-        <div className="mb-6">
-          <h3 className="font-medium text-gray-900 mb-3">Category</h3>
+        <div className="mb-6 pb-4 border-b border-gray-100">
+          <h3 className="font-medium text-gray-900 mb-3 font-heading">Category</h3>
           <div className="space-y-2">
             {categoryOptions.map(option => (
               <div key={option.id} className="flex items-center">
@@ -158,7 +150,7 @@ const FilterSidebar = ({ onFiltersChange, activeFilters }) => {
                 />
                 <Label 
                   htmlFor={`category-${option.id}`} 
-                  className="ml-2 text-sm text-gray-700"
+                  className="ml-3 text-sm text-gray-700 font-body"
                 >
                   {option.label}
                 </Label>
@@ -168,12 +160,12 @@ const FilterSidebar = ({ onFiltersChange, activeFilters }) => {
         </div>
 
         {/* Price Range Filter */}
-        <div className="mb-6">
-          <h3 className="font-medium text-gray-900 mb-3">Price Range</h3>
+        <div className="mb-6 pb-4 border-b border-gray-100">
+          <h3 className="font-medium text-gray-900 mb-3 font-heading">Price Range</h3>
           <div className="space-y-4">
             <div className="flex items-center justify-between">
-              <span className="text-sm text-gray-600">${priceRange[0]}</span>
-              <span className="text-sm text-gray-600">${priceRange[1]}</span>
+              <span className="text-sm text-gray-600 font-body">${priceRange[0]}</span>
+              <span className="text-sm text-gray-600 font-body">${priceRange[1]}</span>
             </div>
             <Slider
               min={0}
@@ -188,39 +180,24 @@ const FilterSidebar = ({ onFiltersChange, activeFilters }) => {
 
         {/* Color Filter */}
         <div className="mb-6">
-          <h3 className="font-medium text-gray-900 mb-3">Color</h3>
+          <h3 className="font-medium text-gray-900 mb-3 font-heading">Color</h3>
           <div className="flex flex-wrap gap-2">
             {colorOptions.map(option => (
               <button
                 key={option.id}
                 onClick={() => handleColorChange(option.id)}
-                className={`w-8 h-8 rounded-full border-2 ${color.includes(option.id) ? 'border-amber-600' : 'border-gray-300'}`}
+                className={`w-8 h-8 rounded-full border transition-all duration-200 ${
+                  color.includes(option.id) 
+                    ? 'border-amber-600 shadow-sm ring-2 ring-amber-200' 
+                    : 'border-gray-300 hover:border-amber-300'
+                }`}
                 style={{ backgroundColor: option.color }}
                 aria-label={option.label}
               />
             ))}
           </div>
         </div>
-
-        {/* Size Filter */}
-        <div className="mb-6">
-          <h3 className="font-medium text-gray-900 mb-3">Size</h3>
-          <div className="flex flex-wrap gap-2">
-            {sizeOptions.map(option => (
-              <button
-                key={option.id}
-                onClick={() => handleSizeChange(option.id)}
-                className={`px-3 py-1 text-sm rounded-md border ${
-                  size.includes(option.id) 
-                    ? 'bg-amber-600 text-white border-amber-600' 
-                    : 'bg-white text-gray-700 border-gray-300 hover:bg-gray-50'
-                }`}
-              >
-                {option.label}
-              </button>
-            ))}
-          </div>
-        </div>
+      </div>
       </Card>
     </div>
   );

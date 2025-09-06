@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import AddToCartButton from './AddToCartButton.js';
 
 function ProductCarousel({ products, onAddToCart, onViewProduct }) {
   const [currentIndex, setCurrentIndex] = useState(0);
@@ -15,7 +16,7 @@ function ProductCarousel({ products, onAddToCart, onViewProduct }) {
     <div className="relative py-10 bg-gradient-to-b from-white to-amber-50 rounded-2xl">
       {/* Section Header */}
       <div className="text-center mb-8">
-        <h2 className="text-2xl md:text-3xl font-bold text-gray-900 mb-2 drop-shadow-[0_1px_1px_rgba(0,0,0,0.1)]">Featured Products</h2>
+        <h2 className="text-3xl font-heading font-medium text-gray-900 mb-2 drop-shadow-[0_1px_1px_rgba(0,0,0,0.1)]">Featured Products</h2>
         <div className="w-20 h-1 bg-gradient-to-r from-amber-500 to-orange-500 mx-auto rounded-full"></div>
       </div>
       
@@ -48,27 +49,23 @@ function ProductCarousel({ products, onAddToCart, onViewProduct }) {
                   
                   {/* Product Info */}
                   <div className="p-5">
-                    <h3 className="font-bold text-gray-900 mb-2 group-hover:text-amber-700 transition-colors drop-shadow-[0_1px_1px_rgba(0,0,0,0.1)]">
+                    <h3 className="font-heading font-medium text-gray-900 mb-2 group-hover:text-amber-700 transition-colors drop-shadow-[0_1px_1px_rgba(0,0,0,0.1)]">
                       {product.name}
                     </h3>
                     
-                    <p className="text-sm text-gray-600 mb-4 line-clamp-2 drop-shadow-[0_1px_1px_rgba(0,0,0,0.05)]">
+                    <p className="text-sm text-gray-600 mb-4 line-clamp-2 drop-shadow-[0_1px_1px_rgba(0,0,0,0.05)] font-body">
                       {product.description}
                     </p>
                     
                     <div className="flex items-center justify-between">
                       <div>
-                        <span className="font-bold text-gray-900 text-lg drop-shadow-[0_1px_1px_rgba(0,0,0,0.1)]">${product.price.toFixed(2)}</span>
+                        <span className="font-body font-semibold text-gray-900 text-lg drop-shadow-[0_1px_1px_rgba(0,0,0,0.1)]">${product.price.toFixed(2)}</span>
                       </div>
-                      <button 
-                        onClick={(e) => {
-                          e.stopPropagation();
-                          onAddToCart(product);
-                        }}
-                        className="bg-gradient-to-r from-amber-500 to-orange-500 hover:from-amber-600 hover:to-orange-600 text-white px-4 py-2 rounded-full text-sm font-semibold transition-all duration-300 shadow-sm hover:shadow-md"
-                      >
-                        Add to Cart
-                      </button>
+                      <AddToCartButton 
+                        product={product} 
+                        onAddToCart={onAddToCart}
+                        size="sm"
+                      />
                     </div>
                   </div>
                 </div>

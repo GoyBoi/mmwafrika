@@ -29,15 +29,15 @@ const NotificationAlert = ({
       case 'error':
         return 'bg-red-50 text-red-800 border-red-200';
       case 'warning':
-        return 'bg-yellow-50 text-yellow-800 border-yellow-200';
+        return 'bg-amber-50 text-amber-800 border-amber-200';
       default:
-        return 'bg-blue-50 text-blue-800 border-blue-200';
+        return 'bg-gray-50 text-gray-800 border-gray-200';
     }
   };
 
   return (
     <Alert 
-      className={`relative rounded-lg border p-4 ${getTypeClass()} ${className}`}
+      className={`relative rounded-lg border p-4 ${getTypeClass()} ${className} font-body`}
       variant={type === 'success' ? 'default' : type}
     >
       <div className="flex items-start">
@@ -46,7 +46,7 @@ const NotificationAlert = ({
         </div>
         <div className="ml-3 flex-1">
           {title && (
-            <AlertTitle className="text-sm font-medium">
+            <AlertTitle className="text-sm font-medium font-heading">
               {title}
             </AlertTitle>
           )}

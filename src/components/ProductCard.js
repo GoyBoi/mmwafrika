@@ -1,6 +1,7 @@
 import React from 'react';
 import { Card, CardContent } from '@/components/ui/card.jsx';
 import Rating from '../components/Rating.js';
+import AddToCartButton from './AddToCartButton.js';
 
 const ProductCard = ({ 
   product, 
@@ -170,15 +171,11 @@ const ProductCard = ({
               <span className="text-sm text-gray-500 line-through ml-2">${product.originalPrice.toFixed(2)}</span>
             )}
           </div>
-          <button 
-            className="bg-gradient-to-r from-amber-500 to-orange-500 hover:from-amber-600 hover:to-orange-600 text-white px-4 py-2 rounded-full text-sm font-semibold transition-all duration-300 shadow-sm hover:shadow-md transform hover:scale-105"
-            onClick={(e) => {
-              e.stopPropagation();
-              if (onAddToCart) onAddToCart(product);
-            }}
-          >
-            Add to Cart
-          </button>
+          <AddToCartButton 
+            product={product} 
+            onAddToCart={onAddToCart}
+            size="sm"
+          />
         </div>
       </CardContent>
     </Card>

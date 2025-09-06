@@ -76,7 +76,9 @@ const Navbar = ({ showBackButton = false, onHome }) => {
           {/* Right side - Cart, User menu and mobile menu */}
           <div className="flex items-center space-x-2">
             {/* Shopping Cart Icon - NEW DESIGN */}
-            <ShoppingCartIcon />
+            <div className="relative">
+              <ShoppingCartIcon />
+            </div>
             
             {/* Account/Login Icon */}
             <button

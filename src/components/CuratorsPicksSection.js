@@ -54,8 +54,8 @@ function CuratorsPicksSection({ onViewProduct }) {
     <div className="py-16 bg-gradient-to-b from-white to-amber-50">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="text-center mb-16">
-          <h2 className="text-3xl font-bold text-gray-900 mb-4">Curator's Picks</h2>
-          <p className="text-gray-600 max-w-2xl mx-auto">
+          <h2 className="text-3xl font-bold text-gray-900 mb-4 font-heading">Curator's Picks</h2>
+          <p className="text-gray-600 max-w-2xl mx-auto font-body">
             Expertly selected collections that showcase the beauty and diversity of African culture
           </p>
           <div className="w-20 h-1 bg-gradient-to-r from-amber-500 to-orange-500 mx-auto mt-6 rounded-full"></div>
@@ -74,24 +74,24 @@ function CuratorsPicksSection({ onViewProduct }) {
                   className="w-full h-full object-cover"
                 />
                 <div className="absolute top-4 left-4">
-                  <span className="inline-block bg-amber-600 text-white text-xs font-semibold px-3 py-1 rounded-full">
+                  <span className="inline-block bg-amber-600 text-white text-xs font-semibold px-3 py-1 rounded-full font-body">
                     Curated by {pick.curator}
                   </span>
                 </div>
               </div>
               
               <div className="p-6">
-                <h3 className="text-2xl font-bold text-gray-900 mb-2">{pick.title}</h3>
-                <p className="text-gray-600 mb-4">{pick.description}</p>
+                <h3 className="text-2xl font-bold text-gray-900 mb-2 font-heading">{pick.title}</h3>
+                <p className="text-gray-600 mb-4 font-body">{pick.description}</p>
                 
                 <div className="mb-6">
-                  <blockquote className="border-l-4 border-amber-500 pl-4 italic text-gray-700 text-sm">
+                  <blockquote className="border-l-4 border-amber-500 pl-4 italic text-gray-700 text-sm font-body">
                     "{pick.story}"
                   </blockquote>
                 </div>
                 
                 <div className="mb-6">
-                  <h4 className="font-semibold text-gray-900 mb-3">Featured Items</h4>
+                  <h4 className="font-semibold text-gray-900 mb-3 font-heading">Featured Items</h4>
                   <div className="grid grid-cols-2 gap-3">
                     {pick.products.map((product) => (
                       <div 
@@ -107,8 +107,8 @@ function CuratorsPicksSection({ onViewProduct }) {
                           />
                         </div>
                         <div className="ml-3">
-                          <h5 className="font-medium text-gray-900 text-sm truncate max-w-[90px]">{product.name}</h5>
-                          <p className="text-amber-600 font-semibold text-sm">${product.price.toFixed(2)}</p>
+                          <h5 className="font-medium text-gray-900 text-sm truncate max-w-[90px] font-body">{product.name}</h5>
+                          <p className="text-amber-600 font-semibold text-sm font-body">${product.price.toFixed(2)}</p>
                         </div>
                       </div>
                     ))}

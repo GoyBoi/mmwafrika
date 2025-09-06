@@ -9,6 +9,7 @@ import EmailSignupForm from '../components/EmailSignupForm.js';
 import CuratorsPicksSection from '../components/CuratorsPicksSection.js';
 import SocialProofSection from '../components/SocialProofSection.js';
 import Button from '../components/Button.js';
+import EnhancedHeroSection from '../components/EnhancedHeroSection.js';
 import { useCart } from '../context/CartContext.js';
 
 // Mock product data with additional properties for our new features
@@ -108,57 +109,14 @@ function HomePage() {
       <Navbar />
       
       {/* Hero Section */}
-      <div className="relative bg-gradient-to-r from-amber-50 to-orange-50 overflow-hidden">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="flex flex-col lg:flex-row items-center py-16 md:py-24">
-            {/* Text Content */}
-            <div className="lg:w-1/2 lg:pr-12 text-center lg:text-left mb-12 lg:mb-0">
-              <h1 className="text-4xl md:text-5xl lg:text-6xl font-extrabold text-gray-900 tracking-tight mb-6">
-                <span className="block">Discover Authentic</span>
-                <span className="block text-amber-600 mt-2">African Fashion</span>
-              </h1>
-              <p className="text-lg md:text-xl text-gray-600 max-w-2xl mx-auto lg:mx-0 mb-10">
-                Experience the rich heritage and vibrant culture of Africa through our curated collection of traditional clothing, accessories, and artisan crafts.
-              </p>
-              <div className="flex justify-center lg:justify-start mt-2">
-                <Button
-                  onClick={handleShopNow}
-                  variant="accent"
-                  size="lg"
-                  style={{ 
-                    minWidth: '200px',
-                    fontWeight: 'bold',
-                    fontSize: '16px',
-                    position: 'relative',
-                    zIndex: '10',
-                    boxShadow: '0 4px 6px -1px rgba(0, 0, 0, 0.1)'
-                  }}
-                >
-                  Shop Now
-                </Button>
-              </div>
-            </div>
-            
-            {/* Image */}
-            <div className="lg:w-1/2 w-full">
-              <div className="rounded-2xl overflow-hidden shadow-xl">
-                <img
-                  className="w-full h-auto object-cover"
-                  src="/products_and_logo/1000006827.jpg"
-                  alt="African fashion collection"
-                />
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
+      <EnhancedHeroSection onShopNow={handleShopNow} />
 
       {/* Featured Products Carousel */}
       <div className="py-12 bg-white">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center mb-10">
-            <h2 className="text-3xl font-bold text-gray-900 mb-2">Featured Products</h2>
-            <p className="text-gray-600">Handpicked selections from our collection</p>
+            <h2 className="text-3xl font-heading font-semibold text-gray-900 mb-2">Featured Products</h2>
+            <p className="text-gray-600 font-body">Handpicked selections from our collection</p>
             <div className="w-20 h-1 bg-gradient-to-r from-amber-500 to-orange-500 mx-auto mt-4 rounded-full"></div>
           </div>
           <ProductCarousel 

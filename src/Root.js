@@ -11,6 +11,8 @@ const CheckoutPage = React.lazy(() => import('./pages/CheckoutPage.js'));
 const ComponentTestPage = React.lazy(() => import('./pages/ComponentTestPage.js'));
 const HomePage = React.lazy(() => import('./pages/HomePage.js'));
 const SearchResultsPage = React.lazy(() => import('./pages/SearchResultsPage.js'));
+const CartTestPage = React.lazy(() => import('./pages/CartTestPage.js'));
+const CartBadgeTestPage = React.lazy(() => import('./pages/CartBadgeTestPage.js'));
 
 // Loading fallback component
 const LoadingFallback = () => (
@@ -32,6 +34,8 @@ function Root() {
             <Route path="/checkout" element={<CheckoutPage />} />
             <Route path="/test" element={<ComponentTestPage />} />
             <Route path="/search" element={<SearchResultsPage />} />
+            <Route path="/cart-test" element={<CartTestPage />} />
+            <Route path="/cart-badge-test" element={<CartBadgeTestPage />} />
           </Routes>
         </Suspense>
       </Router>
