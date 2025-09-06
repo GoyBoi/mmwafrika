@@ -1,12 +1,13 @@
 import React, { useState } from 'react';
 import { useNavigate, useLocation } from 'react-router-dom';
-import { useCart } from '../context/CartContext.js';
 import SearchBar from './SearchBar.js';
+import { Sheet, SheetContent, SheetHeader, SheetTitle, SheetTrigger } from '@/components/ui/sheet';
+import { Button } from '@/components/ui/button';
+import ShoppingCartIcon from './ShoppingCartIcon.js';
 
-const Navbar = ({ showBackButton = false, onHome, onViewCart }) => {
+const Navbar = ({ showBackButton = false, onHome }) => {
   const navigate = useNavigate();
   const location = useLocation();
-  const { cartItems } = useCart();
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   
   const handleHome = () => {
@@ -17,20 +18,9 @@ const Navbar = ({ showBackButton = false, onHome, onViewCart }) => {
     }
   };
   
-  const handleViewCart = () => {
-    if (onViewCart) {
-      onViewCart();
-    } else {
-      navigate('/cart');
-    }
-  };
-  
   const handleBack = () => {
     navigate(-1);
   };
-  
-  // Calculate total number of items in cart
-  const totalItems = cartItems ? cartItems.reduce((total, item) => total + (item?.quantity || 0), 0) : 0;
   
   return (
     <nav className="bg-white shadow-sm border-b border-gray-200 sticky top-0 z-40">
@@ -41,7 +31,7 @@ const Navbar = ({ showBackButton = false, onHome, onViewCart }) => {
             {showBackButton && location.pathname !== '/' && (
               <button
                 onClick={handleBack}
-                className="mr-4 p-2 rounded-md text-gray-700 hover:text-gray-900 hover:bg-gray-100 focus:outline-none"
+                className="mr-4 rounded-md p-2 text-gray-700 transition-colors hover:bg-gray-100 hover:text-gray-900 focus:outline-none"
               >
                 <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" />
@@ -51,84 +41,112 @@ const Navbar = ({ showBackButton = false, onHome, onViewCart }) => {
             
             <button
               onClick={handleHome}
-              className="text-xl font-bold text-gray-900 hover:text-amber-600 transition-colors"
+              className="text-xl font-bold text-gray-900 transition-colors hover:text-amber-600"
             >
               MMWAFRIKA
             </button>
           </div>
           
-          {/* Center - Search bar (desktop only) */}
-          <div className="hidden md:flex flex-1 max-w-md mx-4">
-            <SearchBar />
+          {/* Center - Desktop navigation */}
+          <div className="hidden md:flex items-center space-x-8">
+            <nav className="flex space-x-6">
+              <button 
+                onClick={() => navigate('/')}
+                className={`text-sm font-medium transition-colors ${
+                  location.pathname === '/' 
+                    ? 'text-amber-600' 
+                    : 'text-gray-700 hover:text-amber-600'
+                }`}
+              >
+                Home
+              </button>
+              <button 
+                onClick={() => navigate('/products')}
+                className={`text-sm font-medium transition-colors ${
+                  location.pathname === '/products' 
+                    ? 'text-amber-600' 
+                    : 'text-gray-700 hover:text-amber-600'
+                }`}
+              >
+                Products
+              </button>
+            </nav>
           </div>
           
-          {/* Right side - Cart and menu */}
-          <div className="flex items-center">
+          {/* Right side - Cart, User menu and mobile menu */}
+          <div className="flex items-center space-x-2">
+            {/* Shopping Cart Icon - NEW DESIGN */}
+            <ShoppingCartIcon />
+            
+            {/* Account/Login Icon */}
             <button
-              onClick={handleViewCart}
-              className="p-2 rounded-md text-gray-700 hover:text-amber-600 hover:bg-gray-100 focus:outline-none relative transition-all duration-200 transform hover:scale-110"
+              className="rounded-md p-2 text-gray-700 transition-colors hover:bg-gray-100 hover:text-amber-600 focus:outline-none"
+              onClick={() => console.log('Account clicked')}
             >
               <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13L5.4 5M7 13l-2.293 2.293c-.63.63-.184 1.707.707 1.707H17M17 13v4a2 2 0 01-2 2H9a2 2 0 01-2-2v-4m8 0V9a2 2 0 00-2-2H9a2 2 0 00-2 2v4.01" />
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z" />
               </svg>
-              {totalItems > 0 && (
-                <span className="absolute -top-1 -right-1 bg-amber-600 text-white text-xs font-bold rounded-full h-5 w-5 flex items-center justify-center shadow-lg border-2 border-white animate-pulse">
-                  {totalItems}
-                </span>
-              )}
             </button>
             
             {/* Mobile menu button */}
-            <button 
-              className="ml-2 p-2 rounded-md text-gray-700 hover:text-amber-600 hover:bg-gray-100 focus:outline-none md:hidden"
-              onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
-            >
-              <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 6h16M4 12h16M4 18h16" />
-              </svg>
-            </button>
+            <Sheet open={isMobileMenuOpen} onOpenChange={setIsMobileMenuOpen}>
+              <SheetTrigger asChild>
+                <Button variant="ghost" size="icon" className="md:hidden rounded-md p-2 text-gray-700 hover:bg-gray-100 hover:text-amber-600 focus:outline-none">
+                  <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 6h16M4 12h16M4 18h16" />
+                  </svg>
+                </Button>
+              </SheetTrigger>
+              <SheetContent side="right" className="w-[300px] sm:w-[400px]">
+                <SheetHeader>
+                  <SheetTitle>Menu</SheetTitle>
+                </SheetHeader>
+                <div className="mt-6 flex flex-col space-y-4">
+                  <Button 
+                    variant={location.pathname === '/' ? 'default' : 'ghost'}
+                    className="justify-start"
+                    onClick={() => {
+                      handleHome();
+                      setIsMobileMenuOpen(false);
+                    }}
+                  >
+                    Home
+                  </Button>
+                  <Button 
+                    variant={location.pathname === '/products' ? 'default' : 'ghost'}
+                    className="justify-start"
+                    onClick={() => {
+                      navigate('/products');
+                      setIsMobileMenuOpen(false);
+                    }}
+                  >
+                    Products
+                  </Button>
+                  {/* Cart option in mobile menu */}
+                  <Button 
+                    variant="outline"
+                    className="justify-start"
+                    onClick={() => {
+                      navigate('/cart');
+                      setIsMobileMenuOpen(false);
+                    }}
+                  >
+                    <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5 mr-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13L5.4 5M7 13l-2.293 2.293c-.63.63-.184 1.707.707 1.707H17M17 13v4a2 2 0 01-2 2H9a2 2 0 01-2-2v-4m8 0V9a2 2 0 00-2-2H9a2 2 0 00-2 2v4.01" />
+                    </svg>
+                    View Cart
+                  </Button>
+                </div>
+              </SheetContent>
+            </Sheet>
           </div>
         </div>
       </div>
       
-      {/* Mobile search bar */}
+      {/* Mobile search bar - only shown on mobile */}
       <div className="md:hidden px-4 pb-4">
         <SearchBar />
       </div>
-      
-      {/* Mobile menu */}
-      {isMobileMenuOpen && (
-        <div className="md:hidden bg-white border-t border-gray-200">
-          <div className="px-2 pt-2 pb-3 space-y-1">
-            <button 
-              onClick={() => {
-                handleHome();
-                setIsMobileMenuOpen(false);
-              }}
-              className={`block px-3 py-2 rounded-md text-base font-medium w-full text-left ${
-                location.pathname === '/' 
-                  ? 'text-amber-600 bg-amber-50' 
-                  : 'text-gray-700 hover:text-amber-600 hover:bg-gray-50'
-              }`}
-            >
-              Home
-            </button>
-            <button 
-              onClick={() => {
-                navigate('/products');
-                setIsMobileMenuOpen(false);
-              }}
-              className={`block px-3 py-2 rounded-md text-base font-medium w-full text-left ${
-                location.pathname === '/products' 
-                  ? 'text-amber-600 bg-amber-50' 
-                  : 'text-gray-700 hover:text-amber-600 hover:bg-gray-50'
-              }`}
-            >
-              Products
-            </button>
-          </div>
-        </div>
-      )}
     </nav>
   );
 };

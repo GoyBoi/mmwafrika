@@ -9,6 +9,7 @@ import EmailSignupForm from '../components/EmailSignupForm.js';
 import CuratorsPicksSection from '../components/CuratorsPicksSection.js';
 import SocialProofSection from '../components/SocialProofSection.js';
 import Button from '../components/Button.js';
+import { useCart } from '../context/CartContext.js';
 
 // Mock product data with additional properties for our new features
 const products = [
@@ -92,6 +93,7 @@ const limitedTimeOffers = [
 function HomePage() {
   const navigate = useNavigate();
   const [selectedProduct, setSelectedProduct] = useState(null);
+  const { addToCart } = useCart();
   
   const handleShopNow = () => {
     navigate('/products');
@@ -161,7 +163,7 @@ function HomePage() {
           </div>
           <ProductCarousel 
             products={products.slice(0, 3)} 
-            onAddToCart={(product) => console.log('Add to cart:', product)} 
+            onAddToCart={addToCart} 
             onViewProduct={handleViewProduct} 
           />
         </div>

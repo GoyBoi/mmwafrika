@@ -9,6 +9,7 @@ const RedesignedProductListingPage = React.lazy(() => import('../pages/Redesigne
 const ComponentShowcasePage = React.lazy(() => import('../pages/ComponentShowcasePage.js'));
 const CartPage = React.lazy(() => import('../pages/CartPage.js'));
 const CheckoutPage = React.lazy(() => import('../pages/CheckoutPage.js'));
+const CartTestPage = React.lazy(() => import('../pages/CartTestPage.js'));
 
 // Loading fallback component
 const LoadingFallback = () => (
@@ -30,6 +31,7 @@ function App() {
               <Route path="/components" element={<ComponentShowcasePage />} />
               <Route path="/cart" element={<CartPage />} />
               <Route path="/checkout" element={<CheckoutPage />} />
+              <Route path="/cart-test" element={<CartTestPage />} />
             </Routes>
           </Suspense>
         </div>

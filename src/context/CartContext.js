@@ -19,33 +19,41 @@ const actionTypes = {
 const cartReducer = (state, action) => {
   switch (action.type) {
     case actionTypes.ADD_TO_CART: {
+      console.log('ADD_TO_CART action received:', action.payload);
       const existingItem = state.cartItems.find(item => item.id === action.payload.id);
       
       if (existingItem) {
+        console.log('Item already exists in cart:', existingItem);
         const updatedCartItems = state.cartItems.map(item =>
           item.id === action.payload.id
             ? { ...item, quantity: item.quantity + 1 }
             : item
         );
         
-        return {
+        const newState = {
           ...state,
           cartItems: updatedCartItems,
           totalItems: state.totalItems + 1,
           totalAmount: state.totalAmount + action.payload.price,
         };
+        
+        console.log('Updated state (existing item):', newState);
+        return newState;
       } else {
         const newItem = {
           ...action.payload,
           quantity: 1,
         };
         
-        return {
+        const newState = {
           ...state,
           cartItems: [...state.cartItems, newItem],
           totalItems: state.totalItems + 1,
           totalAmount: state.totalAmount + action.payload.price,
         };
+        
+        console.log('Updated state (new item):', newState);
+        return newState;
       }
     }
       
@@ -99,6 +107,7 @@ export const CartProvider = ({ children }) => {
   
   // Save cart to localStorage whenever it changes
   useEffect(() => {
+    console.log('Saving cart to localStorage:', state);
     localStorage.setItem('cart', JSON.stringify(state));
   }, [state]);
   
