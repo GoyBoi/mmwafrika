@@ -1,5 +1,6 @@
 import React from 'react';
 import MinimalProductCard from './MinimalProductCard.js';
+import ProductGrid from './ProductGrid.js';
 
 function BestSellersSection({ products, onViewProduct }) {
   // Sort products by sales count (highest first) and take top 4
@@ -16,16 +17,19 @@ function BestSellersSection({ products, onViewProduct }) {
           <div className="w-20 h-1 bg-gradient-to-r from-amber-500 to-orange-500 mx-auto mt-4 rounded-full"></div>
         </div>
         
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
-          {bestSellers.map((product) => (
+        {/* Enhanced Product Grid with Better Alignment */}
+        <ProductGrid 
+          products={bestSellers} 
+          columns={4}
+          renderItem={(product) => (
             <div key={product.id} className="relative">
               <MinimalProductCard product={product} onViewProduct={onViewProduct} />
               <div className="absolute top-3 right-3 bg-white rounded-full px-2 py-1 text-xs font-bold text-gray-900 shadow-sm font-body">
                 #{bestSellers.indexOf(product) + 1}
               </div>
             </div>
-          ))}
-        </div>
+          )}
+        />
       </div>
     </div>
   );

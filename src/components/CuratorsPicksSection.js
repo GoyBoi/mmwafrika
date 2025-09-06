@@ -1,4 +1,5 @@
 import React from 'react';
+import ProductGrid from './ProductGrid.js';
 import Button from './Button.js';
 
 function CuratorsPicksSection({ onViewProduct }) {
@@ -92,11 +93,13 @@ function CuratorsPicksSection({ onViewProduct }) {
                 
                 <div className="mb-6">
                   <h4 className="font-semibold text-gray-900 mb-3 font-heading">Featured Items</h4>
-                  <div className="grid grid-cols-2 gap-3">
-                    {pick.products.map((product) => (
+                  <ProductGrid 
+                    products={pick.products} 
+                    columns={2}
+                    renderItem={(product) => (
                       <div 
                         key={product.id} 
-                        className="flex items-center p-3 rounded-lg border border-gray-200 hover:border-amber-300 transition-all duration-200 cursor-pointer bg-white"
+                        className="flex items-center p-3 rounded-lg border border-gray-200 hover:border-amber-300 transition-all duration-200 cursor-pointer bg-white w-full"
                         onClick={() => onViewProduct(product.id)}
                       >
                         <div className="flex-shrink-0 w-14 h-14 rounded-md overflow-hidden border border-gray-200">
@@ -111,8 +114,8 @@ function CuratorsPicksSection({ onViewProduct }) {
                           <p className="text-amber-600 font-semibold text-sm font-body">${product.price.toFixed(2)}</p>
                         </div>
                       </div>
-                    ))}
-                  </div>
+                    )}
+                  />
                 </div>
                 
                 <Button 

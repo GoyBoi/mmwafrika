@@ -1,17 +1,15 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useMemo } from 'react';
 import { Box, Typography, Grid, Snackbar, Alert } from '@mui/material';
-import { useNavigate } from 'react-router-dom';
-import { useCart } from '../context/CartContext.js';
 import Navbar from '../components/Navbar.js';
 import Footer from '../components/Footer.js';
 import MinimalProductCard from '../components/MinimalProductCard.js';
-import ProductCarousel from '../components/ProductCarousel.js';
+import ProductPagination from '../components/ProductPagination.js';
+import QuickViewModal from '../components/QuickViewModal.js';
 import FilterSidebar from '../components/filters/FilterSidebar.js';
 import MobileFilterSheet from '../components/filters/MobileFilterSheet.js';
 import SortingDropdown from '../components/filters/SortingDropdown.js';
-import QuickViewModal from '../components/QuickViewModal.js';
-import Button from '../components/Button.js';
-import ProductPagination from '../components/ProductPagination.js';
+import ProductGrid from '../components/ProductGrid.js';
+import { useCart } from '../context/CartContext.js';
 
 // Mock product data with enhanced properties
 const products = [
@@ -326,18 +324,19 @@ function ProductListingPage() {
             <div className="flex-grow">
               {currentProducts.length > 0 ? (
                 <>
-                  <div className="grid grid-cols-2 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
-                    {currentProducts.map((product) => (
-                      <div key={product.id}>
-                        <MinimalProductCard 
-                          product={product} 
-                          onViewProduct={handleViewProduct} 
-                          onAddToCart={handleAddToCart} 
-                          onQuickView={handleQuickView} 
-                        />
-                      </div>
-                    ))}
-                  </div>
+                  {/* Enhanced Product Grid with Better Alignment */}
+                  <ProductGrid 
+                    products={currentProducts} 
+                    columns={4}
+                    renderItem={(product) => (
+                      <MinimalProductCard 
+                        product={product} 
+                        onViewProduct={handleViewProduct} 
+                        onAddToCart={handleAddToCart} 
+                        onQuickView={handleQuickView} 
+                      />
+                    )}
+                  />
                   
                   {/* Pagination */}
                   {totalPages > 1 && (
