@@ -1,5 +1,7 @@
 import React, { useState } from 'react';
 import Rating from './Rating.js';
+import ProductGrid from './ProductGrid.js';
+import MinimalProductCard from './MinimalProductCard.js';
 
 function SocialProofSection() {
   // Mock data for testimonials
@@ -158,38 +160,18 @@ function SocialProofSection() {
             <p className="text-gray-600 font-body">Most popular items this hour</p>
           </div>
           
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-            {trendingProducts.map((product, index) => (
-              <div 
-                key={product.id} 
-                className="bg-white rounded-xl shadow-md p-5 border border-gray-200 hover:shadow-lg transition-all duration-300 flex items-center"
-              >
-                <div className="flex-shrink-0 w-16 h-16 rounded-lg overflow-hidden border border-gray-200 mr-4">
-                  <img 
-                    src={product.image} 
-                    alt={product.name}
-                    className="w-full h-full object-contain p-1"
-                  />
-                </div>
-                <div className="flex-1">
-                  <div className="flex items-center mb-1">
-                    <span className="inline-flex items-center justify-center w-6 h-6 bg-amber-100 text-amber-800 rounded-full text-xs font-bold mr-2 font-body">
-                      {index + 1}
-                    </span>
-                    <h3 className="font-semibold text-gray-900 font-heading truncate">{product.name}</h3>
-                  </div>
-                  <p className="text-sm text-gray-600 font-body">{product.sales} purchases today</p>
-                  <div className="flex items-center mt-1">
-                    <div className="w-full bg-gray-200 rounded-full h-1.5">
-                      <div 
-                        className="bg-gradient-to-r from-amber-500 to-orange-500 h-1.5 rounded-full" 
-                        style={{ width: `${Math.min(100, (product.sales / 300) * 100)}%` }}
-                      ></div>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            ))}
+          <div className="flex justify-center w-full">
+            <ProductGrid 
+              products={trendingProducts} 
+              columns={3}
+              renderItem={(product) => (
+                <MinimalProductCard 
+                  product={product} 
+                  onViewProduct={(productId) => console.log('View product:', productId)}
+                  compact={true}
+                />
+              )}
+            />
           </div>
         </div>
 
