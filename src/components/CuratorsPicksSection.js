@@ -97,21 +97,12 @@ function CuratorsPicksSection({ onViewProduct }) {
                     products={pick.products} 
                     columns={2}
                     renderItem={(product) => (
-                      <div 
-                        className="flex items-center p-3 rounded-lg border border-gray-200 hover:border-amber-300 transition-all duration-200 cursor-pointer bg-white w-full"
-                        onClick={() => onViewProduct(product.id)}
-                      >
-                        <div className="flex-shrink-0 w-14 h-14 rounded-md overflow-hidden border border-gray-200">
-                          <img 
-                            src={product.image} 
-                            alt={product.name}
-                            className="w-full h-full object-contain p-1"
-                          />
-                        </div>
-                        <div className="ml-3">
-                          <h5 className="font-medium text-gray-900 text-sm truncate max-w-[90px] font-body">{product.name}</h5>
-                          <p className="text-amber-600 font-semibold text-sm font-body">${product.price.toFixed(2)}</p>
-                        </div>
+                      <div className="w-full">
+                        <MinimalProductCard 
+                          product={product} 
+                          onViewProduct={onViewProduct} 
+                          compact={true}
+                        />
                       </div>
                     )}
                   />

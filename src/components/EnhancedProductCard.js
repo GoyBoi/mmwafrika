@@ -174,6 +174,15 @@ const EnhancedProductCard = ({
                 )}
               </div>
             </div>
+            
+            {/* Add to Cart and Wishlist Buttons for compact view */}
+            <div className="mt-2 flex justify-center">
+              <ProductActionButtons 
+                product={product} 
+                size="sm"
+                fullWidth={true}
+              />
+            </div>
           </CardContent>
         </Card>
       </motion.div>
