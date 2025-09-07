@@ -21,7 +21,7 @@ const buttonVariants = cva(
         link: "text-primary underline-offset-4 hover:underline",
         accent: "bg-amber-600 text-white shadow-sm hover:bg-amber-700 hover:shadow-md",
         primaryDark: "bg-white text-black hover:bg-gray-100 shadow-sm",
-        cart: "bg-[#F7BE89] text-[#FFEBD6] shadow-md hover:bg-[#e6ac7a] hover:shadow-lg font-semibold hover:-translate-y-0.5 transition-all duration-300",
+        cart: "bg-[#F7BE89] text-[#1c1917] shadow-md hover:bg-[#e6ac7a] hover:shadow-lg font-semibold hover:-translate-y-0.5 transition-all duration-300",
       },
       size: {
         default: "h-9 px-4 py-2",

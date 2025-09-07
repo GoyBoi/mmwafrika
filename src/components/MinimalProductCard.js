@@ -154,14 +154,14 @@ function MinimalProductCard({ product, onViewProduct, onAddToCart, onQuickView, 
       {/* Product Info with Better Typography */}
       <div className="p-4 flex-grow flex flex-col justify-between">
         {/* Product Title and Rating */}
-        <div onClick={() => onViewProduct(product.id)}>
+        <div className="text-center" onClick={() => onViewProduct(product.id)}>
           {/* Product Title */}
           <h3 className="font-heading font-medium text-gray-900 text-lg mb-1 truncate group-hover:text-amber-700 transition-colors">
             {product.name}
           </h3>
           
           {/* Rating */}
-          <div className="flex items-center mb-2">
+          <div className="flex items-center justify-center mb-2">
             <Rating value={rating} readonly />
             <span className="text-sm text-gray-500 ml-2 font-body">({reviewCount})</span>
             {salesCount > 0 && (
@@ -171,10 +171,10 @@ function MinimalProductCard({ product, onViewProduct, onAddToCart, onQuickView, 
         </div>
         
         {/* Price and Add to Cart Button */}
-        <div>
+        <div className="text-center">
           {/* Price with Visual Emphasis */}
-          <div className="flex items-center justify-between pt-2" onClick={() => onViewProduct(product.id)}>
-            <div className="flex items-center">
+          <div className="flex items-center justify-center pt-2" onClick={() => onViewProduct(product.id)}>
+            <div className="flex items-center justify-center">
               <span className="font-body font-semibold text-gray-900 text-xl">${product.price.toFixed(2)}</span>
               {isOnSale && (
                 <span className="text-sm text-gray-500 line-through ml-2 font-body">${product.originalPrice.toFixed(2)}</span>
