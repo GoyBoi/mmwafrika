@@ -15,32 +15,13 @@ const ProductGrid = ({ products, renderItem, columns = 4 }) => {
     }
   };
 
-  // Calculate if we need to add placeholder items for centering
-  const needsCentering = products.length % columns !== 0;
-  const placeholdersNeeded = needsCentering ? columns - (products.length % columns) : 0;
-
   return (
-    <div className={`grid ${getColumnClasses()} gap-6 justify-items-center`}>
+    <div className={`grid ${getColumnClasses()} gap-6 justify-items-center mx-auto w-full`}>
       {products.map((product, index) => (
-        <div key={product.id || index} className="w-full max-w-[280px]">
+        <div key={product.id || index} className="w-full">
           {renderItem(product)}
         </div>
       ))}
-      
-      {/* Placeholder items for better centering with odd numbers */}
-      {needsCentering && placeholdersNeeded > 0 && (
-        <>
-          {Array.from({ length: placeholdersNeeded }).map((_, index) => (
-            <div 
-              key={`placeholder-${index}`} 
-              className="w-full max-w-[280px] invisible"
-              aria-hidden="true"
-            >
-              {renderItem(products[0])}
-            </div>
-          ))}
-        </>
-      )}
     </div>
   );
 };

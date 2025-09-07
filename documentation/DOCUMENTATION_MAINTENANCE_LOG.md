@@ -24,7 +24,8 @@ The following documentation files have been retained as they represent current o
 14. **OPERATION_BEAUTIFY_PHASE3_IMPLEMENTATION.md** - Phase 3 implementation details
 15. **OPERATION_BEAUTIFY_PHASE4_IMPLEMENTATION.md** - Phase 4 implementation details
 16. **OPERATION_BEAUTIFY_PHASE4_BUG_FIXES.md** - Phase 4 bug fixes
-17. **COMPREHENSIVE_BUTTON_FIXES_2025-09-06.md** - Comprehensive button fixes (NEW)
+17. **COMPREHENSIVE_BUTTON_FIXES_2025-09-06.md** - Comprehensive button fixes
+18. **VISIBILITY_AND_ALIGNMENT_FIXES_2025-09-06.md** - Visibility and alignment fixes (NEW) (NEW)
 
 ## Documentation Files Removed
 

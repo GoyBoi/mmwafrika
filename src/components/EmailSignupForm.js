@@ -56,7 +56,7 @@ function EmailSignupForm() {
           />
           <Button
             type="submit"
-            variant="accent"
+            variant="primaryDark"
             disabled={isLoading}
             className="px-6 py-3"
           >

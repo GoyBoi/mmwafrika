@@ -183,7 +183,7 @@ function MinimalProductCard({ product, onViewProduct, onAddToCart, onQuickView, 
           </div>
           
           {/* Add to Cart Button */}
-          <div className="mt-4">
+          <div className="mt-4 flex justify-center">
             <AddToCartButton 
               product={product} 
               onAddToCart={onAddToCart}

@@ -17,6 +17,7 @@ const Button = ({
     primary: 'default',
     secondary: 'secondary',
     ghost: 'ghost',
+    link: 'link',
     accent: 'accent',
     primaryDark: 'primaryDark',
     cart: 'cart'
@@ -26,13 +27,14 @@ const Button = ({
   const sizeMap = {
     sm: 'sm',
     md: 'default',
-    lg: 'lg'
+    lg: 'lg',
+    icon: 'icon'
   };
 
   const shadcnVariant = variantMap[variant] || variant;
   const shadcnSize = sizeMap[size] || size;
 
-  console.log('Button: Rendering with classes', className);
+  console.log('Button: Rendering with variant', variant, 'mapped to', shadcnVariant, 'and size', size, 'mapped to', shadcnSize);
 
   return (
     <motion.div

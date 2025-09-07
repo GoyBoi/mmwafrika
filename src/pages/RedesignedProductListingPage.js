@@ -324,22 +324,22 @@ function ProductListingPage() {
               </div>
               
               {/* Product Grid */}
-            <div className="flex-grow">
-              {currentProducts.length > 0 ? (
-                <>
-                  {/* Enhanced Product Grid with Better Alignment */}
-                  <ProductGrid 
-                    products={currentProducts} 
-                    columns={4}
-                    renderItem={(product) => (
-                      <MinimalProductCard 
-                        product={product} 
-                        onViewProduct={handleViewProduct} 
-                        onAddToCart={handleAddToCart} 
-                        onQuickView={handleQuickView} 
-                      />
-                    )}
-                  />
+              <div className="w-full">
+                {currentProducts.length > 0 ? (
+                  <>
+                    {/* Enhanced Product Grid with Better Alignment */}
+                    <ProductGrid 
+                      products={currentProducts} 
+                      columns={4}
+                      renderItem={(product) => (
+                        <MinimalProductCard 
+                          product={product} 
+                          onViewProduct={handleViewProduct} 
+                          onAddToCart={handleAddToCart} 
+                          onQuickView={handleQuickView} 
+                        />
+                      )}
+                    />
                   
                   {/* Pagination */}
                   {totalPages > 1 && (

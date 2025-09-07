@@ -42,7 +42,7 @@ const AddToCartButton = ({
 
   return (
     <motion.div
-      whileHover={{ scale: 1.02 }}
+      whileHover={{ scale: 1.03 }}
       whileTap={{ scale: 0.98 }}
       className={fullWidth ? 'w-full' : ''}
     >
@@ -50,7 +50,7 @@ const AddToCartButton = ({
         variant="cart"
         size={shadcnSize}
         onClick={handleAddToCart}
-        className={className}
+        className={`font-semibold shadow-md hover:shadow-lg transition-all duration-300 rounded-lg ${className}`}
         {...props}
       >
         Add to Cart
