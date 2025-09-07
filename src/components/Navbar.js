@@ -3,7 +3,8 @@ import { useNavigate, useLocation } from 'react-router-dom';
 import SearchBar from './SearchBar.js';
 import { Sheet, SheetContent, SheetHeader, SheetTitle, SheetTrigger } from '@/components/ui/sheet';
 import { Button } from '@/components/ui/button';
-import ShoppingCartIcon from './ShoppingCartIcon.js';
+import ShoppingCartIcon from './cart/ShoppingCartIcon.js';
+import WishlistIcon from './WishlistIcon.js';
 
 const Navbar = ({ showBackButton = false, onHome }) => {
   const navigate = useNavigate();
@@ -73,8 +74,13 @@ const Navbar = ({ showBackButton = false, onHome }) => {
             </nav>
           </div>
           
-          {/* Right side - Cart, User menu and mobile menu */}
+          {/* Right side - Cart, Wishlist, User menu and mobile menu */}
           <div className="flex items-center space-x-2">
+            {/* Wishlist Icon */}
+            <div className="relative">
+              <WishlistIcon />
+            </div>
+            
             {/* Shopping Cart Icon - NEW DESIGN */}
             <div className="relative">
               <ShoppingCartIcon />
@@ -124,19 +130,15 @@ const Navbar = ({ showBackButton = false, onHome }) => {
                   >
                     Products
                   </Button>
-                  {/* Cart option in mobile menu */}
                   <Button 
-                    variant="outline"
+                    variant={location.pathname === '/wishlist' ? 'default' : 'ghost'}
                     className="justify-start"
                     onClick={() => {
-                      navigate('/cart');
+                      navigate('/wishlist');
                       setIsMobileMenuOpen(false);
                     }}
                   >
-                    <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5 mr-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13L5.4 5M7 13l-2.293 2.293c-.63.63-.184 1.707.707 1.707H17M17 13v4a2 2 0 01-2 2H9a2 2 0 01-2-2v-4m8 0V9a2 2 0 00-2-2H9a2 2 0 00-2 2v4.01" />
-                    </svg>
-                    View Cart
+                    Wishlist
                   </Button>
                 </div>
               </SheetContent>

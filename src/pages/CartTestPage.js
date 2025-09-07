@@ -3,7 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import { useCart } from '../context/CartContext.js';
 import Navbar from '../components/Navbar.js';
 import Footer from '../components/Footer.js';
-import AddToCartButton from '../components/AddToCartButton.js';
+import ProductActionButtons from '../components/ProductActionButtons.js';
 import Button from '../components/Button.js';
 
 // Mock product data
@@ -42,7 +42,7 @@ function CartTestPage() {
                 <img 
                   src={testProduct.image} 
                   alt={testProduct.name} 
-                  className="w-full h-64 object-contain bg-gray-100 rounded-lg"
+                  className="w-full h-64 object-cover bg-gray-100 rounded-lg"
                 />
               </div>
               <p className="text-gray-700 mb-4">{testProduct.description}</p>
@@ -63,12 +63,11 @@ function CartTestPage() {
               
               {/* Test AddToCartButton component */}
               <div className="mb-6">
-                <h4 className="text-md font-medium mb-2">AddToCartButton Component:</h4>
-                <AddToCartButton 
+                <h4 className="text-md font-medium mb-2">ProductActionButtons Component:</h4>
+                <ProductActionButtons 
                   product={testProduct} 
                   size="lg"
                   fullWidth={true}
-                  onAddToCart={() => console.log('Added to cart:', testProduct.name)}
                 />
               </div>
               

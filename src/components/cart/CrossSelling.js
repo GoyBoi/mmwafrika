@@ -40,7 +40,7 @@ const mockRecommendations = [
   }
 ];
 
-const CrossSelling = ({ onAddToCart, onViewProduct }) => {
+const CrossSelling = ({ onViewProduct }) => {
   const { cartItems } = useCart();
   
   // Check if an item is already in the cart
@@ -85,7 +85,6 @@ const CrossSelling = ({ onAddToCart, onViewProduct }) => {
               <p className="text-sm text-gray-500 mb-2">{item.description}</p>
               <p className="text-lg font-semibold text-gray-900 mb-3">${item.price.toFixed(2)}</p>
               <Button
-                onClick={() => onAddToCart(item)}
                 disabled={isInCart(item.id)}
                 className="w-full"
                 variant={isInCart(item.id) ? "secondary" : "default"}

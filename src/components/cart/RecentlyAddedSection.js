@@ -3,7 +3,7 @@ import { Card, CardContent } from '@/components/ui/card.jsx';
 import { Button } from '@/components/ui/button.jsx';
 import { useCart } from '../../context/CartContext.js';
 
-const RecentlyAddedSection = ({ recentlyAddedItems, onAddToCart, onViewProduct }) => {
+const RecentlyAddedSection = ({ recentlyAddedItems, onViewProduct }) => {
   const { cartItems } = useCart();
   
   // Check if an item is already in the cart
@@ -43,7 +43,6 @@ const RecentlyAddedSection = ({ recentlyAddedItems, onAddToCart, onViewProduct }
               </h4>
               <p className="text-lg font-semibold text-gray-900 mb-3">${item.price.toFixed(2)}</p>
               <Button
-                onClick={() => onAddToCart(item)}
                 disabled={isInCart(item.id)}
                 className="w-full"
                 variant={isInCart(item.id) ? "secondary" : "default"}

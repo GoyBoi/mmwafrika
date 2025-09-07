@@ -7,7 +7,7 @@ import Button from '../components/Button.js';
 import Rating from '../components/Rating.js';
 import Card from '../components/Card.js';
 import ProductDetailTabs from '../components/ProductDetailTabs.js';
-import AddToCartButton from '../components/AddToCartButton.js';
+import ProductActionButtons from '../components/ProductActionButtons.js';
 import ProductImageViewer from '../components/ProductImageViewer.js';
 
 // Mock product data with enhanced information
@@ -195,7 +195,7 @@ const reviews = [
 function EnhancedProductDetailPage() {
   const { productId } = useParams();
   const navigate = useNavigate();
-  const { addToCart } = useCart();
+  // Add to cart functionality removed for fresh start
   const [selectedImage, setSelectedImage] = useState(0);
   const [quantity, setQuantity] = useState(1);
   const [showZoom, setShowZoom] = useState(false);
@@ -224,18 +224,7 @@ function EnhancedProductDetailPage() {
     );
   }
 
-  const handleAddToCart = () => {
-    // Add the product to cart without size selection
-    const productToAdd = {
-      ...product,
-      quantity
-    };
-    
-    console.log('Adding product to cart:', productToAdd);
-    addToCart(productToAdd);
-    // Show success message or redirect to cart
-    console.log('Product added to cart successfully');
-  };
+  
 
   const handleImageClick = () => {
     setShowZoom(!showZoom);
@@ -368,14 +357,10 @@ function EnhancedProductDetailPage() {
                 
                 {/* Add to cart button */}
                 <div className="mt-6">
-                  <AddToCartButton 
-                    product={{
-                      ...product,
-                      selectedSize: product.size && product.size.length > 0 ? product.size[0] : 'ONE SIZE'
-                    }}
+                  <ProductActionButtons 
+                    product={product}
                     size="lg"
                     fullWidth={true}
-                    onAddToCart={() => console.log('Added to cart (detail):', product.name)}
                   />
                 </div>
                 

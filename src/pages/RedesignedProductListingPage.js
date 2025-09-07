@@ -1,5 +1,5 @@
 import React, { useState, useMemo } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 import { Box, Typography, Grid, Snackbar, Alert } from '@mui/material';
 import Navbar from '../components/Navbar.js';
 import Footer from '../components/Footer.js';
@@ -23,15 +23,9 @@ const products = [
     originalPrice: 39.99,
     image: '/products_and_logo/1000006827.jpg',
     description: 'Beautiful traditional African print dress made from high-quality fabric. Perfect for any occasion.',
-    rating: 4.5,
-    reviewCount: 128,
-    salesCount: 342,
     isNew: true,
     addedDate: new Date(Date.now() - 2 * 24 * 60 * 60 * 1000), // Added 2 days ago
-    category: 'dresses',
-    gender: 'women',
-    color: 'multi',
-    size: ['S', 'M', 'L', 'XL']
+    salesCount: 128
   },
   {
     id: 2,
@@ -39,13 +33,8 @@ const products = [
     price: 39.99,
     image: '/products_and_logo/1000006833.jpg',
     description: 'Handcrafted basket made by skilled artisans using traditional techniques. Great for storage or decoration.',
-    rating: 4.8,
-    reviewCount: 96,
-    salesCount: 156,
-    category: 'home',
-    gender: 'unisex',
-    color: 'brown',
-    size: ['one-size']
+    isNew: false,
+    salesCount: 96
   },
   {
     id: 3,
@@ -54,15 +43,9 @@ const products = [
     originalPrice: 24.99,
     image: '/products_and_logo/1000006880.jpg',
     description: 'Intricately carved wooden sculpture representing African culture and heritage.',
-    rating: 4.3,
-    reviewCount: 75,
-    salesCount: 89,
     isNew: true,
     addedDate: new Date(Date.now() - 1 * 24 * 60 * 60 * 1000), // Added 1 day ago
-    category: 'home',
-    gender: 'unisex',
-    color: 'brown',
-    size: ['one-size']
+    salesCount: 75
   },
   {
     id: 4,
@@ -70,13 +53,8 @@ const products = [
     price: 49.99,
     image: '/products_and_logo/1000006881.jpg',
     description: 'Authentic Kente cloth made in Ghana. Each pattern has a special meaning and significance.',
-    rating: 4.9,
-    reviewCount: 210,
-    salesCount: 432,
-    category: 'accessories',
-    gender: 'unisex',
-    color: 'multi',
-    size: ['one-size']
+    isNew: false,
+    salesCount: 210
   },
   {
     id: 5,
@@ -84,13 +62,8 @@ const products = [
     price: 59.99,
     image: '/products_and_logo/1000006886.jpg',
     description: 'Beautiful set of beaded jewelry including necklace, earrings, and bracelet. Handmade with vibrant colors.',
-    rating: 4.7,
-    reviewCount: 187,
-    salesCount: 298,
-    category: 'accessories',
-    gender: 'women',
-    color: 'multi',
-    size: ['one-size']
+    isNew: false,
+    salesCount: 187
   },
   {
     id: 6,
@@ -98,206 +71,108 @@ const products = [
     price: 69.99,
     image: '/products_and_logo/1000016728.jpg',
     description: 'Traditional African mask used in ceremonies and cultural events. Made from authentic materials.',
-    rating: 4.6,
-    reviewCount: 64,
-    salesCount: 78,
     isNew: true,
     addedDate: new Date(Date.now() - 5 * 24 * 60 * 60 * 1000), // Added 5 days ago
-    category: 'home',
-    gender: 'unisex',
-    color: 'brown',
-    size: ['one-size']
+    salesCount: 64
+  }
+];
+
+// Mock limited time offers data
+const limitedTimeOffers = [
+  {
+    title: 'Summer Collection Sale',
+    description: 'Up to 50% off on selected items',
+    discount: '50%',
+    endTime: new Date(Date.now() + 3 * 24 * 60 * 60 * 1000), // 3 days from now
+    products: [products[0], products[1]]
   },
   {
-    id: 7,
-    name: 'Dashiki Shirt',
-    price: 34.99,
-    originalPrice: 44.99,
-    image: '/products_and_logo/1000006827.jpg',
-    description: 'Comfortable and stylish Dashiki shirt with traditional African patterns.',
-    rating: 4.4,
-    reviewCount: 156,
-    salesCount: 267,
-    category: 'tops',
-    gender: 'men',
-    color: 'red',
-    size: ['S', 'M', 'L', 'XL', 'XXL']
-  },
-  {
-    id: 8,
-    name: 'Ankara Skirt',
-    price: 27.99,
-    image: '/products_and_logo/1000006833.jpg',
-    description: 'Beautiful Ankara print skirt perfect for any occasion.',
-    rating: 4.2,
-    reviewCount: 89,
-    salesCount: 143,
-    category: 'bottoms',
-    gender: 'women',
-    color: 'multi',
-    size: ['S', 'M', 'L']
+    title: 'New Arrivals Special',
+    description: '25% off all new arrivals',
+    discount: '25%',
+    endTime: new Date(Date.now() + 5 * 24 * 60 * 60 * 1000), // 5 days from now
+    products: [products[2], products[5]]
   }
 ];
 
 function ProductListingPage() {
   const navigate = useNavigate();
-  const { addToCart } = useCart();
-  const [openSnackbar, setOpenSnackbar] = useState(false);
-  const [snackbarMessage, setSnackbarMessage] = useState('');
   const [selectedProduct, setSelectedProduct] = useState(null);
-  const [isQuickViewOpen, setIsQuickViewOpen] = useState(false);
-  const [isMobileFilterOpen, setIsMobileFilterOpen] = useState(false);
-  const [activeFilters, setActiveFilters] = useState({});
-  const [sortBy, setSortBy] = useState('featured');
-  const [currentPage, setCurrentPage] = useState(1);
-  const [productsPerPage] = useState(8);
-
-  const handleAddToCart = (product) => {
-    console.log('handleAddToCart called with product:', product);
-    addToCart(product);
-    setSnackbarMessage(`${product.name} added to cart!`);
-    setOpenSnackbar(true);
-    
-    // Close modals after adding to cart
-    setIsQuickViewOpen(false);
+  // Add to cart functionality removed for fresh start
+  
+  const handleShopNow = () => {
+    navigate('/products');
   };
 
   const handleViewProduct = (productId) => {
-    // Navigate to the product detail page using React Router
     navigate(`/product/${productId}`);
   };
 
-  const handleQuickView = (productId) => {
-    const product = products.find(p => p.id === productId);
-    setSelectedProduct(product);
-    setIsQuickViewOpen(true);
-  };
-
-  const handleCloseModal = () => {
-    setIsQuickViewOpen(false);
-    setSelectedProduct(null);
-  };
-
-  const handleCloseSnackbar = (event, reason) => {
-    if (reason === 'clickaway') {
-      return;
-    }
-    setOpenSnackbar(false);
-  };
-
-  const handleFiltersChange = (newFilters) => {
-    setActiveFilters(newFilters);
-    setCurrentPage(1); // Reset to first page when filters change
-  };
-
-  const handleSortChange = (sortId) => {
-    setSortBy(sortId);
-    setCurrentPage(1); // Reset to first page when sorting changes
-  };
-
-  // Filter and sort products
-  const filteredAndSortedProducts = (() => {
-    let result = [...products];
-    
-    // Apply filters
-    if (activeFilters.gender && activeFilters.gender.length > 0) {
-      result = result.filter(product => 
-        activeFilters.gender.includes(product.gender)
-      );
-    }
-    
-    if (activeFilters.category && activeFilters.category.length > 0) {
-      result = result.filter(product => 
-        activeFilters.category.includes(product.category)
-      );
-    }
-    
-    if (activeFilters.priceRange) {
-      const [min, max] = activeFilters.priceRange;
-      result = result.filter(product => 
-        product.price >= min && product.price <= max
-      );
-    }
-    
-    if (activeFilters.color && activeFilters.color.length > 0) {
-      result = result.filter(product => 
-        activeFilters.color.includes(product.color)
-      );
-    }
-    
-    // Apply sorting
-    switch (sortBy) {
-      case 'newest':
-        result.sort((a, b) => (b.addedDate || new Date(0)) - (a.addedDate || new Date(0)));
-        break;
-      case 'price-low':
-        result.sort((a, b) => a.price - b.price);
-        break;
-      case 'price-high':
-        result.sort((a, b) => b.price - a.price);
-        break;
-      case 'rating':
-        result.sort((a, b) => b.rating - a.rating);
-        break;
-      case 'best-sellers':
-        result.sort((a, b) => b.salesCount - a.salesCount);
-        break;
-      case 'discount':
-        result.sort((a, b) => {
-          const aDiscount = a.originalPrice ? ((a.originalPrice - a.price) / a.originalPrice) * 100 : 0;
-          const bDiscount = b.originalPrice ? ((b.originalPrice - b.price) / b.originalPrice) * 100 : 0;
-          return bDiscount - aDiscount;
-        });
-        break;
-      default:
-        // Featured sorting (default) - could be a more complex algorithm
-        result.sort((a, b) => b.salesCount - a.salesCount);
-    }
-    
-    return result;
-  })();
-
-  // Pagination
-  const indexOfLastProduct = currentPage * productsPerPage;
-  const indexOfFirstProduct = indexOfLastProduct - productsPerPage;
-  const currentProducts = filteredAndSortedProducts.slice(indexOfFirstProduct, indexOfLastProduct);
-  const totalPages = Math.ceil(filteredAndSortedProducts.length / productsPerPage);
-
-  const handlePageChange = (pageNumber) => {
-    setCurrentPage(pageNumber);
-  };
-
-  // Featured products (first 3)
-  const featuredProducts = products.slice(0, 3);
-
   return (
-    <div className="flex flex-col min-h-screen bg-background-white">
-      <Navbar showBackButton={true} />
+    <div className="min-h-screen flex flex-col bg-white">
+      <Navbar />
       
-      <Box className="flex-grow">
-        {/* Hero section with featured products carousel */}
-        <div className="bg-background-white py-section-space-2">
-          <div className="container mx-auto px-component-space-2">
-            <Typography variant="h2" className="mb-section-space-1 text-center font-heading font-medium text-secondary-black">
-              Featured Products
-            </Typography>
-            <ProductCarousel 
-              products={featuredProducts} 
-              onAddToCart={handleAddToCart} 
-              onViewProduct={handleViewProduct} 
-            />
-          </div>
+      {/* Hero Section */}
+      <div className="relative w-full h-[85vh] overflow-hidden">
+        <div className="absolute inset-0">
+          <div className="w-full h-full bg-cover bg-center bg-fixed" style={{ backgroundImage: "url('/products_and_logo/1000006827.jpg')" }} />
+          <div className="absolute inset-0 bg-gradient-to-r from-black/70 via-black/40 to-transparent md:from-black/60 md:via-black/20 md:to-transparent" />
         </div>
         
-        {/* Products section with filters and sorting */}
-        <div className="container mx-auto px-component-space-2 py-section-space-2">
+        <div className="relative z-10 h-full flex items-center">
+          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div className="max-w-2xl ml-0 md:ml-8 lg:ml-16">
+              <div className="space-y-6">
+                <div className="space-y-4">
+                  <h2 className="text-lg md:text-xl font-accent text-amber-400 tracking-widest uppercase">
+                    MMWafrika Collection
+                  </h2>
+                  <h1 className="text-4xl md:text-5xl lg:text-6xl font-heading font-semibold tracking-tight text-white">
+                    <span className="block">Discover Authentic</span>
+                    <span className="block text-amber-400 mt-2">African Fashion</span>
+                  </h1>
+                </div>
+                <p className="text-base md:text-lg text-gray-200 font-body max-w-xl leading-relaxed">
+                  Experience the rich heritage and vibrant culture of Africa through our curated collection of traditional clothing, accessories, and artisan crafts.
+                </p>
+                <div className="pt-4">
+                  <Button
+                    onClick={handleShopNow}
+                    variant="accent"
+                    size="lg"
+                    className="px-8 py-4 text-base font-semibold rounded-full shadow-xl hover:shadow-2xl transform hover:scale-105 transition-all duration-300 hover-glow-lg"
+                  >
+                    Shop Collection
+                  </Button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      {/* Featured Products Carousel */}
+      <div className="py-12 bg-white">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="text-center mb-10">
+            <h2 className="text-3xl font-heading font-semibold text-gray-900 mb-2">Featured Products</h2>
+            <p className="text-gray-600 font-body">Handpicked selections from our collection</p>
+            <div className="w-20 h-1 bg-gradient-to-r from-amber-500 to-orange-500 mx-auto mt-4 rounded-full"></div>
+          </div>
+          <ProductCarousel 
+            products={products.slice(0, 3)} 
+            onViewProduct={handleViewProduct} 
+          />
+        </div>
+      </div>
+
+      {/* Product Grid with Filters */}
+      <div className="py-12 bg-white">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex flex-col md:flex-row">
             {/* Filter Sidebar - Hidden on mobile */}
-            <div className="hidden md:block">
-              <FilterSidebar 
-                onFiltersChange={handleFiltersChange} 
-                activeFilters={activeFilters} 
-              />
+            <div className="hidden md:block md:w-1/4 lg:w-1/5 pr-6">
+              <FilterSidebar />
             </div>
             
             {/* Main Content */}
@@ -306,7 +181,7 @@ function ProductListingPage() {
               <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center mb-6 gap-4">
                 <Button
                   variant="secondary"
-                  onClick={() => setIsMobileFilterOpen(true)}
+                  onClick={() => console.log('Open mobile filters')}
                   className="md:hidden w-full sm:w-auto"
                 >
                   Filter Products
@@ -314,122 +189,40 @@ function ProductListingPage() {
                 
                 <div className="flex items-center w-full sm:w-auto">
                   <span className="mr-4 text-sm text-gray-600 font-body">
-                    {filteredAndSortedProducts.length} products
+                    {products.length} products
                   </span>
-                  <SortingDropdown 
-                    onSortChange={handleSortChange} 
-                    currentSort={sortBy} 
-                  />
+                  <SortingDropdown />
                 </div>
               </div>
               
               {/* Product Grid */}
               <div className="w-full">
-                {currentProducts.length > 0 ? (
-                  <>
-                    {/* Enhanced Product Grid with Better Alignment */}
-                    <ProductGrid 
-                      products={currentProducts} 
-                      columns={4}
-                      renderItem={(product) => (
-                        <MinimalProductCard 
-                          product={product} 
-                          onViewProduct={handleViewProduct} 
-                          onAddToCart={handleAddToCart} 
-                          onQuickView={handleQuickView} 
-                        />
-                      )}
+                <ProductGrid 
+                  products={products} 
+                  columns={4}
+                  renderItem={(product) => (
+                    <MinimalProductCard 
+                      product={product} 
+                      onViewProduct={handleViewProduct} 
                     />
-                  
-                  {/* Pagination */}
-                  {totalPages > 1 && (
-                    <div className="flex justify-center mt-12 mb-8">
-                      <ProductPagination
-                        currentPage={currentPage}
-                        totalPages={totalPages}
-                        onPageChange={handlePageChange}
-                      />
-                    </div>
                   )}
-                </>
-              ) : (
-                <div className="text-center py-16">
-                  <Typography variant="h5" className="mb-4 font-heading font-medium text-gray-900">
-                    No products found
-                  </Typography>
-                  <p className="text-gray-600 mb-8 font-body">
-                    Try adjusting your filters to see more products
-                  </p>
-                  <Button
-                    variant="accent"
-                    onClick={() => handleFiltersChange({})}
-                    className="px-6 py-3"
-                  >
-                    Clear All Filters
-                  </Button>
-                </div>
-              )}
-            </div>
+                />
+              </div>
+              
+              {/* Pagination */}
+              <div className="flex justify-center mt-12 mb-8">
+                <ProductPagination
+                  currentPage={1}
+                  totalPages={Math.ceil(products.length / 8)}
+                  onPageChange={(page) => console.log('Page changed to:', page)}
+                />
+              </div>
             </div>
           </div>
         </div>
-      </Box>
-      
+      </div>
+
       <Footer />
-      
-      {/* Quick View Modal */}
-      {isQuickViewOpen && (
-        <QuickViewModal 
-          product={selectedProduct} 
-          isOpen={isQuickViewOpen} 
-          onClose={handleCloseModal} 
-          onAddToCart={handleAddToCart} 
-        />
-      )}
-      
-      {/* Mobile Filter Sheet */}
-      <MobileFilterSheet 
-        isOpen={isMobileFilterOpen} 
-        onClose={() => setIsMobileFilterOpen(false)} 
-        onFiltersChange={handleFiltersChange} 
-        activeFilters={activeFilters} 
-      />
-      
-      <Snackbar 
-        open={openSnackbar} 
-        autoHideDuration={3000} 
-        onClose={handleCloseSnackbar}
-        anchorOrigin={{ vertical: 'bottom', horizontal: 'right' }}
-        sx={{
-          '& .MuiSnackbarContent-root': {
-            background: 'white',
-            color: '#1d1d1f',
-            boxShadow: '0 4px 12px rgba(0,0,0,0.08)',
-            borderRadius: '12px',
-            fontWeight: 400,
-            fontSize: '0.95rem',
-            border: '1px solid #f0f0f0',
-            minWidth: '300px'
-          }
-        }}
-      >
-        <Alert 
-          onClose={handleCloseSnackbar} 
-          severity="success" 
-          sx={{ 
-            width: '100%',
-            background: 'transparent',
-            color: '#1d1d1f',
-            fontWeight: 400,
-            fontSize: '0.95rem',
-            padding: '0px'
-          }}
-          variant="filled"
-          icon={false}
-        >
-          {snackbarMessage}
-        </Alert>
-      </Snackbar>
     </div>
   );
 }

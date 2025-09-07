@@ -8,8 +8,14 @@ import LimitedTimeOffersSection from '../components/LimitedTimeOffersSection.js'
 import EmailSignupForm from '../components/EmailSignupForm.js';
 import CuratorsPicksSection from '../components/CuratorsPicksSection.js';
 import SocialProofSection from '../components/SocialProofSection.js';
+import WindowShoppingSection from '../components/WindowShoppingSection.js';
+import PersonalizedRecommendations from '../components/PersonalizedRecommendations.js';
+import RewardsSection from '../components/RewardsSection.js';
+import SurpriseDelight from '../components/SurpriseDelight.js';
+import SeasonalCollections from '../components/SeasonalCollections.js';
 import Button from '../components/Button.js';
 import EnhancedHeroSection from '../components/EnhancedHeroSection.js';
+import SectionLayout from '../components/ui/SectionLayout.js';
 import { useCart } from '../context/CartContext.js';
 
 // Mock product data with additional properties for our new features
@@ -22,7 +28,8 @@ const products = [
     description: 'Beautiful traditional African print dress made from high-quality fabric. Perfect for any occasion.',
     isNew: true,
     addedDate: new Date(Date.now() - 2 * 24 * 60 * 60 * 1000), // Added 2 days ago
-    salesCount: 128
+    salesCount: 128,
+    stockCount: 3 // Low stock
   },
   {
     id: 2,
@@ -31,7 +38,8 @@ const products = [
     image: '/products_and_logo/1000006833.jpg',
     description: 'Handcrafted basket made by skilled artisans using traditional techniques. Great for storage or decoration.',
     isNew: false,
-    salesCount: 96
+    salesCount: 96,
+    stockCount: 15
   },
   {
     id: 3,
@@ -41,7 +49,8 @@ const products = [
     description: 'Intricately carved wooden sculpture representing African culture and heritage.',
     isNew: true,
     addedDate: new Date(Date.now() - 1 * 24 * 60 * 60 * 1000), // Added 1 day ago
-    salesCount: 75
+    salesCount: 75,
+    stockCount: 1 // Almost gone
   },
   {
     id: 4,
@@ -50,7 +59,8 @@ const products = [
     image: '/products_and_logo/1000006881.jpg',
     description: 'Authentic Kente cloth made in Ghana. Each pattern has a special meaning and significance.',
     isNew: false,
-    salesCount: 210
+    salesCount: 210,
+    stockCount: 8
   },
   {
     id: 5,
@@ -59,7 +69,8 @@ const products = [
     image: '/products_and_logo/1000006886.jpg',
     description: 'Beautiful set of beaded jewelry including necklace, earrings, and bracelet. Handmade with vibrant colors.',
     isNew: false,
-    salesCount: 187
+    salesCount: 187,
+    stockCount: 20
   },
   {
     id: 6,
@@ -69,7 +80,8 @@ const products = [
     description: 'Traditional African mask used in ceremonies and cultural events. Made from authentic materials.',
     isNew: true,
     addedDate: new Date(Date.now() - 5 * 24 * 60 * 60 * 1000), // Added 5 days ago
-    salesCount: 64
+    salesCount: 64,
+    stockCount: 5 // Low stock
   }
 ];
 
@@ -94,7 +106,7 @@ const limitedTimeOffers = [
 function HomePage() {
   const navigate = useNavigate();
   const [selectedProduct, setSelectedProduct] = useState(null);
-  const { addToCart } = useCart();
+  const { cartItems, totalItems } = useCart();
   
   const handleShopNow = () => {
     navigate('/products');
@@ -121,7 +133,6 @@ function HomePage() {
           </div>
           <ProductCarousel 
             products={products.slice(0, 3)} 
-            onAddToCart={addToCart} 
             onViewProduct={handleViewProduct} 
           />
         </div>
@@ -129,22 +140,56 @@ function HomePage() {
 
       {/* Limited Time Offers */}
       <div className="py-8">
-        <LimitedTimeOffersSection offers={limitedTimeOffers} onViewProduct={handleViewProduct} />
+        <LimitedTimeOffersSection 
+          offers={limitedTimeOffers} 
+          onViewProduct={handleViewProduct} 
+        />
+      </div>
+
+      {/* Window Shopping Section - New browsing encouragement features */}
+      <div className="py-8">
+        <WindowShoppingSection 
+          products={products} 
+          onViewProduct={handleViewProduct} 
+        />
+      </div>
+
+      {/* Personalized Recommendations */}
+      <div className="py-8">
+        <PersonalizedRecommendations 
+          products={products} 
+          onViewProduct={handleViewProduct} 
+        />
+      </div>
+
+      {/* Rewards Section */}
+      <div className="py-8">
+        <RewardsSection />
       </div>
 
       {/* Best Sellers */}
       <div className="py-8">
-        <BestSellersSection products={products} onViewProduct={handleViewProduct} />
+        <BestSellersSection 
+          products={products} 
+          onViewProduct={handleViewProduct} 
+        />
       </div>
 
       {/* Curator's Picks */}
       <div className="py-8">
-        <CuratorsPicksSection onViewProduct={handleViewProduct} />
+        <CuratorsPicksSection 
+          onViewProduct={handleViewProduct} 
+        />
       </div>
 
       {/* Social Proof */}
       <div className="py-8">
         <SocialProofSection />
+      </div>
+
+      {/* Seasonal Collections */}
+      <div className="py-8">
+        <SeasonalCollections onViewCollection={(id) => console.log('View collection:', id)} />
       </div>
 
       {/* Email Signup */}
@@ -153,6 +198,9 @@ function HomePage() {
       </div>
 
       <Footer />
+      
+      {/* Surprise and Delight Elements */}
+      <SurpriseDelight products={products} />
     </div>
   );
 }

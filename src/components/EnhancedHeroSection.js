@@ -145,7 +145,7 @@ const EnhancedHeroSection = ({ onShopNow }) => {
 
       {/* Content with enhanced typography and layout */}
       <div className="relative z-10 h-full flex items-center">
-        <div className="container mx-auto px-4 sm:px-6 lg:px-8">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="max-w-2xl ml-0 md:ml-8 lg:ml-16">
             <motion.div
               key={currentIndex}
@@ -194,7 +194,7 @@ const EnhancedHeroSection = ({ onShopNow }) => {
                   onClick={() => onShopNow && onShopNow()}
                   variant="accent"
                   size="lg"
-                  className="px-8 py-4 text-base font-semibold rounded-full shadow-xl hover:shadow-2xl transform hover:scale-105 transition-all duration-300"
+                  className="px-8 py-4 text-base font-semibold rounded-full shadow-xl hover:shadow-2xl transform hover:scale-105 transition-all duration-300 hover-glow-lg"
                 >
                   {currentImage.cta}
                 </Button>
@@ -207,7 +207,7 @@ const EnhancedHeroSection = ({ onShopNow }) => {
       {/* Enhanced Navigation Arrows */}
       <button 
         onClick={prevSlide}
-        className="absolute left-4 top-1/2 -translate-y-1/2 w-12 h-12 rounded-full bg-white/20 backdrop-blur-sm shadow-lg hover:bg-white/30 flex items-center justify-center transition-all duration-300 hover:scale-110 z-20 border border-white/30"
+        className="absolute left-4 top-1/2 -translate-y-1/2 w-12 h-12 rounded-full bg-white/20 backdrop-blur-sm shadow-lg hover:bg-white/30 flex items-center justify-center transition-all duration-300 hover:scale-110 z-20 border border-white/30 hover-glow"
         aria-label="Previous slide"
       >
         <svg className="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -217,7 +217,7 @@ const EnhancedHeroSection = ({ onShopNow }) => {
       
       <button 
         onClick={nextSlide}
-        className="absolute right-4 top-1/2 -translate-y-1/2 w-12 h-12 rounded-full bg-white/20 backdrop-blur-sm shadow-lg hover:bg-white/30 flex items-center justify-center transition-all duration-300 hover:scale-110 z-20 border border-white/30"
+        className="absolute right-4 top-1/2 -translate-y-1/2 w-12 h-12 rounded-full bg-white/20 backdrop-blur-sm shadow-lg hover:bg-white/30 flex items-center justify-center transition-all duration-300 hover:scale-110 z-20 border border-white/30 hover-glow"
         aria-label="Next slide"
       >
         <svg className="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -231,7 +231,7 @@ const EnhancedHeroSection = ({ onShopNow }) => {
           <div key={index} className="flex items-center">
             <button
               onClick={() => goToSlide(index)}
-              className={`w-3 h-3 rounded-full transition-all duration-300 ${
+              className={`w-3 h-3 rounded-full transition-all duration-300 hover-glow ${
                 index === currentIndex 
                   ? 'bg-amber-400 w-8' 
                   : 'bg-white/50 hover:bg-white/75'

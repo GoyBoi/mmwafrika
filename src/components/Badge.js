@@ -1,4 +1,5 @@
 import React from 'react';
+import { motion } from 'framer-motion';
 
 const Badge = ({ 
   children, 
@@ -7,27 +8,48 @@ const Badge = ({
   className = '',
   isNew = false,
   timestamp = null,
+  animate = true,
   ...props 
 }) => {
-  const baseClasses = 'inline-flex items-center rounded-full font-medium font-body';
+  const baseClasses = 'inline-flex items-center rounded-full font-medium font-body transition-all duration-300';
   
   const variantClasses = {
-    default: 'bg-gray-100 text-gray-800',
-    primary: 'bg-amber-100 text-amber-800',
-    secondary: 'bg-blue-100 text-blue-800',
-    success: 'bg-green-100 text-green-800',
-    warning: 'bg-amber-100 text-amber-800',
-    danger: 'bg-red-100 text-red-800',
-    info: 'bg-indigo-100 text-indigo-800',
-    dark: 'bg-gray-800 text-white',
+    default: 'bg-gray-100 text-gray-800 hover:bg-gray-200',
+    primary: 'bg-amber-100 text-amber-800 hover:bg-amber-200',
+    secondary: 'bg-blue-100 text-blue-800 hover:bg-blue-200',
+    success: 'bg-green-100 text-green-800 hover:bg-green-200',
+    warning: 'bg-amber-100 text-amber-800 hover:bg-amber-200',
+    danger: 'bg-red-100 text-red-800 hover:bg-red-200',
+    info: 'bg-indigo-100 text-indigo-800 hover:bg-indigo-200',
+    dark: 'bg-gray-800 text-white hover:bg-gray-700',
     // Special variant for new arrivals
-    'new-arrival': 'bg-gradient-to-r from-amber-500 to-orange-500 text-white',
+    'new-arrival': 'bg-gradient-to-r from-amber-500 to-orange-500 text-white hover:shadow-md',
   };
   
   const sizeClasses = {
     sm: 'text-xs px-2 py-0.5',
     md: 'text-sm px-2.5 py-0.5',
     lg: 'text-sm px-3 py-1',
+  };
+  
+  // Enhanced animation variants
+  const badgeVariants = {
+    hover: { 
+      scale: 1.05,
+      transition: { 
+        type: "spring", 
+        stiffness: 400, 
+        damping: 10 
+      } 
+    },
+    tap: { 
+      scale: 0.95,
+      transition: { 
+        type: "spring", 
+        stiffness: 400, 
+        damping: 10 
+      } 
+    }
   };
   
   // Special handling for new arrival badges with timestamps
@@ -41,21 +63,31 @@ const Badge = ({
       displayText = `NEW - ${diffInDays}d ago`;
     }
     
-    const classes = `${baseClasses} ${variantClasses['new-arrival']} ${sizeClasses[size]} ${className}`;
+    const classes = `${baseClasses} ${variantClasses['new-arrival']} ${sizeClasses[size]} ${className} hover-glow`;
     
     return (
-      <span className={classes} {...props}>
+      <motion.span 
+        className={classes} 
+        whileHover={animate ? badgeVariants.hover : {}}
+        whileTap={animate ? badgeVariants.tap : {}}
+        {...props}
+      >
         {displayText}
-      </span>
+      </motion.span>
     );
   }
   
-  const classes = `${baseClasses} ${variantClasses[variant]} ${sizeClasses[size]} ${className}`;
+  const classes = `${baseClasses} ${variantClasses[variant]} ${sizeClasses[size]} ${className} hover-glow`;
   
   return (
-    <span className={classes} {...props}>
+    <motion.span 
+      className={classes} 
+      whileHover={animate ? badgeVariants.hover : {}}
+      whileTap={animate ? badgeVariants.tap : {}}
+      {...props}
+    >
       {children}
-    </span>
+    </motion.span>
   );
 };
 

@@ -1,9 +1,9 @@
 import React, { useState } from 'react';
 import Card from './Card.js';
 import Rating from './Rating.js';
-import Button from './Button.js';
+import ProductActionButtons from './ProductActionButtons.js';
 
-const QuickViewModal = ({ product, isOpen, onClose, onAddToCart }) => {
+const QuickViewModal = ({ product, isOpen, onClose }) => {
   const [selectedImage, setSelectedImage] = useState(0);
   const [quantity, setQuantity] = useState(1);
   
@@ -15,17 +15,6 @@ const QuickViewModal = ({ product, isOpen, onClose, onAddToCart }) => {
     product.image,
     product.image
   ];
-  
-  const handleAddToCart = () => {
-    // Add product to cart without size selection
-    const productToAdd = {
-      ...product,
-      quantity
-    };
-    
-    onAddToCart(productToAdd);
-    onClose();
-  };
   
   return (
     <div className="fixed inset-0 z-50 overflow-y-auto">
@@ -46,7 +35,7 @@ const QuickViewModal = ({ product, isOpen, onClose, onAddToCart }) => {
                   <img 
                     src={productImages[selectedImage]} 
                     alt={product.name} 
-                    className="w-full h-96 object-contain bg-gray-50 rounded-xl shadow-sm"
+                    className="w-full h-96 object-cover bg-gray-50 rounded-xl shadow-sm"
                   />
                 </div>
                 <div className="flex space-x-3 justify-center">
@@ -63,7 +52,7 @@ const QuickViewModal = ({ product, isOpen, onClose, onAddToCart }) => {
                       <img 
                         src={image} 
                         alt={`Product view ${index + 1}`} 
-                        className="w-full h-full object-contain bg-gray-50"
+                        className="w-full h-full object-cover bg-gray-50"
                       />
                     </button>
                   ))}
@@ -130,22 +119,20 @@ const QuickViewModal = ({ product, isOpen, onClose, onAddToCart }) => {
                 
                 {/* Action Buttons */}
                 <div className="flex flex-col sm:flex-row space-y-4 sm:space-y-0 sm:space-x-4">
-                  <Button
-                    variant="accent"
+                  <ProductActionButtons
+                    product={{
+                      ...product,
+                      quantity
+                    }}
                     size="lg"
-                    onClick={handleAddToCart}
-                    className="flex-1 py-3 text-base font-body"
-                  >
-                    Add to Cart
-                  </Button>
-                  <Button
-                    variant="secondary"
-                    size="lg"
+                    fullWidth={true}
+                  />
+                  <button
                     onClick={onClose}
-                    className="flex-1 py-3 text-base font-body"
+                    className="flex-1 py-3 px-4 border border-gray-300 rounded-lg bg-white text-gray-700 hover:bg-gray-50 transition-colors text-base font-body"
                   >
                     Close
-                  </Button>
+                  </button>
                 </div>
               </div>
             </div>

@@ -25,6 +25,19 @@
   --color-gray-500: #78716c;
   --color-gray-700: #44403c;
   --color-gray-900: #1c1917;
+  
+  /* Enhanced color palette for more sophisticated appearance */
+  --color-amber-light: #fbbf24;
+  --color-amber-dark: #b45309;
+  --color-orange-light: #f97316;
+  --color-orange-dark: #c2410c;
+  --color-terracotta-light: #ea580c;
+  --color-terracotta-dark: #9a3412;
+  --color-warm-gray-light: #fafafa;
+  --color-warm-gray-dark: #e5e5e5;
+  --color-cool-gray-light: #a3a3a3;
+  --color-cool-gray-dark: #525252;
+  
   --color-background: var(--color-white);
   --color-surface: var(--color-warm-gray);
   --color-text-primary: var(--color-dark-gray);
@@ -98,6 +111,23 @@
   --font-weight-small: 400; /* Normal */
   --line-height-small: 1.4;
   --letter-spacing-small: 0.03em;
+  
+  /* Enhanced typography hierarchy */
+  --font-size-display-xl: 4rem; /* 64px - For extra large displays */
+  --font-size-display-lg: 3rem; /* 48px - For large displays */
+  --font-size-display-md: 2.25rem; /* 36px - For medium displays */
+  --font-size-display-sm: 1.875rem; /* 30px - For small displays */
+  
+  /* Font weights for visual hierarchy */
+  --font-weight-thin: 100;
+  --font-weight-extralight: 200;
+  --font-weight-light: 300;
+  --font-weight-normal: 400;
+  --font-weight-medium: 500;
+  --font-weight-semibold: 600;
+  --font-weight-bold: 700;
+  --font-weight-extrabold: 800;
+  --font-weight-black: 900;
 
   /* Spacing System (8px grid) */
   --spacing-4xs: 0.125rem; /* 2px */
@@ -111,6 +141,24 @@
   --spacing-2xl: 4rem; /* 64px */
   --spacing-3xl: 6rem; /* 96px */
   --spacing-4xl: 8rem; /* 128px */
+  
+  /* Micro-spacing for detailed typography */
+  --spacing-micro-xs: 0.1875rem; /* 3px */
+  --spacing-micro-sm: 0.3125rem; /* 5px */
+  --spacing-micro-md: 0.375rem; /* 6px */
+  --spacing-micro-lg: 0.625rem; /* 10px */
+  
+  /* Section spacing */
+  --spacing-section-sm: 2.5rem; /* 40px */
+  --spacing-section-md: 3.5rem; /* 56px */
+  --spacing-section-lg: 5rem; /* 80px */
+  
+  /* Component spacing */
+  --spacing-component-xs: 0.5rem; /* 8px */
+  --spacing-component-sm: 0.75rem; /* 12px */
+  --spacing-component-md: 1rem; /* 16px */
+  --spacing-component-lg: 1.25rem; /* 20px */
+  --spacing-component-xl: 1.5rem; /* 24px */
 
   /* Border Radius */
   --radius-xs: 0.25rem; /* 4px */
@@ -221,12 +269,65 @@ html.fonts-loaded h6 {
   background: linear-gradient(135deg, #f59e0b 0%, #d97706 100%);
 }
 
+.bg-gradient-subtle {
+  background: linear-gradient(135deg, #fafaf9 0%, #f5f5f4 100%);
+}
+
+.bg-gradient-warm {
+  background: linear-gradient(135deg, #f5f5f7 0%, #e7e5e4 100%);
+}
+
+.bg-gradient-amber-to-orange {
+  background: linear-gradient(135deg, var(--color-amber) 0%, var(--color-orange) 100%);
+}
+
+.bg-gradient-terracotta-to-amber {
+  background: linear-gradient(135deg, var(--color-terracotta) 0%, var(--color-amber) 100%);
+}
+
+.bg-gradient-cool-gray-to-warm-gray {
+  background: linear-gradient(135deg, var(--color-cool-gray) 0%, var(--color-warm-gray) 100%);
+}
+
 /* Text gradients */
 .text-gradient-amber {
   background: linear-gradient(135deg, #f59e0b 0%, #d97706 100%);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   background-clip: text;
+}
+
+.text-gradient-warm {
+  background: linear-gradient(135deg, var(--color-amber) 0%, var(--color-terracotta) 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+/* Subtle textures */
+.bg-texture-subtle {
+  background-image: radial-gradient(#d6d3d1 1px, transparent 1px);
+  background-size: 20px 20px;
+}
+
+.bg-texture-warm {
+  background-image: radial-gradient(#f5f5f7 1px, transparent 1px);
+  background-size: 20px 20px;
+}
+
+.bg-texture-amber {
+  background-image: radial-gradient(var(--color-amber-light) 1px, transparent 1px);
+  background-size: 20px 20px;
+}
+
+.bg-texture-diagonal-lines {
+  background-image: linear-gradient(135deg, transparent 75%, rgba(217, 119, 6, 0.1) 75%);
+  background-size: 20px 20px;
+}
+
+/* Subtle overlays */
+.bg-overlay-subtle {
+  background: linear-gradient(to bottom, rgba(255, 255, 255, 0.95) 0%, rgba(245, 245, 247, 0.9) 100%);
 }
 
 /* Hover effects */
@@ -239,6 +340,115 @@ html.fonts-loaded h6 {
   transform: translateY(-5px);
 }
 
+/* Enhanced hover effects */
+.hover-lift-lg {
+  transform: translateY(0);
+  transition: transform 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.hover-lift-lg:hover {
+  transform: translateY(-8px);
+}
+
+.hover-scale {
+  transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.hover-scale:hover {
+  transform: scale(1.03);
+}
+
+.hover-scale-lg {
+  transition: transform 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.hover-scale-lg:hover {
+  transform: scale(1.05);
+}
+
+/* Glow effects */
+.hover-glow {
+  transition: box-shadow 0.3s ease;
+}
+
+.hover-glow:hover {
+  box-shadow: 0 10px 25px -5px rgba(217, 119, 6, 0.2), 0 5px 10px -5px rgba(217, 119, 6, 0.1);
+}
+
+.hover-glow-lg {
+  transition: box-shadow 0.4s ease;
+}
+
+.hover-glow-lg:hover {
+  box-shadow: 0 20px 35px -5px rgba(217, 119, 6, 0.25), 0 10px 15px -5px rgba(217, 119, 6, 0.15);
+}
+
+/* Advanced micro-interactions */
+.transition-all-fast {
+  transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.transition-all-medium {
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.transition-all-slow {
+  transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+/* Smooth transitions for interactive elements */
+.smooth-transition {
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+/* Enhanced button interactions */
+.btn-enhanced {
+  position: relative;
+  overflow: hidden;
+  transition: all 0.3s ease;
+}
+
+.btn-enhanced::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+  transition: left 0.5s;
+}
+
+.btn-enhanced:hover::before {
+  left: 100%;
+}
+
+/* Card hover effects with multiple transitions */
+.card-hover {
+  transition: 
+    transform 0.3s ease,
+    box-shadow 0.3s ease,
+    border-color 0.3s ease;
+}
+
+.card-hover:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+  border-color: rgba(217, 119, 6, 0.3);
+}
+
+/* Interactive element focus states */
+.focus-ring-enhanced {
+  outline: 2px solid var(--color-amber);
+  outline-offset: 2px;
+  transition: outline 0.2s ease;
+}
+
+.focus-ring-enhanced:focus {
+  outline: 2px solid var(--color-amber-light);
+  outline-offset: 3px;
+}
+
 /* Line clamp for text */
 .line-clamp-2 {
   display: -webkit-box;
@@ -246,6 +456,93 @@ html.fonts-loaded h6 {
   -webkit-box-orient: vertical;
   overflow: hidden;
 }
+
+.line-clamp-3 {
+  display: -webkit-box;
+  -webkit-line-clamp: 3;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
+.line-clamp-4 {
+  display: -webkit-box;
+  -webkit-line-clamp: 4;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
+/* Text emphasis utilities */
+.text-weight-thin { font-weight: var(--font-weight-thin); }
+.text-weight-extralight { font-weight: var(--font-weight-extralight); }
+.text-weight-light { font-weight: var(--font-weight-light); }
+.text-weight-normal { font-weight: var(--font-weight-normal); }
+.text-weight-medium { font-weight: var(--font-weight-medium); }
+.text-weight-semibold { font-weight: var(--font-weight-semibold); }
+.text-weight-bold { font-weight: var(--font-weight-bold); }
+.text-weight-extrabold { font-weight: var(--font-weight-extrabold); }
+.text-weight-black { font-weight: var(--font-weight-black); }
+
+/* Enhanced visual hierarchy classes */
+.text-display-xl {
+  font-size: var(--font-size-display-xl);
+  font-weight: var(--font-weight-light);
+  line-height: 1.1;
+  letter-spacing: -0.025em;
+}
+
+.text-display-lg {
+  font-size: var(--font-size-display-lg);
+  font-weight: var(--font-weight-light);
+  line-height: 1.15;
+  letter-spacing: -0.02em;
+}
+
+.text-display-md {
+  font-size: var(--font-size-display-md);
+  font-weight: var(--font-weight-normal);
+  line-height: 1.2;
+  letter-spacing: -0.015em;
+}
+
+.text-display-sm {
+  font-size: var(--font-size-display-sm);
+  font-weight: var(--font-weight-medium);
+  line-height: 1.25;
+  letter-spacing: -0.01em;
+}
+
+/* Enhanced spacing utilities */
+.m-micro-xs { margin: var(--spacing-micro-xs); }
+.m-micro-sm { margin: var(--spacing-micro-sm); }
+.m-micro-md { margin: var(--spacing-micro-md); }
+.m-micro-lg { margin: var(--spacing-micro-lg); }
+
+.p-micro-xs { padding: var(--spacing-micro-xs); }
+.p-micro-sm { padding: var(--spacing-micro-sm); }
+.p-micro-md { padding: var(--spacing-micro-md); }
+.p-micro-lg { padding: var(--spacing-micro-lg); }
+
+/* Section spacing utilities */
+.py-section-sm { padding-top: var(--spacing-section-sm); padding-bottom: var(--spacing-section-sm); }
+.py-section-md { padding-top: var(--spacing-section-md); padding-bottom: var(--spacing-section-md); }
+.py-section-lg { padding-top: var(--spacing-section-lg); padding-bottom: var(--spacing-section-lg); }
+
+.my-section-sm { margin-top: var(--spacing-section-sm); margin-bottom: var(--spacing-section-sm); }
+.my-section-md { margin-top: var(--spacing-section-md); margin-bottom: var(--spacing-section-md); }
+.my-section-lg { margin-top: var(--spacing-section-lg); margin-bottom: var(--spacing-section-lg); }
+
+/* Component spacing utilities */
+.p-component-xs { padding: var(--spacing-component-xs); }
+.p-component-sm { padding: var(--spacing-component-sm); }
+.p-component-md { padding: var(--spacing-component-md); }
+.p-component-lg { padding: var(--spacing-component-lg); }
+.p-component-xl { padding: var(--spacing-component-xl); }
+
+.m-component-xs { margin: var(--spacing-component-xs); }
+.m-component-sm { margin: var(--spacing-component-sm); }
+.m-component-md { margin: var(--spacing-component-md); }
+.m-component-lg { margin: var(--spacing-component-lg); }
+.m-component-xl { margin: var(--spacing-component-xl); }
 
 /* Focus states for accessibility */
 .focus-ring {

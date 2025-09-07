@@ -64,7 +64,7 @@ const ProductImageViewer = ({
       <img
         src={currentImage}
         alt={`${productName} - Front View`}
-        className="w-full h-full object-contain transition-transform duration-300"
+        className="w-full h-full object-cover transition-transform duration-300"
         onClick={handleImageClick}
         onMouseMove={handleMouseMove}
         onTouchMove={handleTouchMove}
@@ -112,7 +112,7 @@ const ProductImageViewer = ({
           <img
             src={frontImage}
             alt={`${productName} - Front View`}
-            className="w-full h-full object-contain"
+            className="w-full h-full object-cover"
             onClick={() => {
               setShowZoom(true);
               setSelectedImageIndex(0);
@@ -128,7 +128,7 @@ const ProductImageViewer = ({
           <img
             src={backImage}
             alt={`${productName} - Back View`}
-            className="w-full h-full object-contain"
+            className="w-full h-full object-cover"
             onClick={() => {
               setShowZoom(true);
               setSelectedImageIndex(1);
@@ -149,7 +149,7 @@ const ProductImageViewer = ({
         <img
           src={currentImage}
           alt={`${productName} - View ${selectedImageIndex + 1}`}
-          className="w-full h-full object-contain cursor-zoom-in"
+          className="w-full h-full object-cover cursor-zoom-in"
           onClick={handleImageClick}
           onMouseMove={handleMouseMove}
           onTouchMove={handleTouchMove}
@@ -285,7 +285,7 @@ const ProductImageViewer = ({
             <img
               src={currentImage}
               alt={`${productName} - Zoom View`}
-              className="max-w-full max-h-full object-contain cursor-move"
+              className="max-w-full max-h-full object-cover cursor-move"
               style={{
                 transform: 'scale(2)',
                 transformOrigin: `${zoomPosition.x}% ${zoomPosition.y}%`,

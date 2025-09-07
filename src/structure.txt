@@ -2,18 +2,33 @@ src/
   app/
     App.js
   components/
+    ui/ (shadcn/ui components)
+    cart/ (cart-specific components)
+    filters/ (filter components)
     ProductCard.js
-    ProductDetailModal.js
+    MinimalProductCard.js
+    ProductCarousel.js
     Navbar.js
     Footer.js
+    Button.js
+    AddToCartButton.js
+    Rating.js
+    ShoppingCartIcon.js
+    ... (other components)
   context/
     CartContext.js
   pages/
     HomePage.js
-    ProductListingPage.js
-    ProductDetailPage.js
+    RedesignedProductListingPage.js
+    EnhancedProductDetailPage.js
     CartPage.js
     CheckoutPage.js
+    ComponentShowcasePage.js
+    CartTestPage.js
+    CartBadgeTestPage.js
+  lib/
+    utils.js
+  utils/
+    fontLoader.js
   index.css
   index.js
-  Root.js

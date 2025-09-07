@@ -29,7 +29,7 @@ const ProductImageCarousel = ({ images, productName }) => {
               <img
                 src={image}
                 alt={`${productName} - View ${index + 1}`}
-                className="h-full w-full object-contain"
+                className="h-full w-full object-cover"
               />
             </div>
           </CarouselItem>

@@ -10,44 +10,54 @@ const Button = ({
   disabled = false, 
   fullWidth = false,
   className = '',
+  animate = true,
   ...props 
 }) => {
-  // Map our custom variants to shadcn variants
-  const variantMap = {
-    primary: 'default',
-    secondary: 'secondary',
-    ghost: 'ghost',
-    link: 'link',
-    accent: 'accent',
-    primaryDark: 'primaryDark',
-    cart: 'cart'
+  // Handle variant mapping and custom styling
+  let additionalClasses = '';
+  
+  if (variant === 'accent') {
+    // For accent variant, we want to use our custom amber color
+    additionalClasses = 'bg-amber-600 hover:bg-amber-700 text-white';
+  } else if (variant === 'primary') {
+    // For primary variant on dark backgrounds, use white background
+    additionalClasses = 'bg-white text-black hover:bg-gray-100';
+  }
+
+  console.log('Button: Rendering with classes', className);
+
+  // Enhanced animation variants
+  const animationVariants = {
+    hover: { 
+      scale: 1.03,
+      transition: { 
+        type: "spring", 
+        stiffness: 400, 
+        damping: 10 
+      } 
+    },
+    tap: { 
+      scale: 0.98,
+      transition: { 
+        type: "spring", 
+        stiffness: 400, 
+        damping: 10 
+      } 
+    }
   };
-
-  // Map size prop to shadcn sizes
-  const sizeMap = {
-    sm: 'sm',
-    md: 'default',
-    lg: 'lg',
-    icon: 'icon'
-  };
-
-  const shadcnVariant = variantMap[variant] || variant;
-  const shadcnSize = sizeMap[size] || size;
-
-  console.log('Button: Rendering with variant', variant, 'mapped to', shadcnVariant, 'and size', size, 'mapped to', shadcnSize);
 
   return (
     <motion.div
-      whileHover={{ scale: 1.02 }}
-      whileTap={{ scale: 0.98 }}
-      className={fullWidth ? 'w-full' : ''}
+      whileHover={animate ? animationVariants.hover : {}}
+      whileTap={animate ? animationVariants.tap : {}}
+      className={`${fullWidth ? 'w-full' : ''} inline-block`}
     >
       <ShadcnButton
-        variant={shadcnVariant}
-        size={shadcnSize}
+        variant={variant === 'accent' ? 'accent' : (variant === 'primary' ? 'primaryDark' : variant)}
+        size={size}
         onClick={onClick}
         disabled={disabled}
-        className={className}
+        className={`${additionalClasses} ${className} transition-all duration-300 transform hover:scale-105`}
         {...props}
       >
         {children}

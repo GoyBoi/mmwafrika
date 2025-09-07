@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
-import AddToCartButton from './AddToCartButton.js';
+import EnhancedProductCard from './EnhancedProductCard.js';
 
-function ProductCarousel({ products, onAddToCart, onViewProduct }) {
+function ProductCarousel({ products, onViewProduct }) {
   const [currentIndex, setCurrentIndex] = useState(0);
   
   const nextSlide = () => {
@@ -24,51 +24,22 @@ function ProductCarousel({ products, onAddToCart, onViewProduct }) {
       <div className="relative max-w-6xl mx-auto px-4">
         {/* Main Carousel */}
         <div className="overflow-hidden">
-          <div className="flex transition-transform duration-500 ease-in-out">
+          <div 
+            className="flex transition-transform duration-500 ease-in-out"
+            style={{ transform: `translateX(-${currentIndex * 33.333}%)` }}
+          >
             {products.map((product, index) => (
               <div 
-                key={`${product.id}-${index}`} 
+                key={product.id} 
                 className="flex-shrink-0 w-full md:w-1/3 px-3"
-                style={{ transform: `translateX(-${currentIndex * 100}%)` }}
               >
-                <div 
-                  className="group bg-white rounded-xl border border-gray-200 overflow-hidden shadow-lg hover:shadow-2xl transition-all duration-300 transform hover:-translate-y-1 h-full cursor-pointer"
-                  onClick={() => onViewProduct(product.id)}
-                >
-                  {/* Enhanced Image Section */}
-                  <div className="relative h-48 overflow-hidden bg-gradient-to-br from-gray-50 to-gray-100">
-                    <img 
-                      src={product.image} 
-                      alt={product.name} 
-                      className="w-full h-full object-contain transition-transform duration-700 group-hover:scale-110 p-2"
-                    />
-                    
-                    {/* Overlay */}
-                    <div className="absolute inset-0 bg-gradient-to-t from-black/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
-                  </div>
+                <EnhancedProductCard 
+                  product={product} 
                   
-                  {/* Product Info */}
-                  <div className="p-5">
-                    <h3 className="font-heading font-medium text-gray-900 mb-2 group-hover:text-amber-700 transition-colors drop-shadow-[0_1px_1px_rgba(0,0,0,0.1)]">
-                      {product.name}
-                    </h3>
-                    
-                    <p className="text-sm text-gray-600 mb-4 line-clamp-2 drop-shadow-[0_1px_1px_rgba(0,0,0,0.05)] font-body">
-                      {product.description}
-                    </p>
-                    
-                    <div className="flex items-center justify-between">
-                      <div>
-                        <span className="font-body font-semibold text-gray-900 text-lg drop-shadow-[0_1px_1px_rgba(0,0,0,0.1)]">${product.price.toFixed(2)}</span>
-                      </div>
-                      <AddToCartButton 
-                        product={product} 
-                        onAddToCart={onAddToCart}
-                        size="sm"
-                      />
-                    </div>
-                  </div>
-                </div>
+                  onViewProduct={onViewProduct}
+                  variant="carousel"
+                  compact={false}
+                />
               </div>
             ))}
           </div>
@@ -77,7 +48,7 @@ function ProductCarousel({ products, onAddToCart, onViewProduct }) {
         {/* Enhanced Navigation Arrows */}
         <button 
           onClick={prevSlide}
-          className="absolute left-0 top-1/2 -translate-y-1/2 -translate-x-4 w-10 h-10 rounded-full bg-white/90 backdrop-blur-sm shadow-lg hover:shadow-xl flex items-center justify-center transition-all duration-300 hover:scale-110 border border-gray-200 z-20"
+          className="absolute left-0 top-1/2 -translate-y-1/2 -translate-x-4 w-10 h-10 rounded-full bg-white/90 backdrop-blur-sm shadow-lg hover:bg-white/30 flex items-center justify-center transition-all duration-300 hover:scale-110 z-20 border border-white/30"
         >
           <svg className="w-5 h-5 text-gray-700 drop-shadow-[0_1px_1px_rgba(0,0,0,0.1)]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" />
@@ -86,7 +57,7 @@ function ProductCarousel({ products, onAddToCart, onViewProduct }) {
         
         <button 
           onClick={nextSlide}
-          className="absolute right-0 top-1/2 -translate-y-1/2 translate-x-4 w-10 h-10 rounded-full bg-white/90 backdrop-blur-sm shadow-lg hover:shadow-xl flex items-center justify-center transition-all duration-300 hover:scale-110 border border-gray-200 z-20"
+          className="absolute right-0 top-1/2 -translate-y-1/2 translate-x-4 w-10 h-10 rounded-full bg-white/90 backdrop-blur-sm shadow-lg hover:bg-white/30 flex items-center justify-center transition-all duration-300 hover:scale-110 z-20 border border-white/30"
         >
           <svg className="w-5 h-5 text-gray-700 drop-shadow-[0_1px_1px_rgba(0,0,0,0.1)]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
@@ -101,9 +72,10 @@ function ProductCarousel({ products, onAddToCart, onViewProduct }) {
               onClick={() => setCurrentIndex(index)}
               className={`w-3 h-3 rounded-full transition-all duration-300 drop-shadow-[0_1px_1px_rgba(0,0,0,0.1)] ${
                 index === currentIndex 
-                  ? 'bg-amber-600 w-6' 
-                  : 'bg-gray-300 hover:bg-gray-400'
+                  ? 'bg-amber-400 w-8' 
+                  : 'bg-white/50 hover:bg-white/75'
               }`}
+              aria-label={`Go to slide ${index + 1}`}
             />
           ))}
         </div>

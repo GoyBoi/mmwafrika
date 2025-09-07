@@ -156,11 +156,11 @@ function CartPage() {
                                 }}
                                 onClick={() => handleViewProduct(item.id)}
                               >
-                                <img
-                                  src={item.image}
-                                  alt={item.name}
-                                  className="w-full h-full object-contain p-2 bg-warm-gray transition-transform duration-300 hover:scale-105"
-                                />
+                                                    <img
+                      src={item.image}
+                      alt={item.name}
+                      className="w-full h-full object-cover p-2 bg-warm-gray transition-transform duration-300 hover:scale-105"
+                    />
                               </div>
                               <Typography 
                                 className="font-medium cursor-pointer hover:text-secondary-black transition-colors duration-300" 
@@ -288,12 +288,11 @@ function CartPage() {
                 
                 <RecentlyAddedSection 
                   recentlyAddedItems={recentlyAddedItems}
-                  onAddToCart={addToCart}
                   onViewProduct={handleViewProduct}
                 />
                 
                 <CrossSelling 
-                  onAddToCart={addToCart}
+                  
                   onViewProduct={handleViewProduct}
                 />
               </div>

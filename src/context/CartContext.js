@@ -113,6 +113,9 @@ export const CartProvider = ({ children }) => {
   
   // Action creators
   const addToCart = (product) => {
+    const callId = Math.random().toString(36).substr(2, 9);
+    console.log(`CartContext [${callId}]: addToCart called with product`, product);
+    console.trace(`CartContext [${callId}]: addToCart call stack`);
     dispatch({
       type: actionTypes.ADD_TO_CART,
       payload: product,

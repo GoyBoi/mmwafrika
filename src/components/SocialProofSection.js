@@ -64,6 +64,56 @@ function SocialProofSection() {
     }
   ];
 
+  // Mock data for recent purchases (real-time social proof)
+  const recentPurchases = [
+    {
+      id: 1,
+      customer: "Alex M.",
+      location: "London, UK",
+      product: "African Print Dress",
+      timeAgo: "2 minutes ago",
+      avatar: "/products_and_logo/1000006827.jpg"
+    },
+    {
+      id: 2,
+      customer: "Jamila K.",
+      location: "Cape Town, SA",
+      product: "Beaded Jewelry Set",
+      timeAgo: "5 minutes ago",
+      avatar: "/products_and_logo/1000006886.jpg"
+    },
+    {
+      id: 3,
+      customer: "Robert T.",
+      location: "Toronto, CA",
+      product: "Handwoven Basket",
+      timeAgo: "12 minutes ago",
+      avatar: "/products_and_logo/1000006833.jpg"
+    }
+  ];
+
+  // Mock data for trending products
+  const trendingProducts = [
+    {
+      id: 1,
+      name: "Kente Cloth",
+      sales: 245,
+      image: "/products_and_logo/1000006881.jpg"
+    },
+    {
+      id: 2,
+      name: "African Print Dress",
+      sales: 189,
+      image: "/products_and_logo/1000006827.jpg"
+    },
+    {
+      id: 3,
+      name: "Beaded Jewelry Set",
+      sales: 156,
+      image: "/products_and_logo/1000006886.jpg"
+    }
+  ];
+
   const [visibleTestimonials, setVisibleTestimonials] = useState(3);
 
   const loadMoreTestimonials = () => {
@@ -73,6 +123,76 @@ function SocialProofSection() {
   return (
     <div className="py-16 bg-white">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        {/* Recent Purchases - Real-time Social Proof */}
+        <div className="mb-12">
+          <div className="text-center mb-8">
+            <h2 className="text-2xl font-bold text-gray-900 mb-2 font-heading">Recently Purchased</h2>
+            <p className="text-gray-600 font-body">See what others are buying right now</p>
+          </div>
+          
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mb-12">
+            {recentPurchases.map((purchase) => (
+              <div 
+                key={purchase.id} 
+                className="bg-gradient-to-br from-amber-50 to-orange-50 rounded-xl p-4 border border-amber-100 flex items-center animate-pulse"
+              >
+                <div className="flex-shrink-0 w-10 h-10 rounded-full bg-white border-2 border-dashed border-gray-300 mr-3"></div>
+                <div className="flex-1">
+                  <p className="text-sm font-medium text-gray-900 font-heading">
+                    <span className="font-semibold">{purchase.customer}</span> from {purchase.location}
+                  </p>
+                  <p className="text-xs text-gray-600 font-body">
+                    Just purchased {purchase.product}
+                  </p>
+                  <p className="text-xs text-amber-600 font-body mt-1">{purchase.timeAgo}</p>
+                </div>
+              </div>
+            ))}
+          </div>
+        </div>
+
+        {/* Trending Products */}
+        <div className="mb-12">
+          <div className="text-center mb-8">
+            <h2 className="text-2xl font-bold text-gray-900 mb-2 font-heading">Trending Now</h2>
+            <p className="text-gray-600 font-body">Most popular items this hour</p>
+          </div>
+          
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+            {trendingProducts.map((product, index) => (
+              <div 
+                key={product.id} 
+                className="bg-white rounded-xl shadow-md p-5 border border-gray-200 hover:shadow-lg transition-all duration-300 flex items-center"
+              >
+                <div className="flex-shrink-0 w-16 h-16 rounded-lg overflow-hidden border border-gray-200 mr-4">
+                  <img 
+                    src={product.image} 
+                    alt={product.name}
+                    className="w-full h-full object-contain p-1"
+                  />
+                </div>
+                <div className="flex-1">
+                  <div className="flex items-center mb-1">
+                    <span className="inline-flex items-center justify-center w-6 h-6 bg-amber-100 text-amber-800 rounded-full text-xs font-bold mr-2 font-body">
+                      {index + 1}
+                    </span>
+                    <h3 className="font-semibold text-gray-900 font-heading truncate">{product.name}</h3>
+                  </div>
+                  <p className="text-sm text-gray-600 font-body">{product.sales} purchases today</p>
+                  <div className="flex items-center mt-1">
+                    <div className="w-full bg-gray-200 rounded-full h-1.5">
+                      <div 
+                        className="bg-gradient-to-r from-amber-500 to-orange-500 h-1.5 rounded-full" 
+                        style={{ width: `${Math.min(100, (product.sales / 300) * 100)}%` }}
+                      ></div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            ))}
+          </div>
+        </div>
+
         {/* Testimonials Section */}
         <div className="mb-16">
           <div className="text-center mb-12">

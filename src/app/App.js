@@ -1,6 +1,7 @@
 import React, { Suspense } from 'react';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import { CartProvider } from '../context/CartContext.js';
+import { WishlistProvider } from '../context/WishlistContext.js';
 
 // Lazy load components
 const HomePage = React.lazy(() => import('../pages/HomePage.js'));
@@ -10,6 +11,8 @@ const ComponentShowcasePage = React.lazy(() => import('../pages/ComponentShowcas
 const CartPage = React.lazy(() => import('../pages/CartPage.js'));
 const CheckoutPage = React.lazy(() => import('../pages/CheckoutPage.js'));
 const CartTestPage = React.lazy(() => import('../pages/CartTestPage.js'));
+const WishlistPage = React.lazy(() => import('../pages/WishlistPage.js'));
+const TestPage = React.lazy(() => import('../pages/TestPage.js'));
 
 // Loading fallback component
 const LoadingFallback = () => (
@@ -22,9 +25,10 @@ function App() {
   return (
     <Router>
       <CartProvider>
-        <div className="App bg-white">
-          <Suspense fallback={<LoadingFallback />}>
-            <Routes>
+        <WishlistProvider>
+          <div className="App bg-white">
+            <Suspense fallback={<LoadingFallback />}>
+              <Routes>
               <Route path="/" element={<HomePage />} />
               <Route path="/product/:productId" element={<EnhancedProductDetailPage />} />
               <Route path="/products" element={<RedesignedProductListingPage />} />
@@ -32,9 +36,12 @@ function App() {
               <Route path="/cart" element={<CartPage />} />
               <Route path="/checkout" element={<CheckoutPage />} />
               <Route path="/cart-test" element={<CartTestPage />} />
+              <Route path="/wishlist" element={<WishlistPage />} />
+              <Route path="/test" element={<TestPage />} />
             </Routes>
-          </Suspense>
-        </div>
+            </Suspense>
+          </div>
+        </WishlistProvider>
       </CartProvider>
     </Router>
   );
