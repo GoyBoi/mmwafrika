@@ -1,5 +1,6 @@
 import React from 'react';
 import ProductGrid from './ProductGrid.js';
+import MinimalProductCard from './MinimalProductCard.js';
 import Button from './Button.js';
 
 function CuratorsPicksSection({ onViewProduct }) {
