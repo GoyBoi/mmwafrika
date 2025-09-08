@@ -24,6 +24,13 @@ Operation Beautify styling redesign side quest has been successfully completed, 
 
 ## Recent Fixes
 
+**September 8, 2025**: Implemented glass-morphism effect for all cards and removed annoying pop-up:
+- Updated Card component to support glass, glassDark, and default variants
+- Applied glass-morphism effect to all card components throughout the website
+- Removed SurpriseDelight pop-up component that was annoying users
+- Increased LimitedTimeOffersSection carousel size for better visibility
+- Fixed webpack chunk loading errors with improved chunk naming strategy
+
 **September 7, 2025**: Completed Operation Beautify styling redesign side quest:
 - Implemented enhanced visual design with sophisticated color palette refinements
 - Added subtle gradients and textures for visual interest

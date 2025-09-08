@@ -90,6 +90,27 @@ Each UI pattern should have exactly one implementation:
    - Define sensible defaults for optional props
    - Use destructuring with default values
 
+### Card Component Variants
+
+The `Card` component supports multiple variants for different visual styles:
+
+- `default`: Standard solid background card
+- `glass`: Frosted glass effect with transparency and blur
+- `glassDark`: Dark version of the glass effect for contrast
+
+Example usage:
+```jsx
+// Default card
+<Card>
+  <CardContent>Standard card content</CardContent>
+</Card>
+
+// Glass card
+<Card variant="glass">
+  <CardContent>Glass card content</CardContent>
+</Card>
+```
+
 ## State Management
 
 ### Cart Context
