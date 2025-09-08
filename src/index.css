@@ -604,6 +604,26 @@ html.fonts-loaded h6 {
   box-shadow: var(--shadow-lg);
 }
 
+/* Glassmorphism card effect */
+.glass-card {
+  backdrop-filter: blur(12px) saturate(164%);
+  -webkit-backdrop-filter: blur(12px) saturate(164%);
+  background-color: rgba(14, 14, 17, 0.72);
+  border-radius: 12px;
+  border: 1px solid rgba(255, 255, 255, 0.125);
+  box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.2);
+}
+
+/* Light glassmorphism variant */
+.glass-card-light {
+  backdrop-filter: blur(12px) saturate(164%);
+  -webkit-backdrop-filter: blur(12px) saturate(164%);
+  background-color: rgba(255, 255, 255, 0.72);
+  border-radius: 12px;
+  border: 1px solid rgba(255, 255, 255, 0.125);
+  box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.1);
+}
+
 /* Product card specific styles */
 .product-card {
   background-color: var(--color-white);

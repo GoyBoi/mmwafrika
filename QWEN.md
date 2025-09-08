@@ -95,8 +95,10 @@ Each UI pattern should have exactly one implementation:
 The `Card` component supports multiple variants for different visual styles:
 
 - `default`: Standard solid background card
-- `glass`: Frosted glass effect with transparency and blur
-- `glassDark`: Dark version of the glass effect for contrast
+- `glass`: Light glass-morphism effect with transparency, blur, and subtle border
+- `glassDark`: Dark glass-morphism effect with deeper transparency and contrast
+
+The glass-morphism effect uses advanced CSS backdrop filters to create a frosted glass appearance that makes text visible even when placed over images or backgrounds.
 
 Example usage:
 ```jsx
@@ -105,9 +107,14 @@ Example usage:
   <CardContent>Standard card content</CardContent>
 </Card>
 
-// Glass card
+// Light glass card
 <Card variant="glass">
   <CardContent>Glass card content</CardContent>
+</Card>
+
+// Dark glass card
+<Card variant="glassDark">
+  <CardContent>Dark glass card content</CardContent>
 </Card>
 ```
 
