@@ -53,7 +53,7 @@ function WishlistPage() {
           ) : (
             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
               {wishlistItems.map((item) => (
-                <Card key={item.id} className="group relative bg-white rounded-xl border border-gray-200 overflow-hidden shadow-md hover:shadow-xl transition-all duration-300 transform hover:-translate-y-1 w-full">
+                <Card key={item.id} className="group relative rounded-xl overflow-hidden shadow-md hover:shadow-xl transition-all duration-300 transform hover:-translate-y-1 w-full" variant="glass">
                   <button
                     onClick={() => handleRemoveFromWishlist(item.id)}
                     className="absolute top-2 right-2 z-10 bg-white rounded-full p-1 shadow-md hover:bg-gray-50 transition-colors"

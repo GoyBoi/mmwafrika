@@ -2,12 +2,22 @@ import * as React from "react"
 
 import { cn } from "@/lib/utils"
 
-const Card = React.forwardRef(({ className, ...props }, ref) => (
-  <div
-    ref={ref}
-    className={cn("rounded-xl border bg-card text-card-foreground shadow", className)}
-    {...props} />
-))
+const Card = React.forwardRef(({ className, variant = "default", ...props }, ref) => {
+  const baseClasses = "rounded-xl border shadow";
+  
+  const variantClasses = {
+    default: "bg-white",
+    glass: "bg-white/30 backdrop-blur-lg border-white/20 shadow-lg shadow-black/10",
+    glassDark: "bg-black/30 backdrop-blur-lg border-black/20 text-white shadow-lg shadow-black/30"
+  };
+  
+  return (
+    <div
+      ref={ref}
+      className={cn(baseClasses, variantClasses[variant], className)}
+      {...props} />
+  );
+})
 Card.displayName = "Card"
 
 const CardHeader = React.forwardRef(({ className, ...props }, ref) => (

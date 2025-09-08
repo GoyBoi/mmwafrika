@@ -76,12 +76,19 @@ export const WishlistProvider = ({ children }) => {
   
   // Action creators
   const addToWishlist = (product) => {
+    // Ensure product has all required properties
+    const productWithDefaults = {
+      price: 0,
+      originalPrice: 0,
+      ...product
+    };
+    
     const callId = Math.random().toString(36).substr(2, 9);
-    console.log(`WishlistContext [${callId}]: addToWishlist called with product`, product);
+    console.log(`WishlistContext [${callId}]: addToWishlist called with product`, productWithDefaults);
     console.trace(`WishlistContext [${callId}]: addToWishlist call stack`);
     dispatch({
       type: actionTypes.ADD_TO_WISHLIST,
-      payload: product,
+      payload: productWithDefaults,
     });
   };
   

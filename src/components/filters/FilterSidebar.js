@@ -104,7 +104,7 @@ const FilterSidebar = ({ onFiltersChange, activeFilters }) => {
 
   return (
     <div className="w-full md:w-64 lg:w-72 pr-4">
-      <Card className="p-5 sticky top-4 shadow-md">
+      <Card className="p-5 sticky top-4" variant="glass">
         <div className="flex justify-between items-center mb-6 pb-3 border-b border-gray-100">
           <h2 className="text-xl font-heading font-semibold text-gray-900">Filters</h2>
           <button 

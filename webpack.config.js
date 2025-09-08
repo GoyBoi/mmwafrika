@@ -11,6 +11,7 @@ export default {
   output: {
     path: path.resolve(__dirname, 'dist'),
     filename: 'bundle.js',
+    chunkFilename: '[id].[contenthash].bundle.js',
     clean: true,
     assetModuleFilename: 'assets/[hash][ext][query]',
     publicPath: '/',

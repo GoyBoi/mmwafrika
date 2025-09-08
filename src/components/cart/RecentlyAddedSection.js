@@ -22,7 +22,8 @@ const RecentlyAddedSection = ({ recentlyAddedItems, onViewProduct }) => {
         {recentlyAddedItems.map((item) => (
           <Card 
             key={item.id} 
-            className="overflow-hidden border border-gray-200 rounded-xl hover:shadow-md transition-all duration-300"
+            className="overflow-hidden rounded-xl hover:shadow-md transition-all duration-300" 
+            variant="glass"
           >
             <div 
               className="relative h-48 bg-gray-100 cursor-pointer"

@@ -16,7 +16,7 @@ const LoyaltyEnrollment = ({ onEnroll, isEnrolled = false }) => {
 
   if (isEnrolled) {
     return (
-      <Card className="bg-amber-50 border-amber-200">
+      <Card className="border-amber-200" variant="glass">
         <CardContent className="p-4">
           <div className="flex items-center">
             <Star className="h-5 w-5 text-amber-600 mr-2" />
@@ -31,7 +31,7 @@ const LoyaltyEnrollment = ({ onEnroll, isEnrolled = false }) => {
   }
 
   return (
-    <Card>
+    <Card variant="glass">
       <CardHeader>
         <CardTitle className="text-xl font-semibold flex items-center">
           <Star className="h-5 w-5 text-amber-600 mr-2" />

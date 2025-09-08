@@ -31,7 +31,7 @@ const TrustBadges = () => {
         {badges.map((badge, index) => (
           <div 
             key={index} 
-            className="flex items-center p-3 bg-gray-50 rounded-lg border border-gray-200"
+            className="flex items-center p-3 rounded-lg border backdrop-blur-lg bg-white/30 border-white/20 shadow-sm"
           >
             <div className="flex-shrink-0 text-amber-600 mr-3">
               {badge.icon}

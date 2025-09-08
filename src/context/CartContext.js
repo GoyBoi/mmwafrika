@@ -113,12 +113,19 @@ export const CartProvider = ({ children }) => {
   
   // Action creators
   const addToCart = (product) => {
+    // Ensure product has all required properties
+    const productWithDefaults = {
+      price: 0,
+      originalPrice: 0,
+      ...product
+    };
+    
     const callId = Math.random().toString(36).substr(2, 9);
-    console.log(`CartContext [${callId}]: addToCart called with product`, product);
+    console.log(`CartContext [${callId}]: addToCart called with product`, productWithDefaults);
     console.trace(`CartContext [${callId}]: addToCart call stack`);
     dispatch({
       type: actionTypes.ADD_TO_CART,
-      payload: product,
+      payload: productWithDefaults,
     });
   };
   

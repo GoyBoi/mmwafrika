@@ -11,7 +11,6 @@ import SocialProofSection from '../components/SocialProofSection.js';
 import WindowShoppingSection from '../components/WindowShoppingSection.js';
 import PersonalizedRecommendations from '../components/PersonalizedRecommendations.js';
 import RewardsSection from '../components/RewardsSection.js';
-import SurpriseDelight from '../components/SurpriseDelight.js';
 import SeasonalCollections from '../components/SeasonalCollections.js';
 import Button from '../components/Button.js';
 import EnhancedHeroSection from '../components/EnhancedHeroSection.js';
@@ -198,9 +197,6 @@ function HomePage() {
       </div>
 
       <Footer />
-      
-      {/* Surprise and Delight Elements */}
-      <SurpriseDelight products={products} />
     </div>
   );
 }

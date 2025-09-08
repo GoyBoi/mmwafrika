@@ -22,10 +22,12 @@ const EnhancedProductCard = ({
   const rating = product.rating || 0;
   const reviewCount = product.reviewCount || 0;
   const salesCount = product.salesCount || 0;
+  const price = product.price || 0;
+  const originalPrice = product.originalPrice || 0;
   
   // Determine if product is on sale
-  const isOnSale = product.originalPrice && product.originalPrice > product.price;
-  const discountPercentage = isOnSale ? Math.round(((product.originalPrice - product.price) / product.originalPrice) * 100) : 0;
+  const isOnSale = originalPrice && originalPrice > price;
+  const discountPercentage = isOnSale ? Math.round(((originalPrice - price) / originalPrice) * 100) : 0;
   
   // Scarcity indicators
   const lowStockThreshold = 5;
@@ -60,16 +62,16 @@ const EnhancedProductCard = ({
   // Card size and styling based on variant and compact props
   const getCardClasses = () => {
     if (compact) {
-      return "group relative bg-white rounded-lg border border-gray-200 overflow-hidden shadow-sm hover:shadow-md transition-all duration-300 cursor-pointer flex flex-col h-full w-full";
+      return "group relative rounded-lg overflow-hidden transition-all duration-300 cursor-pointer flex flex-col h-full w-full";
     }
     
     switch (variant) {
       case 'carousel':
-        return "group relative bg-white rounded-xl border border-gray-200 overflow-hidden shadow-lg hover:shadow-xl transition-all duration-300 transform hover:-translate-y-1 w-full h-full cursor-pointer";
+        return "group relative rounded-xl overflow-hidden transition-all duration-300 transform hover:-translate-y-1 w-full h-full cursor-pointer";
       case 'minimal':
-        return "group relative bg-white rounded-xl border border-gray-200 overflow-hidden shadow-md hover:shadow-xl transition-all duration-300 transform hover:-translate-y-1 w-[280px] h-[380px] cursor-pointer";
+        return "group relative rounded-xl overflow-hidden transition-all duration-300 transform hover:-translate-y-1 w-[280px] h-[380px] cursor-pointer";
       default:
-        return "group relative bg-white rounded-xl border border-gray-200 overflow-hidden shadow-md hover:shadow-xl transition-all duration-300 transform hover:-translate-y-1 w-[280px] h-[380px] cursor-pointer";
+        return "group relative rounded-xl overflow-hidden transition-all duration-300 transform hover:-translate-y-1 w-[280px] h-[380px] cursor-pointer";
     }
   };
   
@@ -110,6 +112,7 @@ const EnhancedProductCard = ({
       >
         <Card 
           className={getCardClasses()}
+          variant="glass"
           onClick={() => onViewProduct(product.id)}
         >
           {/* Enhanced Image Container with Neutral Background for Clothing */}
@@ -168,9 +171,9 @@ const EnhancedProductCard = ({
             {/* Price with Visual Emphasis */}
             <div className="flex items-center justify-between mt-auto">
               <div className="flex items-center">
-                <span className="font-bold text-gray-900 text-base">${product.price.toFixed(2)}</span>
+                <span className="font-bold text-gray-900 text-base">${price.toFixed(2)}</span>
                 {isOnSale && (
-                  <span className="text-xs text-gray-500 line-through ml-2">${product.originalPrice.toFixed(2)}</span>
+                  <span className="text-xs text-gray-500 line-through ml-2">${originalPrice.toFixed(2)}</span>
                 )}
               </div>
             </div>
@@ -285,9 +288,9 @@ const EnhancedProductCard = ({
             {/* Price with Visual Emphasis */}
             <div className="flex items-center justify-between pt-2" onClick={() => onViewProduct(product.id)}>
               <div className="flex items-center">
-                <span className="font-body font-semibold text-gray-900 text-xl">${product.price.toFixed(2)}</span>
+                <span className="font-body font-semibold text-gray-900 text-xl">${price.toFixed(2)}</span>
                 {isOnSale && (
-                  <span className="text-sm text-gray-500 line-through ml-2">${product.originalPrice.toFixed(2)}</span>
+                  <span className="text-sm text-gray-500 line-through ml-2">${originalPrice.toFixed(2)}</span>
                 )}
               </div>
             </div>

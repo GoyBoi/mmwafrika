@@ -34,7 +34,7 @@ const OrderSummary = ({
   };
 
   return (
-    <Card>
+    <Card variant="glass">
       <CardHeader>
         <CardTitle className="text-xl font-semibold">Order Summary</CardTitle>
       </CardHeader>

@@ -100,19 +100,22 @@ function SocialProofSection() {
       id: 1,
       name: "Kente Cloth",
       sales: 245,
-      image: "/products_and_logo/1000006881.jpg"
+      image: "/products_and_logo/1000006881.jpg",
+      price: 49.99
     },
     {
       id: 2,
       name: "African Print Dress",
       sales: 189,
-      image: "/products_and_logo/1000006827.jpg"
+      image: "/products_and_logo/1000006827.jpg",
+      price: 29.99
     },
     {
       id: 3,
       name: "Beaded Jewelry Set",
       sales: 156,
-      image: "/products_and_logo/1000006886.jpg"
+      image: "/products_and_logo/1000006886.jpg",
+      price: 59.99
     }
   ];
 
