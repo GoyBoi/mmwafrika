@@ -3,12 +3,12 @@ import * as React from "react"
 import { cn } from "@/lib/utils"
 
 const Card = React.forwardRef(({ className, variant = "default", ...props }, ref) => {
-  const baseClasses = "rounded-xl border shadow";
+  const baseClasses = "border shadow";
   
   const variantClasses = {
-    default: "bg-white",
-    glass: "glass-card-light",
-    glassDark: "glass-card text-white"
+    default: "bg-white rounded-xl",
+    glass: "glass-card-light rounded-xl",
+    glassDark: "glass-card text-white rounded-xl"
   };
   
   return (
