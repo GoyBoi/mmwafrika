@@ -12,7 +12,7 @@ import { Checkbox } from '@/components/ui/checkbox.jsx';
 import { Slider } from '@/components/ui/slider.jsx';
 import { Label } from '@/components/ui/label.jsx';
 
-const MobileFilterSheet = ({ isOpen, onClose, onFiltersChange, activeFilters }) => {
+const MobileFilterSheet = ({ isOpen, onClose, onFiltersChange, activeFilters = {} }) => {
   // State for filter values
   const [gender, setGender] = useState(activeFilters.gender || []);
   const [category, setCategory] = useState(activeFilters.category || []);

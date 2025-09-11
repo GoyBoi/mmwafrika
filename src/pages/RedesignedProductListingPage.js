@@ -1,18 +1,18 @@
 import React, { useState, useMemo } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 import { Box, Typography, Grid, Snackbar, Alert } from '@mui/material';
-import Navbar from '../components/Navbar.js';
-import Footer from '../components/Footer.js';
-import MinimalProductCard from '../components/MinimalProductCard.js';
-import ProductPagination from '../components/ProductPagination.js';
-import QuickViewModal from '../components/QuickViewModal.js';
-import FilterSidebar from '../components/filters/FilterSidebar.js';
-import MobileFilterSheet from '../components/filters/MobileFilterSheet.js';
-import SortingDropdown from '../components/filters/SortingDropdown.js';
-import ProductGrid from '../components/ProductGrid.js';
-import ProductCarousel from '../components/ProductCarousel.js';
-import Button from '../components/Button.js';
-import { useCart } from '../context/CartContext.js';
+import Navbar from '@/components/Navbar.js';
+import Footer from '@/components/Footer.js';
+import MinimalProductCard from '@/components/MinimalProductCard.js';
+import ProductPagination from '@/components/ProductPagination.js';
+import QuickViewModal from '@/components/QuickViewModal.js';
+import FilterSidebar from '@/components/filters/FilterSidebar.js';
+import MobileFilterSheet from '@/components/filters/MobileFilterSheet.js';
+import SortingDropdown from '@/components/filters/SortingDropdown.js';
+import ProductGrid from '@/components/ProductGrid.js';
+import ProductCarousel from '@/components/ProductCarousel.js';
+import Button from '@/components/Button.js';
+import { useCart } from '@/context/CartContext.js';
 
 // Mock product data with enhanced properties
 const products = [
@@ -98,6 +98,7 @@ const limitedTimeOffers = [
 function ProductListingPage() {
   const navigate = useNavigate();
   const [selectedProduct, setSelectedProduct] = useState(null);
+  const [isMobileFilterOpen, setIsMobileFilterOpen] = useState(false);
   // Add to cart functionality removed for fresh start
   
   const handleShopNow = () => {
@@ -172,7 +173,10 @@ function ProductListingPage() {
           <div className="flex flex-col md:flex-row">
             {/* Filter Sidebar - Hidden on mobile */}
             <div className="hidden md:block md:w-1/4 lg:w-1/5 pr-6">
-              <FilterSidebar />
+              <FilterSidebar 
+                onFiltersChange={(filters) => console.log('Filters changed:', filters)}
+                activeFilters={{}}
+              />
             </div>
             
             {/* Main Content */}
@@ -181,7 +185,7 @@ function ProductListingPage() {
               <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center mb-6 gap-4">
                 <Button
                   variant="secondary"
-                  onClick={() => console.log('Open mobile filters')}
+                  onClick={() => setIsMobileFilterOpen(true)}
                   className="md:hidden w-full sm:w-auto"
                 >
                   Filter Products
@@ -221,6 +225,14 @@ function ProductListingPage() {
           </div>
         </div>
       </div>
+
+      {/* Mobile Filter Sheet */}
+      <MobileFilterSheet 
+        isOpen={isMobileFilterOpen}
+        onClose={() => setIsMobileFilterOpen(false)}
+        onFiltersChange={(filters) => console.log('Mobile filters changed:', filters)}
+        activeFilters={{}}
+      />
 
       <Footer />
     </div>

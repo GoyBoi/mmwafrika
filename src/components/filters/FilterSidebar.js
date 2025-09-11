@@ -4,7 +4,7 @@ import { Slider } from '@/components/ui/slider.jsx';
 import { Checkbox } from '@/components/ui/checkbox.jsx';
 import { Label } from '@/components/ui/label.jsx';
 
-const FilterSidebar = ({ onFiltersChange, activeFilters }) => {
+const FilterSidebar = ({ onFiltersChange, activeFilters = {} }) => {
   // State for filter values
   const [gender, setGender] = useState(activeFilters.gender || []);
   const [category, setCategory] = useState(activeFilters.category || []);
